@@ -1,0 +1,71 @@
+{
+  "run_id": "2026-10-27T23-44-34Z",
+  "stage": "agent_rescore",
+  "source_run_id": "2026-10-27T23-26-23Z",
+  "gold_sha256": "9946ab5ba70a1eaa40e7410504743a2aea0db12b3ba5f2b37da1910be40a76cf",
+  "status": "complete",
+  "latency_ms": 19.36659999999995,
+  "tokens": {
+    "prompt": 0,
+    "completion": 0
+  },
+  "summary": {
+    "valid_runs": 3,
+    "agreement": 0.9629629629629629,
+    "category_accuracy": 1,
+    "mapping_precision": 0.9166666666666666,
+    "mapping_recall": 1,
+    "gap_recall": 1,
+    "valid_quote_rate": 1,
+    "verdict_accuracy": 1,
+    "invented_ids": 0,
+    "needs_review": 0,
+    "latency_ms": 33974.65433333333,
+    "tokens_in": 42745,
+    "tokens_out": 6416
+  },
+  "runs": [
+    {
+      "run": 1,
+      "status": "complete",
+      "metrics": {
+        "category_accuracy": 1,
+        "mapping_precision": 0.75,
+        "mapping_recall": 1,
+        "gap_recall": 1,
+        "valid_quote_rate": 1,
+        "invented_ids": 0,
+        "verdict_accuracy": 1,
+        "needs_review": 0
+      }
+    },
+    {
+      "run": 2,
+      "status": "complete",
+      "metrics": {
+        "category_accuracy": 1,
+        "mapping_precision": 1,
+        "mapping_recall": 1,
+        "gap_recall": 1,
+        "valid_quote_rate": 1,
+        "invented_ids": 0,
+        "verdict_accuracy": 1,
+        "needs_review": 0
+      }
+    },
+    {
+      "run": 3,
+      "status": "complete",
+      "metrics": {
+        "category_accuracy": 1,
+        "mapping_precision": 1,
+        "mapping_recall": 1,
+        "gap_recall": 1,
+        "valid_quote_rate": 1,
+        "invented_ids": 0,
+        "verdict_accuracy": 1,
+        "needs_review": 0
+      }
+    }
+  ]
+}

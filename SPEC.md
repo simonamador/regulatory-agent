@@ -222,7 +222,7 @@ Prompt por etapa: *"Implementa la etapa NN de SPEC.md. Corre `scripts/gate.sh` y
 **Herramientas** (deterministas, en `apps/api/src/tools.ts`):
 - `get_regulation()` devuelve los párrafos hoja con `{ id, context }`. El parser es determinista y no usa LLM; `context` es el texto de los ancestros más el del propio párrafo.
 - `search_requirements(query)` devuelve `{ id, text, status }` de todos los requisitos cuyo texto contiene algún término de la búsqueda. No expone `source` ni `formal`: el mapeo tiene que ser semántico, no copiar trazas.
-- `get_requirement(id)` devuelve `{ id, text, status, formal }`.
+- `get_requirement(id)` devuelve `{ id, text, status, formal }`. Con un id desconocido devuelve `{ error }` al modelo como resultado de la herramienta, sin abortar la corrida. No es un fallback: el código igual valida los ids finales de `implemented_by` (`unknown_requirement`).
 - `run_audit(requirement_ids)` corre la auditoría de §4 (consistency, scenario_conflict por escenario, vacuity, equivalence) y devuelve los findings que tocan esos ids: core, witness resumido y `unverified`.
 
 **Salida del LLM** (schema Zod, structured output), un item por párrafo hoja:
@@ -267,5 +267,7 @@ Cada obligación incluye `contributions: [{ requirement, verdict, finding_ref }]
 - acuerdo entre corridas, latencia y tokens.
 
 Una corrida que falla en la API se marca `status: "api_error"` y queda fuera del acuerdo, las exactitudes, la latencia y los tokens. Sin corridas válidas, cada cifra es null, nunca 1; el acuerdo necesita dos corridas válidas.
+
+`pnpm eval:agent --rescore <run_id>` recalcula las métricas de una corrida guardada contra el `obligations.json` actual, sin llamar a OpenAI, y escribe `runs/agent-rescore-<run_id>.json`. Cada corrida y cada rescore registran `gold_sha256`.
 
 Ningún test del gate llama a OpenAI. Los tests del gate cubren el parser, la validación de citas e ids, la derivación de veredictos con mapeos fijos y la función de métricas.

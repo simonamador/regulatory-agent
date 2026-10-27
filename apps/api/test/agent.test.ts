@@ -86,14 +86,16 @@ describe("verdict derivation (SPEC §10)", () => {
   it("an UNKNOWN scenario_conflict sends every obligation mapped to an approved requirement to NEEDS_REVIEW", () => {
     const unknown = findings.map((f) => (f.scenario === "SCN-102" && f.check === "scenario_conflict" ? { ...f, status: "UNKNOWN" as const, witness: null, unverified: [] } : f));
     const assessed = assess(goldItems, leaves, corpus, unknown);
-    expect(obligation(assessed, "(b)(1)(vii)")).toMatchObject({ verdict: "NEEDS_REVIEW", reasons: ["audit_unknown"], contributions: [] });
+    expect(obligation(assessed, "(b)(5)")).toMatchObject({ verdict: "NEEDS_REVIEW", reasons: ["audit_unknown"], contributions: [] }); // REQ-106
     expect(obligation(assessed, "(b)(7)(iv)")?.verdict).toBe("NOT_FORMALIZED"); // REQ-108 is pending: never in a solve
     expect(obligation(assessed, "(b)(1)(i)")?.verdict).toBe("OUT_OF_SCOPE");
   });
 
   it("an UNKNOWN equivalence does not count (SPEC §10)", () => {
     const unknown = findings.map((f) => (f.subject === "INT-102" ? { ...f, status: "UNKNOWN" as const } : f));
-    const o = obligation(assess(goldItems, leaves, corpus, unknown), "(b)(1)(vii)"); // REQ-105, the requirement of INT-102
+    // (b)(1)(vii) read as behavior and mapped to REQ-105, the requirement of INT-102.
+    const items = goldItems.map((i) => (i.paragraph === "(b)(1)(vii)" ? { ...i, category: "behavior" as const, implemented_by: ["REQ-105"] } : i));
+    const o = obligation(assess(items, leaves, corpus, unknown), "(b)(1)(vii)");
     expect(o?.verdict).toBe("CONSISTENT_BOUNDED");
   });
 
@@ -136,12 +138,12 @@ describe("agent metrics", () => {
     const m = agentMetrics(assess(items, leaves, corpus, findings), items, leaves, gold, corpus);
     expect(m).toEqual({
       category_accuracy: 26 / 27,
-      mapping_precision: 4 / 6, // REQ-104, REQ-105, REQ-106, REQ-108 right; REQ-103, REQ-777 wrong
-      mapping_recall: 4 / 4,
+      mapping_precision: 3 / 6, // REQ-104, REQ-106, REQ-108 right; REQ-103, REQ-105, REQ-777 wrong
+      mapping_recall: 3 / 3,
       gap_recall: 3 / 4,
       valid_quote_rate: 26 / 27,
       invented_ids: 1,
-      verdict_accuracy: 24 / 27, // (b)(7)(i) CONSISTENT_BOUNDED, (b)(5) and (b)(1)(vii) NEEDS_REVIEW
+      verdict_accuracy: 23 / 27, // (b)(7)(i) and (b)(2) CONSISTENT_BOUNDED, (b)(5) and (b)(1)(vii) NEEDS_REVIEW
       needs_review: 2,
     });
   });

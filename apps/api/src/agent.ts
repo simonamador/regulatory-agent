@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { type Corpus, type Finding, audit, loadCorpus } from "@rqaudit/core";
@@ -7,6 +8,7 @@ import { AGENT_TEMPERATURE, MODEL, PROMPTS, type Usage, agentSession } from "./l
 import { type Leaf, agentTools, concerns, parseRegulation } from "./tools.js";
 
 // CLI `pnpm eval:agent` (SPEC §10): 3 real agent runs on the regulation → runs/agent-<run_id>.json.
+// `pnpm eval:agent --rescore <run_id>` re-scores a stored run against the current gold, without calling OpenAI.
 const REGULATION = "corpus/regulations/21-CFR-862.1355.txt";
 const RUNS = 3;
 const MAX_TURNS = 12;
@@ -197,13 +199,39 @@ async function runAgent(corpus: Corpus, leaves: Leaf[]) {
   return { status: "max_turns", message: `No final answer after ${MAX_TURNS} turns.`, items: [], trace, usages, settings };
 }
 
-async function main() {
-  const started = performance.now();
-  const run_id = newRunId();
+// The base corpus, the regulation's leaves and the gold; gold_sha256 identifies the gold a score was computed against.
+function inputs() {
   const corpus = loadCorpus(fileURLToPath(new URL("corpus/", root)), "base");
   if (corpus.findings.length > 0) throw new Error(`The base corpus does not load cleanly: ${JSON.stringify(corpus.findings)}`);
   const leaves = parseRegulation(readFileSync(new URL(REGULATION, root), "utf8"));
-  const gold = (JSON.parse(readFileSync(new URL("tests/gold/obligations.json", root), "utf8")) as { obligations: GoldObligation[] }).obligations;
+  const raw = readFileSync(new URL("tests/gold/obligations.json", root), "utf8");
+  const gold = (JSON.parse(raw) as { obligations: GoldObligation[] }).obligations;
+  return { corpus, leaves, gold, gold_sha256: createHash("sha256").update(raw).digest("hex") };
+}
+
+function rescore(source_run_id: string) {
+  const started = performance.now();
+  const { corpus, leaves, gold, gold_sha256 } = inputs();
+  type Stored = { run: number; status: string; latency_ms: number; tokens: { prompt: number; completion: number }; obligations: Obligation[]; items: Item[] };
+  const source = JSON.parse(readFileSync(new URL(`runs/agent-${source_run_id}.json`, root), "utf8")) as { summary: object; runs: Stored[] };
+  const runs = source.runs.map((r) => ({
+    ...r, metrics: r.status === "api_error" ? null : agentMetrics(r.obligations, r.items, leaves, gold, corpus),
+  }));
+  const run_id = newRunId();
+  const summary = agentSummary(runs, leaves);
+  write(`agent-rescore-${run_id}`, {
+    run_id, stage: "agent_rescore", source_run_id, gold_sha256, status: "complete", latency_ms: performance.now() - started,
+    tokens: { prompt: 0, completion: 0 }, summary, runs: runs.map(({ run, status, metrics }) => ({ run, status, metrics })),
+  });
+  console.log(`agent rescore ${run_id} of ${source_run_id} · gold sha256 ${gold_sha256.slice(0, 12)} · runs/agent-rescore-${run_id}.json`);
+  const before = source.summary as Record<string, unknown>;
+  console.table(Object.fromEntries(Object.entries(summary).map(([key, value]) => [key, { stored: before[key], rescored: value }])));
+}
+
+async function main() {
+  const started = performance.now();
+  const run_id = newRunId();
+  const { corpus, leaves, gold, gold_sha256 } = inputs();
 
   const runs = [];
   for (let run = 1; run <= RUNS; run++) {
@@ -220,7 +248,7 @@ async function main() {
   }
   const report = {
     run_id, stage: "agent", status: runs.every((r) => r.status === "complete") ? "complete" : "incomplete",
-    model: MODEL, requested_temperature: AGENT_TEMPERATURE, prompt: PROMPTS.agent, regulation: REGULATION, max_turns: MAX_TURNS,
+    gold_sha256, model: MODEL, requested_temperature: AGENT_TEMPERATURE, prompt: PROMPTS.agent, regulation: REGULATION, max_turns: MAX_TURNS,
     latency_ms: performance.now() - started,
     summary: agentSummary(runs, leaves),
     runs,
@@ -243,6 +271,12 @@ async function main() {
 
 // Z3 workers keep the process alive, so the CLI exits explicitly (CLAUDE.md).
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  await main();
+  const flag = process.argv.indexOf("--rescore");
+  if (flag === -1) await main();
+  else {
+    const source = process.argv[flag + 1];
+    if (source === undefined) throw new Error("Usage: pnpm eval:agent --rescore <run_id>");
+    rescore(source);
+  }
   process.exit(0);
 }
