@@ -13,5 +13,13 @@
     "data_gap",
     "signal_loss_alert",
     "reading_sent"
-  ]
+  ],
+  "descriptions": {
+    "urgent_low": "Sensor glucose is at or below 55 mg/dL (urgent low).",
+    "urgent_low_alert": "The Urgent Low alert is issued to the user. It is the only glucose-level alert in this vocabulary.",
+    "glucose_shown": "A glucose value is displayed to the user.",
+    "data_gap": "No glucose data has been received for 10 minutes or more.",
+    "signal_loss_alert": "The Signal Loss alert is issued to the user.",
+    "reading_sent": "The sensor transmits a glucose reading to the display device."
+  }
 }
