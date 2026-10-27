@@ -11,11 +11,19 @@ import {
   scenarioConflict,
   vacuity,
 } from "@rqaudit/core";
-import { MODEL, PROMPTS, type Usage, extract, judge } from "./llm.js";
+import { MODEL, PROMPTS, type Usage, extract, judge, preamble } from "./llm.js";
 
 // CLI `pnpm eval` (SPEC §9 etapa 03): variants A/B/C over G01–G04 and the 72 mutations → runs/<run_id>.json.
 const RUNS = 3; // B and C, for the agreement rate
-const AUDITS = 20;
+const AUDITS = 50;
+// v1 gave C the vocabulary but not B, rendered scenarios as `signal = value` lists and warmed up with one solve.
+const PROTOCOL = {
+  version: 2,
+  reason:
+    "Information parity between B and C: one vocabulary preamble (signals, modes, detection semantics) for extract and judge, " +
+    "and scenarios rendered in natural language for A, B and C. Audit latency measured as the server runs: cold first audit, " +
+    "one full warm-up audit, then measured audits.",
+};
 const BATCH = 8; // concurrent LLM calls
 
 const root = new URL("../../../", import.meta.url);
@@ -45,12 +53,17 @@ export const renderReq001 = (D: number, bound: Bound) =>
 export const renderReq002 = (W: number) =>
   `During the first ${W} seconds of calibration mode, audible alarms shall remain disabled.`;
 
-// Same rendering for every case; `description` is not used because it hints at the answer.
+// Natural language, the same for every case and variant; `description` is not used because it hints at the answer.
+// Intervals stay half-open: "from t=0 s to t=12 s" is [0, 12).
 export function renderScenario(horizon: number, facts: Fact[]) {
-  const lines = facts.map((f) =>
-    "mode" in f ? `- mode ${f.mode} during [${f.from_s}, ${f.to_s}) s` : `- ${f.signal} = ${f.value} during [${f.from_s}, ${f.to_s}) s`,
-  );
-  return [`Horizon: t = 0..${horizon - 1} s. Anything not listed is unconstrained.`, ...lines].join("\n");
+  const sentences = facts.map((f) => {
+    const span = f.to_s - f.from_s === 1 ? `at t=${f.from_s} s` : `from t=${f.from_s} s to t=${f.to_s} s`;
+    if ("mode" in f) return `The pump is in ${f.mode.toLowerCase()} mode ${span}.`;
+    const name = f.signal.replaceAll("_", " ");
+    if (!f.value) return `No ${name} is detected ${span}.`;
+    return `${/^[aeiou]/.test(name) ? "An" : "A"} ${name} is detected ${span}.`;
+  });
+  return [`The trace covers t=0 s to t=${horizon - 1} s. Anything not stated is unconstrained.`, ...sentences].join("\n");
 }
 
 function scenarioText({ corpus, scenario }: Case) {
@@ -114,7 +127,7 @@ export function lint(requirements: { id: string; text: string }[], scenario: str
 
 async function variantB(c: Case): Promise<Prediction> {
   const texts = [...c.corpus.requirements, ...c.corpus.axioms].map(({ id, text }) => ({ id, text }));
-  const { value, latency_ms, usage, message } = await judge(texts, scenarioText(c));
+  const { value, latency_ms, usage, message } = await judge(c.corpus.vocabulary, texts, scenarioText(c));
   const status = value === null ? "ERROR" : value.conflict ? "UNSAT" : "SAT";
   const expected = { expected_status: c.expected_status, expected_core: requirementIds(c.expected_core) };
   return { id: c.id, status, core: requirementIds(value?.involved_ids ?? []), ...expected, latency_ms, usage, message };
@@ -194,18 +207,22 @@ export function agreement(runs: Prediction[][]) {
 }
 
 // Audit (SPEC §4): consistency + scenario_conflict per scenario + vacuity + equivalence per interpretation.
+async function audit(corpus: Corpus) {
+  const started = performance.now();
+  await consistency(corpus);
+  for (const s of corpus.scenarios) await scenarioConflict(corpus, s.id);
+  await vacuity(corpus);
+  for (const i of corpus.interpretations) await equivalence(corpus, i.id);
+  return performance.now() - started;
+}
+
+// As the server runs: the first audit of the process is cold, then one full warm-up audit before measuring.
 async function auditLatency(base: Corpus) {
-  await consistency(base); // warm-up solve
+  const cold_first_audit_ms = await audit(base);
+  await audit(base);
   const times: number[] = [];
-  for (let i = 0; i < AUDITS; i++) {
-    const started = performance.now();
-    await consistency(base);
-    for (const s of base.scenarios) await scenarioConflict(base, s.id);
-    await vacuity(base);
-    for (const int of base.interpretations) await equivalence(base, int.id);
-    times.push(performance.now() - started);
-  }
-  return { audits: AUDITS, ...latency(times), samples: times };
+  for (let i = 0; i < AUDITS; i++) times.push(await audit(base));
+  return { cold_first_audit_ms, warmup_audits: 1, audits: AUDITS, ...latency(times), samples: times };
 }
 
 const round = (x: number | null) => (x === null ? null : Math.round(x * 1000) / 1000);
@@ -257,9 +274,15 @@ async function main() {
   const report = {
     run_id,
     stage: "eval",
+    protocol_version: PROTOCOL.version,
+    protocol_change: PROTOCOL.reason,
     status: "complete",
     model: MODEL,
-    prompts: { extract: PROMPTS.extract(base.vocabulary), judge: PROMPTS.judge },
+    // Exactly the system prompts sent: each base prompt followed by the shared preamble.
+    prompts: {
+      extract: `${PROMPTS.extract}\n${preamble(base.vocabulary)}`,
+      judge: `${PROMPTS.judge}\n${preamble(base.vocabulary)}`,
+    },
     cases: cases.map((c) => c.id),
     latency_ms: performance.now() - started,
     tokens: {
@@ -273,7 +296,7 @@ async function main() {
   mkdirSync(new URL("runs/", root), { recursive: true });
   writeFileSync(new URL(`runs/${run_id}.json`, root), `${JSON.stringify(report, null, 2)}\n`);
 
-  console.log(`run ${run_id} · model ${MODEL} · ${cases.length} cases · runs/${run_id}.json`);
+  console.log(`run ${run_id} · protocol v${PROTOCOL.version} · model ${MODEL} · ${cases.length} cases · runs/${run_id}.json`);
   console.table(
     Object.entries(variants).flatMap(([variant, runs]) =>
       runs.map(({ run, needs_review, metrics: m }) => ({
@@ -302,7 +325,8 @@ async function main() {
       ]),
     ),
   );
-  console.log("audit latency (ms):", { audits: AUDITS, p50: round(audit_latency_ms.p50), p95: round(audit_latency_ms.p95) });
+  const { cold_first_audit_ms, p50, p95 } = audit_latency_ms;
+  console.log("audit latency (ms):", { cold_first_audit_ms: round(cold_first_audit_ms), warmup_audits: 1, audits: AUDITS, p50: round(p50), p95: round(p95) });
 }
 
 // Z3 workers keep the process alive, so the CLI exits explicitly (CLAUDE.md).

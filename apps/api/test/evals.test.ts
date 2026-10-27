@@ -17,6 +17,19 @@ describe("templates", () => {
   it("render the exclusive bound with its own wording", () => {
     expect(renderReq001(3, "exclusive")).toContain("in less than 3 seconds");
   });
+
+  it("render scenario facts in natural language", () => {
+    const lines = renderScenario(H, [
+      { mode: "CALIBRATION", from_s: 0, to_s: 12 },
+      { signal: "occlusion", value: true, from_s: 1, to_s: 2 },
+      { signal: "occlusion", value: false, from_s: 3, to_s: 20 },
+    ]).split("\n");
+    expect(lines.slice(1)).toEqual([
+      "The pump is in calibration mode from t=0 s to t=12 s.",
+      "An occlusion is detected at t=1 s.",
+      "No occlusion is detected from t=3 s to t=20 s.",
+    ]);
+  });
 });
 
 describe("variant A", () => {

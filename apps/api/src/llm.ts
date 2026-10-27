@@ -6,8 +6,13 @@ import { z } from "zod";
 // Model and prompts are versioned constants; every run records them (SPEC §5).
 export const MODEL = "gpt-6.1-terra";
 
+// Protocol v2: B and C get the same vocabulary preamble, appended to their system prompts.
+export const preamble = ({ modes, signals }: Vocabulary) =>
+  `Modes: ${modes.join(", ")}. Signals: ${signals.join(", ")}.
+Each signal is a Boolean the pump observes every second; true at tick t means the pump detects that condition at t.`;
+
 export const PROMPTS = {
-  extract: ({ modes, signals }: Vocabulary) => `You formalize one requirement of an infusion pump into a flat template. Fill the fields; do not invent signals or modes.
+  extract: `You formalize one requirement of an infusion pump into a flat template. Fill the fields; do not invent signals or modes.
 Time is discrete: one tick per second. All intervals are half-open [from, to).
 - scope.mode: the operating mode the requirement applies in, or "ANY".
 - scope.window_s: null, or a window {from, to} in seconds measured from the moment the pump entered scope.mode.
@@ -16,8 +21,7 @@ Time is discrete: one tick per second. All intervals are half-open [from, to).
   {"kind":"within","s":S,"bound":"inclusive"} when the response must occur at some tick in [t, t+S] after a trigger at t ("within a maximum of S", "at most S", "immediately" is S=0);
   {"kind":"within","s":S,"bound":"exclusive"} when it must occur in [t, t+S) ("in less than S").
 - response: the signal value that must hold.
-Return {"formal": null} when the requirement cannot be expressed with the given modes and signals.
-Modes: ${modes.join(", ")}. Signals: ${signals.join(", ")}.`,
+Return {"formal": null} when the requirement cannot be expressed with the given modes and signals.`,
   judge: `You review the requirements of an infusion pump against a scenario. Time is discrete, one tick per second; intervals are half-open [from, to).
 Anything the scenario does not fix is free. Decide whether there is NO execution consistent with the scenario that satisfies every requirement and domain fact.
 Return conflict=true only in that case, with involved_ids = the ids of the smallest set of requirements (REQ-*) that cannot hold together in the scenario. Otherwise conflict=false and involved_ids=[].`,
@@ -50,7 +54,7 @@ async function ask<T>(schema: z.ZodType<T>, name: string, system: string, user: 
 // The LLM only proposes `formal`; no formal means the requirement stays pending (NEEDS_REVIEW).
 export async function extract(vocabulary: Vocabulary, text: string) {
   const schema = z.strictObject({ formal: corpusSchemas(vocabulary).Formal.nullable() });
-  const reply = await ask(schema, "requirement", PROMPTS.extract(vocabulary), text);
+  const reply = await ask(schema, "requirement", `${PROMPTS.extract}\n${preamble(vocabulary)}`, text);
   const formal: Formal | null = reply.value?.formal ?? null;
   return {
     ...reply,
@@ -63,7 +67,8 @@ export async function extract(vocabulary: Vocabulary, text: string) {
 const Verdict = z.strictObject({ conflict: z.boolean(), involved_ids: z.array(z.string()) });
 
 // Variant B of the eval: the LLM alone judges the scenario (SPEC §5).
-export function judge(texts: { id: string; text: string }[], scenario: string) {
+export function judge(vocabulary: Vocabulary, texts: { id: string; text: string }[], scenario: string) {
   const listed = texts.map(({ id, text }) => `${id}: ${text}`).join("\n");
-  return ask(Verdict, "verdict", PROMPTS.judge, `Requirements and domain facts:\n${listed}\n\nScenario:\n${scenario}`);
+  const system = `${PROMPTS.judge}\n${preamble(vocabulary)}`;
+  return ask(Verdict, "verdict", system, `Requirements and domain facts:\n${listed}\n\nScenario:\n${scenario}`);
 }

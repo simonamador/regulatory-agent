@@ -114,13 +114,14 @@ Cada requisito, axioma y hecho se asserta como `Implies(p_id, fórmula)` con un 
 - **Identidad de un finding:** `(check, scenario_id | null, ids del core ordenados)`. La regresión compara por esta clave.
 - **Solver:** `random_seed = 0`, `timeout = 2000` ms; si vence → `UNKNOWN`. Un solo `Context` inicializado al arrancar el servidor.
 - **Witness:** tabla tick × señal/modo; la UI la dibuja como timeline.
-- **Auditoría:** auditoría = consistency + scenario_conflict por cada escenario + vacuity + equivalence por cada interpretación, sobre el corpus base, en un proceso que ya hizo un solve de calentamiento.
+- **Auditoría:** auditoría = consistency + scenario_conflict por cada escenario + vacuity + equivalence por cada interpretación, sobre el corpus base, en un proceso que ya hizo 1 auditoría completa de calentamiento (como corre el servidor). La primera auditoría del proceso se reporta aparte como `cold_first_audit_ms`.
 
 **Status:** `SAT | UNSAT | UNKNOWN | PARSE_ERROR | NEEDS_REVIEW`. No existe ningún campo tipo `compliant`. Un requisito `pending` nunca se excluye en silencio.
 
 ## 5. LLM (`apps/api/src/llm.ts`)
 
-- `client.chat.completions.parse` con `response_format: zodResponseFormat(FormalSchema, "requirement")`. La salida se re-valida con el mismo schema Zod.
+- `client.chat.completions.parse` con `response_format: zodResponseFormat(z.strictObject({ formal: FormalSchema.nullable() }), "requirement")`. La salida se re-valida con el mismo schema Zod.
+- `extract` responde `{ formal: Formal | null }`, no `Formal` a secas. Structured outputs exige un objeto en la raíz del schema, y el `null` es la única forma de que el modelo diga que el texto no se puede expresar con el vocabulario de `signals.json` (REQ-008) sin inventar una lectura. Un `formal: null`, igual que un error de la llamada, deja el requisito `pending` → `NEEDS_REVIEW`.
 - Modelo y prompt son constantes versionadas; cada `run_id` los registra.
 - El LLM solo propone `formal`. Nunca decide SAT/UNSAT, nunca marca `approved`, nunca produce código.
 - Variante B del eval (LLM-only judge): devuelve `{ conflict: boolean, involved_ids: string[] }` con su propio schema Zod.
