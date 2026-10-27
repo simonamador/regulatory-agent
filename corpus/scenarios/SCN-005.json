@@ -1,0 +1,29 @@
+{
+  "id": "SCN-005",
+  "description": "Context for equivalence witnesses: a single occlusion at t=2 s, none elsewhere, normal mode.",
+  "facts": [
+    {
+      "mode": "NORMAL",
+      "from_s": 0,
+      "to_s": 20
+    },
+    {
+      "signal": "occlusion",
+      "value": false,
+      "from_s": 0,
+      "to_s": 2
+    },
+    {
+      "signal": "occlusion",
+      "value": true,
+      "from_s": 2,
+      "to_s": 3
+    },
+    {
+      "signal": "occlusion",
+      "value": false,
+      "from_s": 3,
+      "to_s": 20
+    }
+  ]
+}

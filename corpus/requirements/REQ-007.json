@@ -1,0 +1,31 @@
+{
+  "id": "REQ-007",
+  "version": "1.0",
+  "text": "If the reservoir becomes empty during calibration, the pump shall raise an alarm within 2 seconds.",
+  "source": {
+    "kind": "synthetic",
+    "ref": null,
+    "note": "Vacuity target: its trigger is unreachable under AX-002."
+  },
+  "status": "pending",
+  "approved_by": null,
+  "formal": {
+    "scope": {
+      "mode": "CALIBRATION",
+      "window_s": null
+    },
+    "condition": {
+      "signal": "reservoir_empty",
+      "value": true
+    },
+    "timing": {
+      "kind": "within",
+      "s": 2,
+      "bound": "inclusive"
+    },
+    "response": {
+      "signal": "alarm",
+      "value": true
+    }
+  }
+}

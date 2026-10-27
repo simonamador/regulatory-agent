@@ -1,0 +1,31 @@
+{
+  "id": "REQ-901",
+  "version": "1.0",
+  "text": "Upon air-in-line detection, the pump shall alarm within 2 seconds.",
+  "source": {
+    "kind": "synthetic",
+    "ref": null,
+    "note": "Invalid on purpose: signal air_in_line is not declared."
+  },
+  "status": "pending",
+  "approved_by": null,
+  "formal": {
+    "scope": {
+      "mode": "ANY",
+      "window_s": null
+    },
+    "condition": {
+      "signal": "air_in_line",
+      "value": true
+    },
+    "timing": {
+      "kind": "within",
+      "s": 2,
+      "bound": "inclusive"
+    },
+    "response": {
+      "signal": "alarm",
+      "value": true
+    }
+  }
+}

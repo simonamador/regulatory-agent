@@ -1,0 +1,22 @@
+{
+  "id": "SCN-004",
+  "description": "Calibration starts at t=14 s; occlusion at t=16 s. The deadline falls past the horizon, so REQ-001 does not constrain this trace.",
+  "facts": [
+    {
+      "mode": "NORMAL",
+      "from_s": 0,
+      "to_s": 14
+    },
+    {
+      "mode": "CALIBRATION",
+      "from_s": 14,
+      "to_s": 20
+    },
+    {
+      "signal": "occlusion",
+      "value": true,
+      "from_s": 16,
+      "to_s": 17
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "tick_s": 1,
+  "horizon_ticks": 20,
+  "modes": [
+    "NORMAL",
+    "CALIBRATION"
+  ],
+  "signals": [
+    "occlusion",
+    "alarm",
+    "bolus_delivered",
+    "reservoir_empty",
+    "fault",
+    "pumping"
+  ]
+}

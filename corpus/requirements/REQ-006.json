@@ -1,0 +1,26 @@
+{
+  "id": "REQ-006",
+  "version": "1.0",
+  "text": "The pump shall not deliver fluid while in calibration mode.",
+  "source": {
+    "kind": "synthetic",
+    "ref": null,
+    "note": "Domain rule that motivates AX-002."
+  },
+  "status": "pending",
+  "approved_by": null,
+  "formal": {
+    "scope": {
+      "mode": "CALIBRATION",
+      "window_s": null
+    },
+    "condition": null,
+    "timing": {
+      "kind": "always"
+    },
+    "response": {
+      "signal": "pumping",
+      "value": false
+    }
+  }
+}

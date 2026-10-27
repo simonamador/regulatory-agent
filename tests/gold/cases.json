@@ -1,0 +1,153 @@
+[
+  {
+    "id": "G01",
+    "check": "scenario_conflict",
+    "corpus": "base",
+    "scenario": "SCN-001",
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN-001"
+    ],
+    "why": "Alarm needed in [1,6]; alarms forbidden in [0,10)."
+  },
+  {
+    "id": "G02",
+    "check": "scenario_conflict",
+    "corpus": "base",
+    "scenario": "SCN-002",
+    "expected_status": "SAT",
+    "expected_core": null,
+    "why": "Negative: occlusion after calibration."
+  },
+  {
+    "id": "G03",
+    "check": "scenario_conflict",
+    "corpus": "base",
+    "scenario": "SCN-003",
+    "expected_status": "SAT",
+    "expected_core": null,
+    "why": "Boundary negative: alarm at t=10 satisfies both rules."
+  },
+  {
+    "id": "G04",
+    "check": "scenario_conflict",
+    "corpus": "base",
+    "scenario": "SCN-004",
+    "expected_status": "SAT",
+    "expected_core": null,
+    "why": "Horizon negative: REQ-001 window [16,21] passes tick 19, so it is unconstrained. A naive encoding returns a spurious UNSAT."
+  },
+  {
+    "id": "G05",
+    "check": "consistency",
+    "corpus": "base",
+    "scenario": null,
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_review": [
+      "REQ-008"
+    ],
+    "why": "Approved set is globally satisfiable; the conflict exists only under a scenario. REQ-008 is pending and must surface as NEEDS_REVIEW, not be dropped."
+  },
+  {
+    "id": "G06",
+    "check": "vacuity",
+    "corpus": "base",
+    "scenario": null,
+    "expected_findings": [
+      {
+        "requirement": "REQ-007",
+        "expected_status": "UNSAT",
+        "expected_core": [
+          "AX-002",
+          "TRIGGER:REQ-007"
+        ]
+      }
+    ],
+    "expected_reachable": [
+      "REQ-001",
+      "REQ-003",
+      "REQ-004",
+      "REQ-005",
+      "REQ-009"
+    ],
+    "why": "Only REQ-007's trigger is unreachable. Every other conditional requirement must not be reported."
+  },
+  {
+    "id": "G07",
+    "check": "equivalence",
+    "corpus": "base",
+    "interpretation": "INT-001",
+    "expected_status": "SAT",
+    "expected_witness": "Replaying the witness trace, exactly one of readings A and B holds. With SCN-005 the only distinguishing trace has the alarm first firing at t=7 s.",
+    "why": "Inclusive vs exclusive differ when the alarm first fires at exactly t_occ + 5."
+  },
+  {
+    "id": "G08",
+    "check": "equivalence",
+    "corpus": "base",
+    "interpretation": "INT-002",
+    "expected_status": "UNSAT",
+    "why": "Negative: within 3 inclusive and within 4 exclusive cover the same ticks [k, k+3]."
+  },
+  {
+    "id": "G09",
+    "check": "regression",
+    "from": "base",
+    "to": "v2-short-silence",
+    "scenario": "SCN-001",
+    "expected": {
+      "resolved": [
+        {
+          "check": "scenario_conflict",
+          "scenario": "SCN-001",
+          "core": [
+            "REQ-001",
+            "REQ-002",
+            "SCN-001"
+          ]
+        }
+      ],
+      "introduced": [],
+      "changed_requirements": [
+        "REQ-002"
+      ]
+    },
+    "why": "Silence window [0,3) no longer covers the alarm window [1,6]."
+  },
+  {
+    "id": "G10",
+    "check": "regression",
+    "from": "base",
+    "to": "v3-text-only",
+    "scenario": "SCN-001",
+    "expected": {
+      "resolved": [],
+      "introduced": [],
+      "persistent": [
+        {
+          "check": "scenario_conflict",
+          "scenario": "SCN-001",
+          "core": [
+            "REQ-001",
+            "REQ-002",
+            "SCN-001"
+          ]
+        }
+      ]
+    },
+    "why": "Negative: text-only edit, same formal, so the finding persists."
+  },
+  {
+    "id": "G11",
+    "check": "load",
+    "corpus": "invalid",
+    "expected_parse_errors": [
+      "REQ-901",
+      "REQ-902"
+    ],
+    "why": "Undeclared signal and non-integer seconds must be PARSE_ERROR, never silently skipped."
+  }
+]

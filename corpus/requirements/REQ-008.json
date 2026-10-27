@@ -1,0 +1,13 @@
+{
+  "id": "REQ-008",
+  "version": "1.0",
+  "text": "If the pump remains idle for a set period during dose programming, it shall alert the user to complete programming and start the infusion.",
+  "source": {
+    "kind": "anchored",
+    "ref": "GPCA Safety Requirements (Jetley & Jones 2007), as cited in UPenn PRECISE GPCA materials, SR 2.2.4",
+    "note": "Paraphrase. Kept unformalized on purpose: needs a sustained-absence condition and the period is unspecified (source: t minutes). Must surface as NEEDS_REVIEW."
+  },
+  "status": "pending",
+  "approved_by": null,
+  "formal": null
+}

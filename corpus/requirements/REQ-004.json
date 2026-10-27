@@ -1,0 +1,31 @@
+{
+  "id": "REQ-004",
+  "version": "1.0",
+  "text": "When the calculated reservoir volume reaches the empty threshold during an infusion, the pump shall issue an Empty Reservoir alarm within 1 second.",
+  "source": {
+    "kind": "anchored",
+    "ref": "GPCA Safety Requirements (Jetley & Jones 2007), as cited in UPenn PRECISE GPCA materials, SR 1.5.6",
+    "note": "Paraphrase. Source threshold 'y ml' modeled as signal reservoir_empty; 'during infusion' as mode NORMAL; the 1 s deadline is ours (source gives none)."
+  },
+  "status": "pending",
+  "approved_by": null,
+  "formal": {
+    "scope": {
+      "mode": "NORMAL",
+      "window_s": null
+    },
+    "condition": {
+      "signal": "reservoir_empty",
+      "value": true
+    },
+    "timing": {
+      "kind": "within",
+      "s": 1,
+      "bound": "inclusive"
+    },
+    "response": {
+      "signal": "alarm",
+      "value": true
+    }
+  }
+}

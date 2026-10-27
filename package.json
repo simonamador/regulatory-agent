@@ -1,0 +1,22 @@
+{
+  "name": "rqaudit",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.13.0",
+  "engines": { "node": ">=22.12" },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "eval": "pnpm --filter @rqaudit/api eval",
+    "start": "node apps/api/dist/server.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "eslint": "^10.13.0",
+    "knip": "^6.43.0",
+    "turbo": "^2.11.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.1",
+    "vitest": "^5.0.5"
+  }
+}

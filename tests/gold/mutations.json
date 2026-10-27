@@ -1,0 +1,986 @@
+[
+  {
+    "id": "M001",
+    "family": "grid",
+    "t": 0,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M002",
+    "family": "grid",
+    "t": 0,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M003",
+    "family": "grid",
+    "t": 0,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M004",
+    "family": "grid",
+    "t": 0,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M005",
+    "family": "grid",
+    "t": 0,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M006",
+    "family": "grid",
+    "t": 0,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M007",
+    "family": "grid",
+    "t": 0,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M008",
+    "family": "grid",
+    "t": 0,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M009",
+    "family": "grid",
+    "t": 0,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M010",
+    "family": "grid",
+    "t": 0,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M011",
+    "family": "grid",
+    "t": 0,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M012",
+    "family": "grid",
+    "t": 0,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M013",
+    "family": "grid",
+    "t": 2,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M014",
+    "family": "grid",
+    "t": 2,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M015",
+    "family": "grid",
+    "t": 2,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M016",
+    "family": "grid",
+    "t": 2,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M017",
+    "family": "grid",
+    "t": 2,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M018",
+    "family": "grid",
+    "t": 2,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M019",
+    "family": "grid",
+    "t": 2,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M020",
+    "family": "grid",
+    "t": 2,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M021",
+    "family": "grid",
+    "t": 2,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M022",
+    "family": "grid",
+    "t": 2,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M023",
+    "family": "grid",
+    "t": 2,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M024",
+    "family": "grid",
+    "t": 2,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M025",
+    "family": "grid",
+    "t": 4,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M026",
+    "family": "grid",
+    "t": 4,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M027",
+    "family": "grid",
+    "t": 4,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M028",
+    "family": "grid",
+    "t": 4,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M029",
+    "family": "grid",
+    "t": 4,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M030",
+    "family": "grid",
+    "t": 4,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M031",
+    "family": "grid",
+    "t": 4,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M032",
+    "family": "grid",
+    "t": 4,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M033",
+    "family": "grid",
+    "t": 4,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M034",
+    "family": "grid",
+    "t": 4,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M035",
+    "family": "grid",
+    "t": 4,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M036",
+    "family": "grid",
+    "t": 4,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M037",
+    "family": "grid",
+    "t": 6,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M038",
+    "family": "grid",
+    "t": 6,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M039",
+    "family": "grid",
+    "t": 6,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M040",
+    "family": "grid",
+    "t": 6,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M041",
+    "family": "grid",
+    "t": 6,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M042",
+    "family": "grid",
+    "t": 6,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M043",
+    "family": "grid",
+    "t": 6,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M044",
+    "family": "grid",
+    "t": 6,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M045",
+    "family": "grid",
+    "t": 6,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M046",
+    "family": "grid",
+    "t": 6,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M047",
+    "family": "grid",
+    "t": 6,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M048",
+    "family": "grid",
+    "t": 6,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M049",
+    "family": "grid",
+    "t": 8,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M050",
+    "family": "grid",
+    "t": 8,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M051",
+    "family": "grid",
+    "t": 8,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M052",
+    "family": "grid",
+    "t": 8,
+    "D": 3,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M053",
+    "family": "grid",
+    "t": 8,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M054",
+    "family": "grid",
+    "t": 8,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M055",
+    "family": "grid",
+    "t": 8,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M056",
+    "family": "grid",
+    "t": 8,
+    "D": 5,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M057",
+    "family": "grid",
+    "t": 8,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M058",
+    "family": "grid",
+    "t": 8,
+    "D": 7,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M059",
+    "family": "grid",
+    "t": 8,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 6,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M060",
+    "family": "grid",
+    "t": 8,
+    "D": 7,
+    "bound": "exclusive",
+    "W": 10,
+    "e": 0,
+    "calEnd": 12,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M061",
+    "family": "horizon",
+    "t": 16,
+    "D": 1,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 12,
+    "calEnd": 20,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M062",
+    "family": "horizon",
+    "t": 16,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 12,
+    "calEnd": 20,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M063",
+    "family": "horizon",
+    "t": 16,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 12,
+    "calEnd": 20,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M064",
+    "family": "horizon",
+    "t": 18,
+    "D": 1,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 12,
+    "calEnd": 20,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M065",
+    "family": "horizon",
+    "t": 18,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 12,
+    "calEnd": 20,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M066",
+    "family": "horizon",
+    "t": 18,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 12,
+    "calEnd": 20,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M067",
+    "family": "horizon",
+    "t": 16,
+    "D": 1,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 14,
+    "calEnd": 20,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M068",
+    "family": "horizon",
+    "t": 16,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 14,
+    "calEnd": 20,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M069",
+    "family": "horizon",
+    "t": 16,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 14,
+    "calEnd": 20,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M070",
+    "family": "horizon",
+    "t": 18,
+    "D": 1,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 14,
+    "calEnd": 20,
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-001",
+      "REQ-002",
+      "SCN"
+    ]
+  },
+  {
+    "id": "M071",
+    "family": "horizon",
+    "t": 18,
+    "D": 3,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 14,
+    "calEnd": 20,
+    "expected_status": "SAT",
+    "expected_core": null
+  },
+  {
+    "id": "M072",
+    "family": "horizon",
+    "t": 18,
+    "D": 5,
+    "bound": "inclusive",
+    "W": 10,
+    "e": 14,
+    "calEnd": 20,
+    "expected_status": "SAT",
+    "expected_core": null
+  }
+]

@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "deny": [
+      "Edit(tests/gold/**)",
+      "Write(tests/gold/**)",
+      "Edit(corpus/**)",
+      "Write(corpus/**)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && pnpm exec eslint --fix --quiet . >/dev/null 2>&1; true"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/scripts/gate.sh"
+          }
+        ]
+      }
+    ]
+  }
+}
