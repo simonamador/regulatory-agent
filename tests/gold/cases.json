@@ -136,7 +136,8 @@
             "SCN-001"
           ]
         }
-      ]
+      ],
+      "changed_requirements": []
     },
     "why": "Negative: text-only edit, same formal, so the finding persists."
   },
