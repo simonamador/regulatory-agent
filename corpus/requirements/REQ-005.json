@@ -7,8 +7,8 @@
     "ref": "GPCA Safety Requirements (Jetley & Jones 2007), as cited in UPenn PRECISE GPCA materials (unnumbered in the secondary sources consulted)",
     "note": "Paraphrase. 'Immediately' modeled as within 0 s inclusive (same tick)."
   },
-  "status": "pending",
-  "approved_by": null,
+  "status": "approved",
+  "approved_by": "simon",
   "formal": {
     "scope": {
       "mode": "ANY",

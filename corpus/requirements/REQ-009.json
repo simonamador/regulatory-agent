@@ -7,8 +7,8 @@
     "ref": null,
     "note": "Used for the non-trivial equivalence negative (INT-002)."
   },
-  "status": "pending",
-  "approved_by": null,
+  "status": "approved",
+  "approved_by": "simon",
   "formal": {
     "scope": {
       "mode": "NORMAL",

@@ -7,8 +7,8 @@
     "ref": null,
     "note": "Injected on purpose: conflicts with REQ-001 when an occlusion occurs early in calibration."
   },
-  "status": "pending",
-  "approved_by": null,
+  "status": "approved",
+  "approved_by": "simon",
   "formal": {
     "scope": {
       "mode": "CALIBRATION",

@@ -7,8 +7,8 @@
     "ref": null,
     "note": "Vacuity target: its trigger is unreachable under AX-002."
   },
-  "status": "pending",
-  "approved_by": null,
+  "status": "approved",
+  "approved_by": "simon",
   "formal": {
     "scope": {
       "mode": "CALIBRATION",

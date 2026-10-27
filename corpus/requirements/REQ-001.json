@@ -7,8 +7,8 @@
     "ref": null,
     "note": "Occlusion alarm latency. Not taken from a public source; 5 s chosen for the demo."
   },
-  "status": "pending",
-  "approved_by": null,
+  "status": "approved",
+  "approved_by": "simon",
   "formal": {
     "scope": {
       "mode": "ANY",

@@ -7,8 +7,8 @@
     "ref": "GPCA Safety Requirements (Jetley & Jones 2007), as cited in UPenn PRECISE GPCA materials, SR 1.4.3",
     "note": "Paraphrase. 'Alarming (error state)' modeled as alarm=true at the same tick."
   },
-  "status": "pending",
-  "approved_by": null,
+  "status": "approved",
+  "approved_by": "simon",
   "formal": {
     "scope": {
       "mode": "ANY",
