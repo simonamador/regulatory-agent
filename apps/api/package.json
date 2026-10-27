@@ -1,0 +1,11 @@
+{
+  "name": "@rqaudit/api",
+  "private": true,
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint ."
+  }
+}
