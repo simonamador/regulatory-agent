@@ -17,13 +17,15 @@ export const Finding = z.strictObject({
   subject: z.string().nullable(), // requirement, interpretation or corpus file the finding is about
   scenario: z.string().nullable(),
   core: z.array(z.string()), // corpus ids or TRIGGER:<req>
+  witness: z.array(z.strictObject({ mode: z.string(), signals: z.record(z.string(), z.boolean()) })).nullable(), // one row per tick
   message: z.string().nullable(),
 });
 export type Finding = z.infer<typeof Finding>;
+export type Witness = NonNullable<Finding["witness"]>;
 
 const seconds = z.int().nonnegative();
 
-export function corpusSchemas({ modes, signals, horizon_ticks }: z.infer<typeof Vocabulary>) {
+export function corpusSchemas({ modes, signals, horizon_ticks }: Vocabulary) {
   const Mode = z.enum(modes);
   const Signal = z.enum(signals);
   const Literal = z.strictObject({ signal: Signal, value: z.boolean() });
@@ -88,5 +90,11 @@ export function corpusSchemas({ modes, signals, horizon_ticks }: z.infer<typeof 
     readings: z.strictObject({ A: Formal, B: Formal }),
   });
 
-  return { Requirement, Axiom, Scenario, Interpretation };
+  return { Formal, Requirement, Axiom, Scenario, Interpretation };
 }
+
+type Schemas = ReturnType<typeof corpusSchemas>;
+export type Vocabulary = z.infer<typeof Vocabulary>;
+export type Formal = z.infer<Schemas["Formal"]>;
+export type Axiom = z.infer<Schemas["Axiom"]>;
+export type Fact = z.infer<Schemas["Scenario"]>["facts"][number];
