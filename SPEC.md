@@ -114,6 +114,7 @@ Cada requisito, axioma y hecho se asserta como `Implies(p_id, fórmula)` con un 
 - **Identidad de un finding:** `(check, scenario_id | null, ids del core ordenados)`. La regresión compara por esta clave.
 - **Solver:** `random_seed = 0`, `timeout = 2000` ms; si vence → `UNKNOWN`. Un solo `Context` inicializado al arrancar el servidor.
 - **Witness:** tabla tick × señal/modo; la UI la dibuja como timeline.
+- **Auditoría:** auditoría = consistency + scenario_conflict por cada escenario + vacuity + equivalence por cada interpretación, sobre el corpus base, en un proceso que ya hizo un solve de calentamiento.
 
 **Status:** `SAT | UNSAT | UNKNOWN | PARSE_ERROR | NEEDS_REVIEW`. No existe ningún campo tipo `compliant`. Un requisito `pending` nunca se excluye en silencio.
 

@@ -1,4 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema.json",
-  "ignore": ["tests/gold/**"]
+  "ignore": ["tests/gold/**"],
+  "workspaces": {
+    "apps/api": { "entry": ["src/server.ts", "src/evals.ts"] }
+  }
 }
