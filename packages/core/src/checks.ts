@@ -8,7 +8,8 @@ const { Context } = await init();
 const ctx = Context("main");
 
 type Literal = [id: string, literal: Bool<"main">];
-type Outcome = Pick<Finding, "status" | "core" | "witness">;
+type Outcome = Pick<Finding, "status" | "core" | "witness" | "unverified">;
+type Tail = { requirement: string; tick: number; trigger: Bool<"main"> };
 
 // Deletion (SPEC §4): Z3's core is not minimal by guarantee. A literal stays unless dropping it is still UNSAT.
 async function minimize(solver: Solver<"main">, core: Literal[]) {
@@ -21,7 +22,8 @@ async function minimize(solver: Solver<"main">, core: Literal[]) {
 }
 
 // Each assertion is Implies(literal, formula) with the literal named exactly as its corpus id (SPEC §4).
-async function solve(enc: Encoder, assertions: { id: string; formula: Bool<"main"> }[]): Promise<Outcome> {
+// Only scenario_conflict has tails to check; every other check passes [].
+async function solve(enc: Encoder, assertions: { id: string; formula: Bool<"main"> }[], tails: Tail[]): Promise<Outcome> {
   const solver = new ctx.Solver();
   solver.set("random_seed", 0);
   solver.set("timeout", 2000);
@@ -30,11 +32,28 @@ async function solve(enc: Encoder, assertions: { id: string; formula: Bool<"main
     solver.add(ctx.Implies(literal, formula));
     return [id, literal];
   });
-  const result = await solver.check(...literals.map(([, literal]) => literal));
-  if (result === "sat") return { status: "SAT", core: [], witness: enc.witness(solver.model()) };
-  if (result === "unknown") return { status: "UNKNOWN", core: [], witness: null };
+  const assumptions = literals.map(([, literal]) => literal);
+  const result = await solver.check(...assumptions);
+  const unknown: Outcome = { status: "UNKNOWN", core: [], witness: null, unverified: [] };
+  if (result === "unknown") return unknown;
+  if (result === "sat") {
+    const model = solver.model();
+    const witness = enc.witness(model);
+    // Unverified (SPEC §4): a tail counts when its trigger holds in every model, i.e. assuming ¬trigger is UNSAT.
+    // The witness does not decide: it only discards tails whose trigger is false in it. Every reported pair comes
+    // from an UNSAT check on this same solver (incremental). One UNKNOWN makes the list, and the finding, unknown.
+    const candidates = tails.filter(({ trigger }) => ctx.isTrue(model.eval(trigger, true)));
+    const unverified: Finding["unverified"] = [];
+    for (const { requirement, tick, trigger } of candidates) {
+      const forced = await solver.check(...assumptions, ctx.Not(trigger));
+      if (forced === "unknown") return unknown;
+      if (forced === "unsat") unverified.push({ requirement, tick });
+    }
+    return { status: "SAT", core: [], witness, unverified };
+  }
   const core = new Set([...solver.unsatCore()].map((literal) => String(literal.decl().name())));
-  return { status: "UNSAT", core: await minimize(solver, literals.filter(([id]) => core.has(id))), witness: null };
+  const minimal = await minimize(solver, literals.filter(([id]) => core.has(id)));
+  return { status: "UNSAT", core: minimal, witness: null, unverified: [] };
 }
 
 const finding = (check: Finding["check"], subject: string | null, scenario: string | null, outcome: Outcome): Finding => ({
@@ -63,10 +82,10 @@ const approved = (enc: Encoder, corpus: Corpus) =>
 
 export async function consistency(corpus: Corpus): Promise<Finding[]> {
   const enc = encoder(ctx, corpus.vocabulary);
-  const outcome = await solve(enc, [...axioms(enc, corpus), ...approved(enc, corpus)]);
+  const outcome = await solve(enc, [...axioms(enc, corpus), ...approved(enc, corpus)], []);
   const review = corpus.requirements
     .filter((r) => r.status === "pending")
-    .map((r) => ({ ...finding("consistency", r.id, null, { status: "NEEDS_REVIEW", core: [], witness: null }),
+    .map((r) => ({ ...finding("consistency", r.id, null, { status: "NEEDS_REVIEW", core: [], witness: null, unverified: [] }),
       message: "Pending: not in the solver until approved." }));
   return [finding("consistency", null, null, outcome), ...review];
 }
@@ -75,7 +94,11 @@ export async function scenarioConflict(corpus: Corpus, scenarioId: string): Prom
   const enc = encoder(ctx, corpus.vocabulary);
   const scenario = byId(corpus.scenarios, scenarioId);
   const facts = { id: scenario.id, formula: enc.scenario(scenario.facts) };
-  return finding("scenario_conflict", null, scenario.id, await solve(enc, [...axioms(enc, corpus), ...approved(enc, corpus), facts]));
+  const requirements = approved(enc, corpus).toSorted((a, b) => a.id.localeCompare(b.id));
+  // Sorted by requirement, then by tick (SPEC §4).
+  const tails = requirements.flatMap((r) => enc.tails(r.formal).map((t) => ({ requirement: r.id, ...t })));
+  const outcome = await solve(enc, [...axioms(enc, corpus), ...requirements, facts], tails);
+  return finding("scenario_conflict", null, scenario.id, outcome);
 }
 
 // Reports only requirements whose trigger is unreachable (UNSAT) or undecided (UNKNOWN).
@@ -86,7 +109,7 @@ export async function vacuity(corpus: Corpus): Promise<Finding[]> {
   for (const r of requirements.filter((x) => x.formal.condition !== null)) {
     const trigger = { id: `TRIGGER:${r.id}`, formula: enc.triggered(r.formal) };
     const others = requirements.filter((x) => x.id !== r.id);
-    const outcome = await solve(enc, [...axioms(enc, corpus), ...others, trigger]);
+    const outcome = await solve(enc, [...axioms(enc, corpus), ...others, trigger], []);
     if (outcome.status !== "SAT") findings.push(finding("vacuity", r.id, null, outcome));
   }
   return findings;
@@ -98,20 +121,21 @@ export async function equivalence(corpus: Corpus, interpretationId: string): Pro
   const context = byId(corpus.scenarios, context_scenario);
   const differ = ctx.Not(enc.requirement(readings.A).eq(enc.requirement(readings.B)));
   const assertions = [...axioms(enc, corpus), { id: context.id, formula: enc.scenario(context.facts) }, { id, formula: differ }];
-  return finding("equivalence", id, context.id, await solve(enc, assertions));
+  return finding("equivalence", id, context.id, await solve(enc, assertions, []));
 }
 
 // Whether `formal` holds on a fully fixed trace, e.g. a witness.
 export async function holds(vocabulary: Vocabulary, formal: Formal, witness: Witness): Promise<boolean> {
   const enc = encoder(ctx, vocabulary);
+  const span = (k: number) => ({ from_s: k * vocabulary.tick_s, to_s: (k + 1) * vocabulary.tick_s });
   const facts = witness.flatMap(({ mode, signals }, k) => [
-    { mode, from_s: k, to_s: k + 1 },
-    ...Object.entries(signals).map(([signal, value]) => ({ signal, value, from_s: k, to_s: k + 1 })),
+    { mode, ...span(k) },
+    ...Object.entries(signals).map(([signal, value]) => ({ signal, value, ...span(k) })),
   ]);
   const { status } = await solve(enc, [
     { id: "WITNESS", formula: enc.scenario(facts) },
     { id: "READING", formula: enc.requirement(formal) },
-  ]);
+  ], []);
   if (status === "UNKNOWN") throw new Error("Could not evaluate the formula on the witness.");
   return status === "SAT";
 }

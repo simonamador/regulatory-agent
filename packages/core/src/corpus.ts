@@ -17,6 +17,7 @@ function parseFile<T>(path: string, schema: z.ZodType<T>, findings: Finding[]): 
       scenario: null,
       core: [],
       witness: null,
+      unverified: [],
       message: String(error),
     });
     return [];
@@ -50,3 +51,20 @@ export function loadCorpus(root: string, name: string) {
   };
 }
 export type Corpus = ReturnType<typeof loadCorpus>;
+
+// A self-describing mutation (SPEC §7): `formal` fields replaced per requirement id, plus one extra scenario.
+// Both go through the corpus schemas, so a mutation cannot carry what a corpus file could not (e.g. 90 s).
+export function mutate(
+  corpus: Corpus,
+  { id, overrides, scenario }: { id: string; overrides: Record<string, object>; scenario: object },
+): Corpus {
+  const schemas = corpusSchemas(corpus.vocabulary);
+  const unknown = Object.keys(overrides).filter((req) => !corpus.requirements.some((r) => r.id === req && r.formal !== null));
+  if (unknown.length > 0) throw new Error(`${id} overrides requirements without a formal: ${unknown.join(", ")}`);
+  const requirements = corpus.requirements.map((r) => {
+    const override = overrides[r.id];
+    return override === undefined ? r : { ...r, formal: schemas.Formal.parse({ ...r.formal, ...override }) };
+  });
+  const extra = schemas.Scenario.parse({ ...scenario, description: id });
+  return { ...corpus, requirements, scenarios: [...corpus.scenarios, extra] };
+}

@@ -4,7 +4,10 @@
     "build": { "dependsOn": ["^build"], "outputs": ["dist/**"] },
     "typecheck": { "dependsOn": ["^build"] },
     "lint": {},
-    "test": { "dependsOn": ["^build"] },
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", "$TURBO_ROOT$/corpus/**", "$TURBO_ROOT$/tests/gold/**"]
+    },
     "dev": { "cache": false, "persistent": true }
   }
 }

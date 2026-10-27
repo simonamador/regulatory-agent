@@ -1,0 +1,188 @@
+{
+  "run_id": "2026-10-27T22-52-03Z",
+  "stage": "rescore",
+  "source_run_id": "2026-10-27T22-44-26Z",
+  "protocol_version": 4,
+  "status": "complete",
+  "latency_ms": 5.219700000000103,
+  "tokens": {
+    "prompt": 0,
+    "completion": 0
+  },
+  "variants": {
+    "A": [
+      {
+        "run": 1,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 0.8983050847457628,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 0.04739999999583233,
+            "p95": 0.11839999999210704
+          },
+          "tokens": {
+            "prompt": 0,
+            "completion": 0
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 1
+        }
+      }
+    ],
+    "B": [
+      {
+        "run": 1,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 1,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 2258.017999999982,
+            "p95": 6787.387699999992
+          },
+          "tokens": {
+            "prompt": 38971,
+            "completion": 7850
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 0.6206896551724138
+        }
+      },
+      {
+        "run": 2,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 0.9830508474576272,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 2076.8787999999768,
+            "p95": 8190.794099999999
+          },
+          "tokens": {
+            "prompt": 38971,
+            "completion": 7276
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 0.5862068965517241
+        }
+      },
+      {
+        "run": 3,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 0.9661016949152542,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 2112.9114999999874,
+            "p95": 6633.5949000000255
+          },
+          "tokens": {
+            "prompt": 38971,
+            "completion": 7892
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 0.5862068965517241
+        }
+      }
+    ],
+    "C": [
+      {
+        "run": 1,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 1,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 115.56789999999455,
+            "p95": 153.2663000000175
+          },
+          "tokens": {
+            "prompt": 0,
+            "completion": 0
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 0
+        }
+      },
+      {
+        "run": 2,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 1,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 112.27840000001015,
+            "p95": 138.91300000000047
+          },
+          "tokens": {
+            "prompt": 0,
+            "completion": 0
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 0
+        }
+      },
+      {
+        "run": 3,
+        "in_horizon": {
+          "cases": 59,
+          "accuracy": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1,
+          "core_exact": 1,
+          "errors": 0,
+          "latency_ms": {
+            "p50": 112.68090000003576,
+            "p95": 173.54720000003
+          },
+          "tokens": {
+            "prompt": 0,
+            "completion": 0
+          }
+        },
+        "sat": {
+          "cases": 29,
+          "false_positive_rate": 0
+        }
+      }
+    ]
+  }
+}

@@ -1,13 +1,21 @@
+import { isDeepStrictEqual } from "node:util";
 import { z } from "zod";
 
 // corpus/signals.json fixes the vocabulary; every other corpus file is validated against it (SPEC §3).
-// One tick is one second, so seconds and ticks are the same integers.
-export const Vocabulary = z.strictObject({
-  tick_s: z.literal(1),
-  horizon_ticks: z.int().positive(),
-  modes: z.array(z.string()).nonempty(),
-  signals: z.array(z.string()).nonempty(),
-});
+// Corpus times are seconds; the encoder divides them by tick_s. `descriptions` is the glossary the LLM prompts carry:
+// exactly one entry per declared signal.
+export const Vocabulary = z
+  .strictObject({
+    tick_s: z.int().positive(),
+    horizon_ticks: z.int().positive(),
+    modes: z.array(z.string()).nonempty(),
+    signals: z.array(z.string()).nonempty(),
+    descriptions: z.record(z.string(), z.string().min(1)),
+  })
+  .refine((v) => isDeepStrictEqual(Object.keys(v.descriptions).toSorted(), v.signals.toSorted()), {
+    message: "descriptions needs exactly one entry per declared signal",
+    path: ["descriptions"],
+  });
 
 const Status = z.enum(["SAT", "UNSAT", "UNKNOWN", "PARSE_ERROR", "NEEDS_REVIEW"]);
 
@@ -18,14 +26,15 @@ export const Finding = z.strictObject({
   scenario: z.string().nullable(),
   core: z.array(z.string()), // corpus ids or TRIGGER:<req>
   witness: z.array(z.strictObject({ mode: z.string(), signals: z.record(z.string(), z.boolean()) })).nullable(), // one row per tick
+  // scenario_conflict SAT only: `within` obligations past the horizon whose trigger every model forces (SPEC §4).
+  unverified: z.array(z.strictObject({ requirement: z.string(), tick: z.int() })),
   message: z.string().nullable(),
 });
 export type Finding = z.infer<typeof Finding>;
 export type Witness = NonNullable<Finding["witness"]>;
 
-const seconds = z.int().nonnegative();
-
-export function corpusSchemas({ modes, signals, horizon_ticks }: Vocabulary) {
+export function corpusSchemas({ modes, signals, horizon_ticks, tick_s }: Vocabulary) {
+  const seconds = z.int().nonnegative().multipleOf(tick_s, `must be a multiple of tick_s (${tick_s} s)`);
   const Mode = z.enum(modes);
   const Signal = z.enum(signals);
   const Literal = z.strictObject({ signal: Signal, value: z.boolean() });
@@ -72,7 +81,7 @@ export function corpusSchemas({ modes, signals, horizon_ticks }: Vocabulary) {
   });
 
   // Facts are half-open [from_s, to_s) inside the horizon (SPEC §3).
-  const interval = { from_s: seconds, to_s: seconds.max(horizon_ticks) };
+  const interval = { from_s: seconds, to_s: seconds.max(horizon_ticks * tick_s) };
   const Fact = z
     .union([
       z.strictObject({ mode: Mode, ...interval }),

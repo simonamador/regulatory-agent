@@ -8,21 +8,24 @@ import {
   consistency,
   equivalence,
   loadCorpus,
+  mutate,
   scenarioConflict,
   vacuity,
 } from "@rqaudit/core";
 import { MODEL, PROMPTS, type Usage, extract, judge, preamble } from "./llm.js";
 
-// CLI `pnpm eval` (SPEC §9 etapa 03): variants A/B/C over G01–G04 and the 72 mutations → runs/<run_id>.json.
+// CLI `pnpm eval` (SPEC §9): variants A/B/C over the scenario_conflict gold cases and the mutations → runs/<run_id>.json.
+// `pnpm eval --rescore <run_id>` re-scores a v3+ run without calling the LLM again.
 const RUNS = 3; // B and C, for the agreement rate
 const AUDITS = 50;
-// v1 gave C the vocabulary but not B, rendered scenarios as `signal = value` lists and warmed up with one solve.
+// v1 gave C the vocabulary but not B and rendered scenarios as `signal = value` lists; v2 fixed both, on the pump domain.
+// v3 moved to the CGM domain: templates reproduce the corpus texts of REQ-101 and REQ-102, scenarios and the shared
+// preamble speak minutes, extract fills durations in seconds, and predictions record expected_unverified.
 const PROTOCOL = {
-  version: 2,
+  version: 4,
   reason:
-    "Information parity between B and C: one vocabulary preamble (signals, modes, detection semantics) for extract and judge, " +
-    "and scenarios rendered in natural language for A, B and C. Audit latency measured as the server runs: cold first audit, " +
-    "one full warm-up audit, then measured audits.",
+    "The shared vocabulary preamble of B and C carries the signal glossary of signals.json (descriptions). " +
+    "No other prompt change. In v3, C abstained (formal null) on REQ-102 and REQ-105.",
 };
 const BATCH = 8; // concurrent LLM calls
 
@@ -31,81 +34,76 @@ const readJson = (path: string): unknown => JSON.parse(readFileSync(new URL(path
 const load = (name: string) => loadCorpus(fileURLToPath(new URL("corpus/", root)), name);
 
 type Bound = "inclusive" | "exclusive";
-type Gold = { id: string; corpus: string; scenario: string; expected_status: string; expected_core: string[] | null };
-type Mutation = Gold & { t: number; D: number; bound: Bound; W: number; e: number; calEnd: number };
-type Case = { id: string; corpus: Corpus; scenario: string; expected_status: string; expected_core: string[] };
+type Unverified = { requirement: string; tick: number }[];
+type Expected = { expected_status: string; expected_core: string[] | null; expected_unverified: Unverified };
+type Gold = Expected & { id: string; check: string; corpus: string; scenario: string };
+type Mutation = Expected & {
+  id: string;
+  params: { D: number; bound: Bound; W: number };
+  overrides: Record<string, object>;
+  scenario: { id: string; facts: object[] };
+};
+type Case = { id: string; corpus: Corpus; scenario: string; expected_status: string; expected_core: string[]; expected_unverified: Unverified };
 export type Prediction = {
   id: string;
   status: string; // SAT | UNSAT | UNKNOWN | ERROR
   core: string[];
   expected_status: string;
   expected_core: string[];
+  expected_unverified: Unverified;
   latency_ms: number;
   usage: Usage | null;
   message: string | null;
 };
 
-// Fixed templates: the only text that changes across mutations.
-export const renderReq001 = (D: number, bound: Bound) =>
-  `Upon detection of an occlusion, the pump shall activate the audible alarm ${
-    bound === "inclusive" ? `within a maximum of ${D} seconds` : `in less than ${D} seconds`
+// Fixed templates in minutes, the unit of the corpus texts: the only text that changes across mutations.
+export const renderReq101 = (D: number, bound: Bound) =>
+  `When glucose is at or below 55 mg/dL, the system shall issue the Urgent Low alert ${
+    bound === "inclusive" ? `within a maximum of ${D} minutes` : `in less than ${D} minutes`
   }, in any operating mode.`;
-export const renderReq002 = (W: number) =>
-  `During the first ${W} seconds of calibration mode, audible alarms shall remain disabled.`;
+export const renderReq102 = (W: number) =>
+  `During sensor warm-up (the first ${W} minutes after sensor start), the system shall not issue glucose alerts.`;
+
+// Display unit of texts and scenarios; the model's tick comes from signals.json.
+const minutes = (s: number) => s / 60;
 
 // Natural language, the same for every case and variant; `description` is not used because it hints at the answer.
-// Intervals stay half-open: "from t=0 s to t=12 s" is [0, 12).
-export function renderScenario(horizon: number, facts: Fact[]) {
+// Intervals stay half-open: "from minute 0 to minute 30" is [0, 30).
+export function renderScenario({ horizon_ticks, tick_s }: Vocabulary, facts: Fact[]) {
   const sentences = facts.map((f) => {
-    const span = f.to_s - f.from_s === 1 ? `at t=${f.from_s} s` : `from t=${f.from_s} s to t=${f.to_s} s`;
-    if ("mode" in f) return `The pump is in ${f.mode.toLowerCase()} mode ${span}.`;
+    const span =
+      f.to_s - f.from_s === tick_s ? `at minute ${minutes(f.from_s)}` : `from minute ${minutes(f.from_s)} to minute ${minutes(f.to_s)}`;
+    if ("mode" in f) return `The sensor is in ${f.mode.toLowerCase()} mode ${span}.`;
     const name = f.signal.replaceAll("_", " ");
     if (!f.value) return `No ${name} is detected ${span}.`;
     return `${/^[aeiou]/.test(name) ? "An" : "A"} ${name} is detected ${span}.`;
   });
-  return [`The trace covers t=0 s to t=${horizon - 1} s. Anything not stated is unconstrained.`, ...sentences].join("\n");
+  const last = minutes((horizon_ticks - 1) * tick_s);
+  return [`The trace covers minute 0 to minute ${last}. Anything not stated is unconstrained.`, ...sentences].join("\n");
 }
 
 function scenarioText({ corpus, scenario }: Case) {
   const found = corpus.scenarios.find((s) => s.id === scenario);
   if (found === undefined) throw new Error(`Unknown scenario ${scenario}`);
-  return renderScenario(corpus.vocabulary.horizon_ticks, found.facts);
-}
-
-// SPEC §7: the base corpus with REQ-001 and REQ-002 replaced (text and formal) and scenario SCN built from the fields.
-function mutate(base: Corpus, m: Mutation): Case {
-  const requirements = base.requirements.map((r) => {
-    if (r.formal === null) return r;
-    if (r.id === "REQ-001")
-      return { ...r, text: renderReq001(m.D, m.bound), formal: { ...r.formal, timing: { kind: "within" as const, s: m.D, bound: m.bound } } };
-    if (r.id === "REQ-002")
-      return { ...r, text: renderReq002(m.W), formal: { ...r.formal, scope: { ...r.formal.scope, window_s: { from: 0, to: m.W } } } };
-    return r;
-  });
-  const facts = [
-    { mode: "NORMAL", from_s: 0, to_s: m.e },
-    { mode: "CALIBRATION", from_s: m.e, to_s: m.calEnd },
-    { mode: "NORMAL", from_s: m.calEnd, to_s: base.vocabulary.horizon_ticks },
-    { signal: "occlusion", value: true, from_s: m.t, to_s: m.t + 1 },
-  ].filter((f) => f.from_s < f.to_s);
-  const corpus = { ...base, requirements, scenarios: [...base.scenarios, { id: "SCN", description: m.id, facts }] };
-  return { id: m.id, corpus, scenario: "SCN", expected_status: m.expected_status, expected_core: m.expected_core ?? [] };
+  return renderScenario(corpus.vocabulary, found.facts);
 }
 
 const requirementIds = (ids: string[]) => [...new Set(ids.filter((id) => id.startsWith("REQ-")))].sort();
+const expectedOf = ({ expected_status, expected_core, expected_unverified }: Case) => ({ expected_status, expected_core, expected_unverified });
 
 // Variant A: rule-based text linter, a baseline on purpose (not tuned).
 const SIGNAL_WORDS: [string, RegExp][] = [
-  ["occlusion", /occlusion/i],
-  ["alarm", /alarm/i],
-  ["bolus_delivered", /bolus/i],
-  ["reservoir_empty", /reservoir/i],
-  ["fault", /fault/i],
-  ["pumping", /pumping|deliver fluid/i],
+  ["urgent_low", /urgent(ly)? low/i],
+  ["urgent_low_alert", /urgent low alert|glucose alerts/i],
+  ["glucose_shown", /display glucose|glucose values/i],
+  ["data_gap", /no glucose data/i],
+  ["signal_loss_alert", /signal loss/i],
+  ["reading_sent", /transmit|reading/i],
 ];
 const MODE_WORDS: [string, RegExp][] = [
-  ["CALIBRATION", /calibration/i],
-  ["NORMAL", /normal/i],
+  ["WARMUP", /warm-?up/i],
+  ["ACTIVE", /\bactive\b/i],
+  ["EXPIRED", /expired|wear period has ended/i],
 ];
 const NEGATION = /\b(not|no|disabled|stop)\b/i;
 const keywords = (words: [string, RegExp][], text: string) => words.filter(([, word]) => word.test(text)).map(([key]) => key);
@@ -129,7 +127,7 @@ async function variantB(c: Case): Promise<Prediction> {
   const texts = [...c.corpus.requirements, ...c.corpus.axioms].map(({ id, text }) => ({ id, text }));
   const { value, latency_ms, usage, message } = await judge(c.corpus.vocabulary, texts, scenarioText(c));
   const status = value === null ? "ERROR" : value.conflict ? "UNSAT" : "SAT";
-  const expected = { expected_status: c.expected_status, expected_core: requirementIds(c.expected_core) };
+  const expected = { ...expectedOf(c), expected_core: requirementIds(c.expected_core) };
   return { id: c.id, status, core: requirementIds(value?.involved_ids ?? []), ...expected, latency_ms, usage, message };
 }
 
@@ -161,7 +159,7 @@ async function variantC(cases: Case[], vocabulary: Vocabulary) {
     const started = performance.now();
     const { status, core } = await scenarioConflict({ ...c.corpus, requirements }, c.scenario);
     const latency_ms = performance.now() - started;
-    const expected = { expected_status: c.expected_status, expected_core: c.expected_core };
+    const expected = expectedOf(c);
     // Pending requirements are listed, never dropped in silence (SPEC §4).
     const message = `NEEDS_REVIEW, not in the solver: ${pending.join(", ")}`;
     predictions.push({ id: c.id, status, core, ...expected, latency_ms, usage: null, message });
@@ -206,6 +204,18 @@ export function agreement(runs: Prediction[][]) {
   return ratio(same.length, first.length);
 }
 
+// Rescore: the in_horizon slice (no obligation past the horizon) and the false positive rate on SAT cases.
+// In this corpus every SAT case has unverified tails, so an "unverified" slice would just be the SAT class.
+export function rescored(predictions: Prediction[]) {
+  const inHorizon = predictions.filter((p) => p.expected_unverified.length === 0);
+  const correct = inHorizon.filter((p) => p.status === p.expected_status).length;
+  const sat = predictions.filter((p) => p.expected_status === "SAT");
+  return {
+    in_horizon: { cases: inHorizon.length, accuracy: ratio(correct, inHorizon.length), ...metrics(inHorizon) },
+    sat: { cases: sat.length, false_positive_rate: ratio(sat.filter((p) => p.status === "UNSAT").length, sat.length) },
+  };
+}
+
 // Audit (SPEC §4): consistency + scenario_conflict per scenario + vacuity + equivalence per interpretation.
 async function audit(corpus: Corpus) {
   const started = performance.now();
@@ -226,15 +236,59 @@ async function auditLatency(base: Corpus) {
 }
 
 const round = (x: number | null) => (x === null ? null : Math.round(x * 1000) / 1000);
+const newRunId = () => new Date().toISOString().replace(/\.\d+Z$/, "Z").replaceAll(":", "-");
+const write = (run_id: string, report: object) => {
+  mkdirSync(new URL("runs/", root), { recursive: true });
+  writeFileSync(new URL(`runs/${run_id}.json`, root), `${JSON.stringify(report, null, 2)}\n`);
+};
+
+// Re-scores the stored predictions of a run; it never calls the LLM or the solver.
+function rescore(source_run_id: string) {
+  const started = performance.now();
+  const source = readJson(`runs/${source_run_id}.json`) as {
+    protocol_version: number;
+    variants: Record<string, { run: number; predictions: Prediction[] }[]>;
+  };
+  if (source.protocol_version < 3) throw new Error(`${source_run_id} is protocol v${source.protocol_version}: rescore needs v3+`);
+  const variants = Object.fromEntries(
+    Object.entries(source.variants).map(([variant, runs]) => [variant, runs.map(({ run, predictions }) => ({ run, ...rescored(predictions) }))]),
+  );
+  const run_id = newRunId();
+  const report = { run_id, stage: "rescore", source_run_id, protocol_version: source.protocol_version, status: "complete",
+    latency_ms: performance.now() - started, tokens: { prompt: 0, completion: 0 }, variants };
+  write(run_id, report);
+
+  console.log(`rescore ${run_id} of ${source_run_id} · runs/${run_id}.json`);
+  console.table(
+    Object.entries(variants).flatMap(([variant, runs]) =>
+      runs.map(({ run, in_horizon: m, sat }) => ({
+        variant, run, in_horizon: m.cases, accuracy: round(m.accuracy), P: round(m.precision), R: round(m.recall),
+        F1: round(m.f1), core_exact: round(m.core_exact), errors: m.errors, sat: sat.cases, fpr_sat: round(sat.false_positive_rate),
+      })),
+    ),
+  );
+}
 
 async function main() {
   const started = performance.now();
-  const run_id = new Date().toISOString().replace(/\.\d+Z$/, "Z").replaceAll(":", "-");
+  const run_id = newRunId();
   const base = load("base");
-  const gold = (readJson("tests/gold/cases.json") as Gold[]).filter((c) => ["G01", "G02", "G03", "G04"].includes(c.id));
+  const gold = (readJson("tests/gold/cases.json") as Gold[]).filter((c) => c.check === "scenario_conflict");
   const cases: Case[] = [
     ...gold.map((c) => ({ ...c, corpus: load(c.corpus), expected_core: (c.expected_core ?? []).toSorted() })),
-    ...(readJson("tests/gold/mutations.json") as Mutation[]).map((m) => mutate(base, m)),
+    // SPEC §7: the base corpus with each mutation applied; each overridden requirement gets its text from its template.
+    ...(readJson("tests/gold/mutations.json") as Mutation[]).map((m): Case => {
+      const corpus = mutate(base, m);
+      const texts: Record<string, string> = { "REQ-101": renderReq101(m.params.D, m.params.bound), "REQ-102": renderReq102(m.params.W) };
+      const requirements = corpus.requirements.map((r) => {
+        if (!(r.id in m.overrides)) return r;
+        const text = texts[r.id];
+        if (text === undefined) throw new Error(`${m.id}: no template for ${r.id}`);
+        return { ...r, text };
+      });
+      const { id, expected_status, expected_core, expected_unverified } = m;
+      return { id, corpus: { ...corpus, requirements }, scenario: m.scenario.id, expected_status, expected_core: expected_core ?? [], expected_unverified };
+    }),
   ];
 
   const audit_latency_ms = await auditLatency(base);
@@ -242,7 +296,7 @@ async function main() {
     const started = performance.now();
     const { conflict, involved_ids } = lint(c.corpus.requirements, scenarioText(c));
     const latency_ms = performance.now() - started;
-    const expected = { expected_status: c.expected_status, expected_core: requirementIds(c.expected_core) };
+    const expected = { ...expectedOf(c), expected_core: requirementIds(c.expected_core) };
     return { id: c.id, status: conflict ? "UNSAT" : "SAT", core: involved_ids, ...expected, latency_ms, usage: null, message: null };
   });
   const B: { run: number; predictions: Prediction[] }[] = [];
@@ -293,8 +347,7 @@ async function main() {
     agreement: { B: agreement(B.map((r) => r.predictions)), C: agreement(C.map((r) => r.predictions)) },
     variants,
   };
-  mkdirSync(new URL("runs/", root), { recursive: true });
-  writeFileSync(new URL(`runs/${run_id}.json`, root), `${JSON.stringify(report, null, 2)}\n`);
+  write(run_id, report);
 
   console.log(`run ${run_id} · protocol v${PROTOCOL.version} · model ${MODEL} · ${cases.length} cases · runs/${run_id}.json`);
   console.table(
@@ -331,6 +384,12 @@ async function main() {
 
 // Z3 workers keep the process alive, so the CLI exits explicitly (CLAUDE.md).
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  await main();
+  const flag = process.argv.indexOf("--rescore");
+  if (flag === -1) await main();
+  else {
+    const source = process.argv[flag + 1];
+    if (source === undefined) throw new Error("Usage: pnpm eval --rescore <run_id>");
+    rescore(source);
+  }
   process.exit(0);
 }

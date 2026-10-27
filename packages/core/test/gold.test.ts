@@ -14,6 +14,7 @@ type Gold = {
   interpretation: string;
   expected_status: string;
   expected_core: string[] | null;
+  expected_unverified: { requirement: string; tick: number }[];
   expected_review: string[];
   expected_findings: { requirement: string; expected_status: string; expected_core: string[] }[];
   expected_reachable: string[];
@@ -26,7 +27,7 @@ const corpusDir = fileURLToPath(new URL("../../../corpus/", import.meta.url));
 const load = (name: string) => loadCorpus(corpusDir, name);
 const gold = JSON.parse(readFileSync(new URL("../../../tests/gold/cases.json", import.meta.url), "utf8")) as Gold[];
 
-// G07: on the witness exactly one reading holds, and the response first fires at t_trigger + s.
+// G07: on the witness exactly one reading holds, and the response first fires at t_trigger + s (in ticks).
 async function replay(corpus: Corpus, interpretationId: string, witness: Witness) {
   const interpretation = corpus.interpretations.find((i) => i.id === interpretationId);
   if (interpretation === undefined) throw new Error(`Unknown interpretation ${interpretationId}`);
@@ -38,7 +39,7 @@ async function replay(corpus: Corpus, interpretationId: string, witness: Witness
   const tTrigger = witness.findIndex((row) => row.signals[condition.signal] === condition.value);
   const tResponse = witness.findIndex((row, k) => k >= tTrigger && row.signals[response.signal] === response.value);
   expect(tTrigger).toBeGreaterThanOrEqual(0);
-  expect(tResponse).toBe(tTrigger + timing.s);
+  expect(tResponse).toBe(tTrigger + timing.s / corpus.vocabulary.tick_s);
 }
 
 const runners: Record<string, (c: Gold) => Promise<void>> = {
@@ -47,6 +48,7 @@ const runners: Record<string, (c: Gold) => Promise<void>> = {
     const f = await scenarioConflict(corpus, c.scenario);
     expect(f.status).toBe(c.expected_status);
     expect(f.core).toEqual(c.expected_core?.toSorted() ?? []);
+    expect(f.unverified).toEqual(c.expected_unverified);
     if (f.status === "SAT") expect(f.witness).toHaveLength(corpus.vocabulary.horizon_ticks);
   },
 

@@ -6,23 +6,26 @@ import { z } from "zod";
 // Model and prompts are versioned constants; every run records them (SPEC §5).
 export const MODEL = "gpt-6.1-terra";
 
-// Protocol v2: B and C get the same vocabulary preamble, appended to their system prompts.
-export const preamble = ({ modes, signals }: Vocabulary) =>
+// B and C get the same vocabulary preamble, appended to their system prompts. Since protocol v3 it speaks minutes;
+// since v4 it carries the signal glossary of signals.json.
+export const preamble = ({ modes, signals, tick_s, descriptions }: Vocabulary) =>
   `Modes: ${modes.join(", ")}. Signals: ${signals.join(", ")}.
-Each signal is a Boolean the pump observes every second; true at tick t means the pump detects that condition at t.`;
+Time is discrete: one tick is ${tick_s / 60} minute (${tick_s} s). Each signal is a Boolean the CGM observes every tick; true at minute t means the CGM detects that condition at minute t.
+Signal glossary:
+${signals.map((s) => `- ${s}: ${descriptions[s]}`).join("\n")}`;
 
 export const PROMPTS = {
-  extract: `You formalize one requirement of an infusion pump into a flat template. Fill the fields; do not invent signals or modes.
-Time is discrete: one tick per second. All intervals are half-open [from, to).
+  extract: `You formalize one requirement of a continuous glucose monitor (CGM) into a flat template. Fill the fields; do not invent signals or modes.
+All intervals are half-open [from, to). Every duration in the template is in seconds (2 minutes is 120) and must be a whole number of ticks.
 - scope.mode: the operating mode the requirement applies in, or "ANY".
-- scope.window_s: null, or a window {from, to} in seconds measured from the moment the pump entered scope.mode.
+- scope.window_s: null, or a window {from, to} in seconds measured from the moment the sensor entered scope.mode.
 - condition: the signal value that triggers the obligation, or null if it holds at every tick in scope.
 - timing: {"kind":"always"} when the response must hold at the same tick as the trigger, for as long as the trigger holds;
   {"kind":"within","s":S,"bound":"inclusive"} when the response must occur at some tick in [t, t+S] after a trigger at t ("within a maximum of S", "at most S", "immediately" is S=0);
   {"kind":"within","s":S,"bound":"exclusive"} when it must occur in [t, t+S) ("in less than S").
 - response: the signal value that must hold.
 Return {"formal": null} when the requirement cannot be expressed with the given modes and signals.`,
-  judge: `You review the requirements of an infusion pump against a scenario. Time is discrete, one tick per second; intervals are half-open [from, to).
+  judge: `You review the requirements of a continuous glucose monitor (CGM) against a scenario. Time is discrete, in ticks; intervals are half-open [from, to).
 Anything the scenario does not fix is free. Decide whether there is NO execution consistent with the scenario that satisfies every requirement and domain fact.
 Return conflict=true only in that case, with involved_ids = the ids of the smallest set of requirements (REQ-*) that cannot hold together in the scenario. Otherwise conflict=false and involved_ids=[].`,
 };

@@ -5,12 +5,14 @@ import type { Axiom, Fact, Formal, Vocabulary, Witness } from "./schema.js";
 const range = (from: number, to: number) => Array.from({ length: Math.max(0, to - from) }, (_, i) => from + i);
 
 // Formulas over one bounded trace: ticks 0..H-1, a Bool per signal and a mode enum per tick (SPEC §3).
-// Z3 constants are identified by name, so `alarm@3` is the same variable wherever it is built.
-export function encoder(ctx: Context<"main">, { horizon_ticks: H, modes, signals }: Vocabulary) {
+// Z3 constants are identified by name, so `urgent_low@3` is the same variable wherever it is built.
+// Corpus times are seconds, already validated as multiples of tick_s; `tick` turns them into ticks.
+export function encoder(ctx: Context<"main">, { horizon_ticks: H, tick_s, modes, signals }: Vocabulary) {
   const Mode = ctx.Datatype("Mode");
   for (const mode of modes) Mode.declare(mode);
   const modeSort = Mode.create();
   const ticks = range(0, H);
+  const tick = (s: number) => s / tick_s;
 
   const modeAt = (k: number) => ctx.Const(`mode@${k}`, modeSort);
   const signalAt = (signal: string, k: number) => ctx.Bool.const(`${signal}@${k}`);
@@ -35,20 +37,22 @@ export function encoder(ctx: Context<"main">, { horizon_ticks: H, modes, signals
     if (mode === "ANY") return ctx.Bool.val(true);
     if (window_s === null) return isMode(mode, k);
     // Some entry e with from <= k - e < to, staying in the mode on every tick of [e, k].
-    const entries = range(Math.max(0, k - window_s.to + 1), k - window_s.from + 1);
+    const entries = range(Math.max(0, k - tick(window_s.to) + 1), k - tick(window_s.from) + 1);
     return ctx.Or(...entries.map((e) => ctx.And(entered(mode, e), ...range(e, k + 1).map((j) => isMode(mode, j)))));
   }
 
   const trigger = (formal: Formal, k: number) =>
     formal.condition === null ? inScope(formal.scope, k) : ctx.And(inScope(formal.scope, k), literal(formal.condition, k));
+  const last = (timing: Extract<Formal["timing"], { kind: "within" }>, k: number) =>
+    timing.bound === "inclusive" ? k + tick(timing.s) : k + tick(timing.s) - 1;
 
   function obligation(formal: Formal, k: number): Bool<"main"> {
     const { timing, response } = formal;
     if (timing.kind === "always") return ctx.Implies(trigger(formal, k), literal(response, k));
-    const last = timing.bound === "inclusive" ? k + timing.s : k + timing.s - 1;
     // A deadline past the horizon constrains nothing; otherwise the trace end yields spurious UNSAT (G04).
-    if (last > H - 1) return ctx.Bool.val(true);
-    return ctx.Implies(trigger(formal, k), ctx.Or(...range(k, last + 1).map((j) => literal(response, j))));
+    // Those ticks are not dropped in silence: `tails` hands them to the unverified check (SPEC §4).
+    if (last(timing, k) > H - 1) return ctx.Bool.val(true);
+    return ctx.Implies(trigger(formal, k), ctx.Or(...range(k, last(timing, k) + 1).map((j) => literal(response, j))));
   }
 
   function axiom(formal: Axiom["formal"]): Bool<"main"> {
@@ -56,13 +60,13 @@ export function encoder(ctx: Context<"main">, { horizon_ticks: H, modes, signals
       const absent = { signal: formal.signal, value: false };
       return ctx.And(...ticks.map((k) => ctx.Implies(isMode(formal.mode, k), literal(absent, k))));
     }
-    const { mode, min_s, max_s } = formal;
-    // After each entry: stay for min_s (a run cut by the horizon is valid) and be gone at e + max_s.
+    const [min, max] = [tick(formal.min_s), tick(formal.max_s)];
+    // After each entry: stay for min ticks (a run cut by the horizon is valid) and be gone at e + max.
     const afterEntry = (e: number) => [
-      ...range(e, Math.min(e + min_s, H)).map((j) => isMode(mode, j)),
-      ...(e + max_s <= H - 1 ? [ctx.Not(isMode(mode, e + max_s))] : []),
+      ...range(e, Math.min(e + min, H)).map((j) => isMode(formal.mode, j)),
+      ...(e + max <= H - 1 ? [ctx.Not(isMode(formal.mode, e + max))] : []),
     ];
-    return ctx.And(...ticks.map((e) => ctx.Implies(entered(mode, e), ctx.And(...afterEntry(e)))));
+    return ctx.And(...ticks.map((e) => ctx.Implies(entered(formal.mode, e), ctx.And(...afterEntry(e)))));
   }
 
   const fact = (f: Fact, k: number) => ("mode" in f ? isMode(f.mode, k) : literal(f, k));
@@ -70,8 +74,15 @@ export function encoder(ctx: Context<"main">, { horizon_ticks: H, modes, signals
   return {
     requirement: (formal: Formal) => ctx.And(...ticks.map((k) => obligation(formal, k))),
     triggered: (formal: Formal) => ctx.Or(...ticks.map((k) => trigger(formal, k))),
+    // The ticks whose `within` deadline passes the horizon, with the trigger at each one.
+    tails: (formal: Formal) => {
+      const { timing } = formal;
+      if (timing.kind === "always") return [];
+      return ticks.filter((k) => last(timing, k) > H - 1).map((k) => ({ tick: k, trigger: trigger(formal, k) }));
+    },
     axiom,
-    scenario: (facts: Fact[]) => ctx.And(...facts.flatMap((f) => range(f.from_s, f.to_s).map((k) => fact(f, k)))),
+    scenario: (facts: Fact[]) =>
+      ctx.And(...facts.flatMap((f) => range(tick(f.from_s), tick(f.to_s)).map((k) => fact(f, k)))),
     witness: (model: Model<"main">): Witness =>
       ticks.map((k) => ({
         mode: model.eval(modeAt(k), true).toString(),

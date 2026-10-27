@@ -15,7 +15,8 @@ Demo: auditor de consistencia lógica para requisitos de un dispositivo médico 
 - `tests/gold/` y `corpus/` son la especificación y son de solo lectura. Si un test gold parece incorrecto, detente y explícalo; no lo rodees.
 - Borrar el código que la etapa vuelve obsoleto es parte de la tarea.
 - `z3-solver`: `init()` es async y pesado. Un solo `Context` por proceso (servidor, archivo de test o CLI). Los CLIs terminan con `process.exit`, porque los workers de Z3 mantienen vivo el proceso.
-- BMC: una obligación `within T` disparada cerca del horizonte no restringe nada (SPEC §3). Olvidarlo produce UNSAT espurios.
+- BMC: una obligación `within T` disparada cerca del horizonte no restringe nada (SPEC §3). Olvidarlo produce UNSAT espurios. No se descarta en silencio: si el disparador es forzado, sale en `unverified` (SPEC §4).
+- El horizonte, el tick y los modos salen de `signals.json`; ningún número del modelo va escrito a mano.
 - Render inyecta `PORT`; Express lo lee de ahí.
 - `tests/gold/gen-mutations.mjs` es un script suelto de Simón: knip debe ignorar `tests/gold/**`, no hay que borrarlo ni importarlo.
 - Los tests de aceptación leen `tests/gold/*.json` desde `packages/core/test/`; el JSON es la especificación y el test solo la recorre.
