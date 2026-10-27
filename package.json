@@ -8,6 +8,7 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "eval": "turbo run build --filter=@rqaudit/api && node --env-file=.env apps/api/dist/evals.js",
+    "eval:agent": "turbo run build --filter=@rqaudit/api && node --env-file=.env apps/api/dist/agent.js",
     "start": "node apps/api/dist/server.js"
   },
   "devDependencies": {

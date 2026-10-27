@@ -5,12 +5,10 @@ import {
   type Corpus,
   type Fact,
   type Vocabulary,
-  consistency,
-  equivalence,
+  audit,
   loadCorpus,
   mutate,
   scenarioConflict,
-  vacuity,
 } from "@rqaudit/core";
 import { MODEL, PROMPTS, type Usage, extract, judge, preamble } from "./llm.js";
 
@@ -29,7 +27,7 @@ const PROTOCOL = {
 };
 const BATCH = 8; // concurrent LLM calls
 
-const root = new URL("../../../", import.meta.url);
+export const root = new URL("../../../", import.meta.url);
 const readJson = (path: string): unknown => JSON.parse(readFileSync(new URL(path, root), "utf8"));
 const load = (name: string) => loadCorpus(fileURLToPath(new URL("corpus/", root)), name);
 
@@ -167,13 +165,13 @@ async function variantC(cases: Case[], vocabulary: Vocabulary) {
   return { predictions, extractions };
 }
 
-const ratio = (num: number, den: number) => (den === 0 ? null : num / den);
+export const ratio = (num: number, den: number) => (den === 0 ? null : num / den);
 // Nearest-rank percentiles; null without samples.
 function latency(values: number[]) {
   const sorted = values.toSorted((a, b) => a - b);
   return { p50: sorted[Math.ceil(0.5 * sorted.length) - 1] ?? null, p95: sorted[Math.ceil(0.95 * sorted.length) - 1] ?? null };
 }
-const tokens = (usages: (Usage | null)[]) => ({
+export const tokens = (usages: (Usage | null)[]) => ({
   prompt: usages.reduce((sum, u) => sum + (u?.prompt_tokens ?? 0), 0),
   completion: usages.reduce((sum, u) => sum + (u?.completion_tokens ?? 0), 0),
 });
@@ -216,28 +214,23 @@ export function rescored(predictions: Prediction[]) {
   };
 }
 
-// Audit (SPEC §4): consistency + scenario_conflict per scenario + vacuity + equivalence per interpretation.
-async function audit(corpus: Corpus) {
-  const started = performance.now();
-  await consistency(corpus);
-  for (const s of corpus.scenarios) await scenarioConflict(corpus, s.id);
-  await vacuity(corpus);
-  for (const i of corpus.interpretations) await equivalence(corpus, i.id);
-  return performance.now() - started;
-}
-
 // As the server runs: the first audit of the process is cold, then one full warm-up audit before measuring.
 async function auditLatency(base: Corpus) {
-  const cold_first_audit_ms = await audit(base);
-  await audit(base);
+  const timed = async () => {
+    const started = performance.now();
+    await audit(base);
+    return performance.now() - started;
+  };
+  const cold_first_audit_ms = await timed();
+  await timed();
   const times: number[] = [];
-  for (let i = 0; i < AUDITS; i++) times.push(await audit(base));
+  for (let i = 0; i < AUDITS; i++) times.push(await timed());
   return { cold_first_audit_ms, warmup_audits: 1, audits: AUDITS, ...latency(times), samples: times };
 }
 
-const round = (x: number | null) => (x === null ? null : Math.round(x * 1000) / 1000);
-const newRunId = () => new Date().toISOString().replace(/\.\d+Z$/, "Z").replaceAll(":", "-");
-const write = (run_id: string, report: object) => {
+export const round = (x: number | null) => (x === null ? null : Math.round(x * 1000) / 1000);
+export const newRunId = () => new Date().toISOString().replace(/\.\d+Z$/, "Z").replaceAll(":", "-");
+export const write = (run_id: string, report: object) => {
   mkdirSync(new URL("runs/", root), { recursive: true });
   writeFileSync(new URL(`runs/${run_id}.json`, root), `${JSON.stringify(report, null, 2)}\n`);
 };

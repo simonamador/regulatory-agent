@@ -124,6 +124,15 @@ export async function equivalence(corpus: Corpus, interpretationId: string): Pro
   return finding("equivalence", id, context.id, await solve(enc, assertions, []));
 }
 
+// Audit (SPEC §4): consistency + scenario_conflict per scenario + vacuity + equivalence per interpretation.
+export async function audit(corpus: Corpus): Promise<Finding[]> {
+  const findings = await consistency(corpus);
+  for (const s of corpus.scenarios) findings.push(await scenarioConflict(corpus, s.id));
+  findings.push(...(await vacuity(corpus)));
+  for (const i of corpus.interpretations) findings.push(await equivalence(corpus, i.id));
+  return findings;
+}
+
 // Whether `formal` holds on a fully fixed trace, e.g. a witness.
 export async function holds(vocabulary: Vocabulary, formal: Formal, witness: Witness): Promise<boolean> {
   const enc = encoder(ctx, vocabulary);

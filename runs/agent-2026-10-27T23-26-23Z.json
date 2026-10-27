@@ -1,0 +1,3131 @@
+{
+  "run_id": "2026-10-27T23-26-23Z",
+  "stage": "agent",
+  "status": "complete",
+  "model": "gpt-6.1-terra",
+  "requested_temperature": 0,
+  "prompt": "You are a regulatory engineer for a continuous glucose monitor (CGM). Produce an impact assessment of a regulation on the product requirements.\nTools: get_regulation returns every leaf paragraph of the regulation with its context; search_requirements and get_requirement find the product requirements; run_audit returns the formal audit findings that touch the given requirement ids.\nOutput exactly one item for every leaf paragraph returned by get_regulation:\n- paragraph: the paragraph id exactly as given.\n- category: \"behavior\" if it constrains what the device does at runtime; \"evidence\" if it asks for design verification/validation, clinical, manufacturing or usability evidence; \"labeling\" if it is content the labeling must include.\n- quote: a short exact substring of that paragraph's context that supports the category.\n- implemented_by: the ids of the product requirements that implement the obligation, [] if none. Use only ids returned by the tools.\n- rationale: at most two sentences.\nDo not judge consistency or compliance: the verdicts are computed from the audit, not by you.",
+  "regulation": "corpus/regulations/21-CFR-862.1355.txt",
+  "max_turns": 12,
+  "latency_ms": 101949.65520000001,
+  "summary": {
+    "valid_runs": 3,
+    "agreement": 0.9629629629629629,
+    "category_accuracy": 0.9259259259259259,
+    "mapping_precision": 0.9166666666666666,
+    "mapping_recall": 0.75,
+    "gap_recall": 1,
+    "valid_quote_rate": 1,
+    "verdict_accuracy": 0.9259259259259259,
+    "invented_ids": 0,
+    "needs_review": 0,
+    "latency_ms": 33974.65433333333,
+    "tokens_in": 42745,
+    "tokens_out": 6416
+  },
+  "runs": [
+    {
+      "run": 1,
+      "status": "complete",
+      "message": null,
+      "latency_ms": 35386.4113,
+      "temperature": null,
+      "temperature_error": "Error: 400 Unsupported parameter: 'temperature' is not supported with this model.",
+      "reasoning_effort": "medium",
+      "tokens": {
+        "prompt": 14321,
+        "completion": 2062
+      },
+      "turns": 4,
+      "tool_calls": 17,
+      "metrics": {
+        "category_accuracy": 0.9259259259259259,
+        "mapping_precision": 0.75,
+        "mapping_recall": 0.75,
+        "gap_recall": 1,
+        "valid_quote_rate": 1,
+        "invented_ids": 0,
+        "verdict_accuracy": 0.9259259259259259,
+        "needs_review": 0
+      },
+      "obligations": [
+        {
+          "paragraph": "(b)(1)(i)",
+          "category": "evidence",
+          "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this clinical evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(ii)",
+          "category": "evidence",
+          "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+          "implemented_by": [],
+          "rationale": "No requirement addresses the laboratory comparison.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(iii)",
+          "category": "evidence",
+          "quote": "a clinical study designed to fully represent the performance of the device throughout the intended use population and throughout the measuring range",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this study design.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(iv)",
+          "category": "evidence",
+          "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this clinical evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(A)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(B)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(C)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(D)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(E)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(F)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(G)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(H)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(I)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(J)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult rate-of-change measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(K)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult rate-of-change measure.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(vi)",
+          "category": "evidence",
+          "quote": "Data demonstrating similar accuracy and rate of change performance of the iCGM in the pediatric population",
+          "implemented_by": [],
+          "rationale": "No requirement addresses pediatric performance data or the alternative justification.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(vii)",
+          "category": "evidence",
+          "quote": "Data must demonstrate that throughout the claimed sensor life, the device does not allow clinically significant gaps in sensor data availability",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 addresses transmission frequency while the sensor is active; it does not specify the required evidence across the claimed sensor life.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(2)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 addresses transmission frequency; it does not specify the verification and validation strategy or secure transmission.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(3)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+          "implemented_by": [],
+          "rationale": "No requirement addresses manufacturing and release controls.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(4)",
+          "category": "evidence",
+          "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+          "implemented_by": [],
+          "rationale": "No requirement addresses interference performance evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(5)",
+          "category": "behavior",
+          "quote": "The device must include appropriate measures to ensure that disposable sensors cannot be used beyond its claimed sensor wear period",
+          "implemented_by": [
+            "REQ-106"
+          ],
+          "rationale": "REQ-106 restricts display after the wear period; it does not address all sensor use.",
+          "verdict": "CONSISTENT_BOUNDED",
+          "reasons": [],
+          "contributions": [
+            {
+              "requirement": "REQ-106",
+              "verdict": "CONSISTENT_BOUNDED",
+              "finding_ref": null
+            }
+          ]
+        },
+        {
+          "paragraph": "(b)(6)",
+          "category": "evidence",
+          "quote": "results obtained through a usability study that demonstrates that the intended user can use the device safely and obtain the expected glucose measurement accuracy",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this usability study.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(i)",
+          "category": "labeling",
+          "quote": "The labeling required under § 809.10(b) of this chapter must include a separate description",
+          "implemented_by": [],
+          "rationale": "No requirement addresses labeling accuracy by the specified glucose ranges, populations and sites.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(ii)",
+          "category": "labeling",
+          "quote": "A description of the accuracy of positive and negative rate of change data",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this labeling content.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(iii)",
+          "category": "labeling",
+          "quote": "A description of the frequency and duration of gaps in sensor data",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this labeling content.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(iv)",
+          "category": "labeling",
+          "quote": "A description of the true, false, missed, and correct alert rates and a description of the available glucose concentration alert settings",
+          "implemented_by": [
+            "REQ-108"
+          ],
+          "rationale": "REQ-108 addresses alert rates and settings; it does not specify separate descriptions by population and site.",
+          "verdict": "NOT_FORMALIZED",
+          "reasons": [],
+          "contributions": [
+            {
+              "requirement": "REQ-108",
+              "verdict": "NOT_FORMALIZED",
+              "finding_ref": "consistency:REQ-108"
+            }
+          ]
+        },
+        {
+          "paragraph": "(b)(7)(v)",
+          "category": "labeling",
+          "quote": "A description of the observed duration of iCGM life for the device",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this labeling content.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        }
+      ],
+      "report": {
+        "obligations": [
+          {
+            "paragraph": "(b)(1)(i)",
+            "category": "evidence",
+            "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this clinical evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(ii)",
+            "category": "evidence",
+            "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+            "implemented_by": [],
+            "rationale": "No requirement addresses the laboratory comparison.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(iii)",
+            "category": "evidence",
+            "quote": "a clinical study designed to fully represent the performance of the device throughout the intended use population and throughout the measuring range",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this study design.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(iv)",
+            "category": "evidence",
+            "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this clinical evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(A)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(B)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(C)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(D)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(E)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(F)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(G)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(H)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(I)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult clinical performance measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(J)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult rate-of-change measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(K)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this adult rate-of-change measure.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(vi)",
+            "category": "evidence",
+            "quote": "Data demonstrating similar accuracy and rate of change performance of the iCGM in the pediatric population",
+            "implemented_by": [],
+            "rationale": "No requirement addresses pediatric performance data or the alternative justification.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(vii)",
+            "category": "evidence",
+            "quote": "Data must demonstrate that throughout the claimed sensor life, the device does not allow clinically significant gaps in sensor data availability",
+            "implemented_by": [
+              "REQ-104"
+            ],
+            "rationale": "REQ-104 addresses transmission frequency while the sensor is active; it does not specify the required evidence across the claimed sensor life.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(2)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+            "implemented_by": [
+              "REQ-104"
+            ],
+            "rationale": "REQ-104 addresses transmission frequency; it does not specify the verification and validation strategy or secure transmission.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(3)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+            "implemented_by": [],
+            "rationale": "No requirement addresses manufacturing and release controls.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(4)",
+            "category": "evidence",
+            "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+            "implemented_by": [],
+            "rationale": "No requirement addresses interference performance evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(5)",
+            "category": "behavior",
+            "quote": "The device must include appropriate measures to ensure that disposable sensors cannot be used beyond its claimed sensor wear period",
+            "implemented_by": [
+              "REQ-106"
+            ],
+            "rationale": "REQ-106 restricts display after the wear period; it does not address all sensor use.",
+            "verdict": "CONSISTENT_BOUNDED",
+            "reasons": [],
+            "contributions": [
+              {
+                "requirement": "REQ-106",
+                "verdict": "CONSISTENT_BOUNDED",
+                "finding_ref": null
+              }
+            ]
+          },
+          {
+            "paragraph": "(b)(6)",
+            "category": "evidence",
+            "quote": "results obtained through a usability study that demonstrates that the intended user can use the device safely and obtain the expected glucose measurement accuracy",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this usability study.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(i)",
+            "category": "labeling",
+            "quote": "The labeling required under § 809.10(b) of this chapter must include a separate description",
+            "implemented_by": [],
+            "rationale": "No requirement addresses labeling accuracy by the specified glucose ranges, populations and sites.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(ii)",
+            "category": "labeling",
+            "quote": "A description of the accuracy of positive and negative rate of change data",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this labeling content.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(iii)",
+            "category": "labeling",
+            "quote": "A description of the frequency and duration of gaps in sensor data",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this labeling content.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(iv)",
+            "category": "labeling",
+            "quote": "A description of the true, false, missed, and correct alert rates and a description of the available glucose concentration alert settings",
+            "implemented_by": [
+              "REQ-108"
+            ],
+            "rationale": "REQ-108 addresses alert rates and settings; it does not specify separate descriptions by population and site.",
+            "verdict": "NOT_FORMALIZED",
+            "reasons": [],
+            "contributions": [
+              {
+                "requirement": "REQ-108",
+                "verdict": "NOT_FORMALIZED",
+                "finding_ref": "consistency:REQ-108"
+              }
+            ]
+          },
+          {
+            "paragraph": "(b)(7)(v)",
+            "category": "labeling",
+            "quote": "A description of the observed duration of iCGM life for the device",
+            "implemented_by": [],
+            "rationale": "No requirement addresses this labeling content.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          }
+        ],
+        "design_conflicts": [
+          {
+            "check": "scenario_conflict",
+            "scenario": "SCN-101",
+            "core": [
+              "REQ-101",
+              "REQ-102",
+              "SCN-101"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 44
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 44
+          },
+          {
+            "scenario": "SCN-104",
+            "requirement": "REQ-101",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 44
+          }
+        ]
+      },
+      "items": [
+        {
+          "paragraph": "(b)(1)(i)",
+          "category": "evidence",
+          "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this clinical evidence."
+        },
+        {
+          "paragraph": "(b)(1)(ii)",
+          "category": "evidence",
+          "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+          "implemented_by": [],
+          "rationale": "No requirement addresses the laboratory comparison."
+        },
+        {
+          "paragraph": "(b)(1)(iii)",
+          "category": "evidence",
+          "quote": "a clinical study designed to fully represent the performance of the device throughout the intended use population and throughout the measuring range",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this study design."
+        },
+        {
+          "paragraph": "(b)(1)(iv)",
+          "category": "evidence",
+          "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this clinical evidence."
+        },
+        {
+          "paragraph": "(b)(1)(v)(A)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(B)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(C)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(D)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(E)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(F)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(G)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(H)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(I)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult clinical performance measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(J)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult rate-of-change measure."
+        },
+        {
+          "paragraph": "(b)(1)(v)(K)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this adult rate-of-change measure."
+        },
+        {
+          "paragraph": "(b)(1)(vi)",
+          "category": "evidence",
+          "quote": "Data demonstrating similar accuracy and rate of change performance of the iCGM in the pediatric population",
+          "implemented_by": [],
+          "rationale": "No requirement addresses pediatric performance data or the alternative justification."
+        },
+        {
+          "paragraph": "(b)(1)(vii)",
+          "category": "evidence",
+          "quote": "Data must demonstrate that throughout the claimed sensor life, the device does not allow clinically significant gaps in sensor data availability",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 addresses transmission frequency while the sensor is active; it does not specify the required evidence across the claimed sensor life."
+        },
+        {
+          "paragraph": "(b)(2)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 addresses transmission frequency; it does not specify the verification and validation strategy or secure transmission."
+        },
+        {
+          "paragraph": "(b)(3)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+          "implemented_by": [],
+          "rationale": "No requirement addresses manufacturing and release controls."
+        },
+        {
+          "paragraph": "(b)(4)",
+          "category": "evidence",
+          "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+          "implemented_by": [],
+          "rationale": "No requirement addresses interference performance evidence."
+        },
+        {
+          "paragraph": "(b)(5)",
+          "category": "behavior",
+          "quote": "The device must include appropriate measures to ensure that disposable sensors cannot be used beyond its claimed sensor wear period",
+          "implemented_by": [
+            "REQ-106"
+          ],
+          "rationale": "REQ-106 restricts display after the wear period; it does not address all sensor use."
+        },
+        {
+          "paragraph": "(b)(6)",
+          "category": "evidence",
+          "quote": "results obtained through a usability study that demonstrates that the intended user can use the device safely and obtain the expected glucose measurement accuracy",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this usability study."
+        },
+        {
+          "paragraph": "(b)(7)(i)",
+          "category": "labeling",
+          "quote": "The labeling required under § 809.10(b) of this chapter must include a separate description",
+          "implemented_by": [],
+          "rationale": "No requirement addresses labeling accuracy by the specified glucose ranges, populations and sites."
+        },
+        {
+          "paragraph": "(b)(7)(ii)",
+          "category": "labeling",
+          "quote": "A description of the accuracy of positive and negative rate of change data",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this labeling content."
+        },
+        {
+          "paragraph": "(b)(7)(iii)",
+          "category": "labeling",
+          "quote": "A description of the frequency and duration of gaps in sensor data",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this labeling content."
+        },
+        {
+          "paragraph": "(b)(7)(iv)",
+          "category": "labeling",
+          "quote": "A description of the true, false, missed, and correct alert rates and a description of the available glucose concentration alert settings",
+          "implemented_by": [
+            "REQ-108"
+          ],
+          "rationale": "REQ-108 addresses alert rates and settings; it does not specify separate descriptions by population and site."
+        },
+        {
+          "paragraph": "(b)(7)(v)",
+          "category": "labeling",
+          "quote": "A description of the observed duration of iCGM life for the device",
+          "implemented_by": [],
+          "rationale": "No requirement addresses this labeling content."
+        }
+      ],
+      "trace": [
+        {
+          "turn": 1,
+          "tool": "get_regulation",
+          "arguments": {},
+          "latency_ms": 0.07110000000011496
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "clinical accuracy study glucose"
+          },
+          "latency_ms": 0.2664999999997235
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "sensor wear life expiration"
+          },
+          "latency_ms": 0.020100000001548324
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "labeling label accuracy alert"
+          },
+          "latency_ms": 0.013100000000122236
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "transmission connectivity gaps data"
+          },
+          "latency_ms": 0.011800000000221189
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "manufacturing release controls"
+          },
+          "latency_ms": 0.008400000000619912
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "interference interfering substances"
+          },
+          "latency_ms": 0.008799999999610009
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "usability human factors"
+          },
+          "latency_ms": 0.007799999999406282
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "pediatric adult rate change"
+          },
+          "latency_ms": 0.010000000000218279
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "confidence 95 85 99"
+          },
+          "latency_ms": 0.014100000000325963
+        },
+        {
+          "turn": 3,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "shall"
+          },
+          "latency_ms": 0.062099999999190914
+        },
+        {
+          "turn": 3,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "must"
+          },
+          "latency_ms": 0.033400000000256114
+        },
+        {
+          "turn": 3,
+          "tool": "run_audit",
+          "arguments": {
+            "requirement_ids": [
+              "REQ-101",
+              "REQ-102",
+              "REQ-103",
+              "REQ-104",
+              "REQ-105",
+              "REQ-106",
+              "REQ-107",
+              "REQ-108"
+            ]
+          },
+          "latency_ms": 1277.4426999999996
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-104"
+          },
+          "latency_ms": 0.07309999999961292
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-105"
+          },
+          "latency_ms": 0.01629999999931897
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-106"
+          },
+          "latency_ms": 0.008599999999205465
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-108"
+          },
+          "latency_ms": 0.005100000000311411
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "status": "complete",
+      "message": null,
+      "latency_ms": 34758.456600000005,
+      "temperature": null,
+      "temperature_error": "Error: 400 Unsupported parameter: 'temperature' is not supported with this model.",
+      "reasoning_effort": "medium",
+      "tokens": {
+        "prompt": 14476,
+        "completion": 2288
+      },
+      "turns": 4,
+      "tool_calls": 16,
+      "metrics": {
+        "category_accuracy": 0.9259259259259259,
+        "mapping_precision": 1,
+        "mapping_recall": 0.75,
+        "gap_recall": 1,
+        "valid_quote_rate": 1,
+        "invented_ids": 0,
+        "verdict_accuracy": 0.9259259259259259,
+        "needs_review": 0
+      },
+      "obligations": [
+        {
+          "paragraph": "(b)(1)(i)",
+          "category": "evidence",
+          "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this clinical accuracy evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(ii)",
+          "category": "evidence",
+          "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the parallel-sample laboratory comparison.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(iii)",
+          "category": "evidence",
+          "quote": "a clinical study designed to fully represent the performance of the device throughout the intended use population and throughout the measuring range",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this study design.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(iv)",
+          "category": "evidence",
+          "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this clinical evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(A)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 85 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult low-range ±15 mg/dL clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(B)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 70 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult 70–180 mg/dL ±15 percent clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(C)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 80 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult high-range ±15 percent clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(D)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 98 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult low-range ±40 mg/dL clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(E)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult 70–180 mg/dL ±40 percent clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(F)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult high-range ±40 percent clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(G)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 87 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult full-range ±20 percent clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(H)",
+          "category": "evidence",
+          "quote": "When iCGM values are less than 70 mg/dL, no corresponding blood glucose value shall read above 180 mg/dL.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult clinical-study result.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(I)",
+          "category": "evidence",
+          "quote": "When iCGM values are greater than 180 mg/dL, no corresponding blood glucose value shall read less than 70 mg/dL.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult clinical-study result.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(J)",
+          "category": "evidence",
+          "quote": "There shall be no more than 1 percent of iCGM measurements that indicate a positive glucose rate of change",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult rate-of-change clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(K)",
+          "category": "evidence",
+          "quote": "There shall be no more than 1 percent of iCGM measurements that indicate a negative glucose rate of change",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult rate-of-change clinical analysis.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(vi)",
+          "category": "evidence",
+          "quote": "Data demonstrating similar accuracy and rate of change performance of the iCGM in the pediatric population",
+          "implemented_by": [],
+          "rationale": "No requirement specifies pediatric comparative data or the alternative justification.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(vii)",
+          "category": "evidence",
+          "quote": "Data must demonstrate that throughout the claimed sensor life, the device does not allow clinically significant gaps in sensor data availability",
+          "implemented_by": [],
+          "rationale": "REQ-104 specifies transmission cadence but does not require the data demonstrating availability.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(2)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 addresses transmission cadence, but does not specify the verification and validation strategy.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(3)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+          "implemented_by": [],
+          "rationale": "No requirement specifies manufacturing and release controls.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(4)",
+          "category": "evidence",
+          "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+          "implemented_by": [],
+          "rationale": "No requirement specifies interference performance evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(5)",
+          "category": "behavior",
+          "quote": "appropriate measures to ensure that disposable sensors cannot be used beyond its claimed sensor wear period",
+          "implemented_by": [
+            "REQ-106"
+          ],
+          "rationale": "REQ-106 prevents display of glucose values after the wear period; it addresses one aspect of post-expiry use.",
+          "verdict": "CONSISTENT_BOUNDED",
+          "reasons": [],
+          "contributions": [
+            {
+              "requirement": "REQ-106",
+              "verdict": "CONSISTENT_BOUNDED",
+              "finding_ref": null
+            }
+          ]
+        },
+        {
+          "paragraph": "(b)(6)",
+          "category": "evidence",
+          "quote": "results obtained through a usability study that demonstrates that the intended user can use the device safely and obtain the expected glucose measurement accuracy",
+          "implemented_by": [],
+          "rationale": "No requirement specifies a usability study.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(i)",
+          "category": "labeling",
+          "quote": "A description of the accuracy in the following blood glucose concentration ranges",
+          "implemented_by": [],
+          "rationale": "No requirement specifies labeling accuracy by these concentration ranges.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(ii)",
+          "category": "labeling",
+          "quote": "A description of the accuracy of positive and negative rate of change data.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this labeling content.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(iii)",
+          "category": "labeling",
+          "quote": "A description of the frequency and duration of gaps in sensor data.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this labeling content.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(iv)",
+          "category": "labeling",
+          "quote": "A description of the true, false, missed, and correct alert rates and a description of the available glucose concentration alert settings",
+          "implemented_by": [
+            "REQ-108"
+          ],
+          "rationale": "REQ-108 specifies the alert rates and settings, but does not specify separate descriptions by intended population and use site.",
+          "verdict": "NOT_FORMALIZED",
+          "reasons": [],
+          "contributions": [
+            {
+              "requirement": "REQ-108",
+              "verdict": "NOT_FORMALIZED",
+              "finding_ref": "consistency:REQ-108"
+            }
+          ]
+        },
+        {
+          "paragraph": "(b)(7)(v)",
+          "category": "labeling",
+          "quote": "A description of the observed duration of iCGM life for the device.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this labeling content.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        }
+      ],
+      "report": {
+        "obligations": [
+          {
+            "paragraph": "(b)(1)(i)",
+            "category": "evidence",
+            "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this clinical accuracy evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(ii)",
+            "category": "evidence",
+            "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the parallel-sample laboratory comparison.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(iii)",
+            "category": "evidence",
+            "quote": "a clinical study designed to fully represent the performance of the device throughout the intended use population and throughout the measuring range",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this study design.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(iv)",
+            "category": "evidence",
+            "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this clinical evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(A)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 85 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult low-range ±15 mg/dL clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(B)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 70 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult 70–180 mg/dL ±15 percent clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(C)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 80 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult high-range ±15 percent clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(D)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 98 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult low-range ±40 mg/dL clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(E)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult 70–180 mg/dL ±40 percent clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(F)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult high-range ±40 percent clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(G)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 87 percent.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies the adult full-range ±20 percent clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(H)",
+            "category": "evidence",
+            "quote": "When iCGM values are less than 70 mg/dL, no corresponding blood glucose value shall read above 180 mg/dL.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this adult clinical-study result.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(I)",
+            "category": "evidence",
+            "quote": "When iCGM values are greater than 180 mg/dL, no corresponding blood glucose value shall read less than 70 mg/dL.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this adult clinical-study result.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(J)",
+            "category": "evidence",
+            "quote": "There shall be no more than 1 percent of iCGM measurements that indicate a positive glucose rate of change",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this adult rate-of-change clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(K)",
+            "category": "evidence",
+            "quote": "There shall be no more than 1 percent of iCGM measurements that indicate a negative glucose rate of change",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this adult rate-of-change clinical analysis.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(vi)",
+            "category": "evidence",
+            "quote": "Data demonstrating similar accuracy and rate of change performance of the iCGM in the pediatric population",
+            "implemented_by": [],
+            "rationale": "No requirement specifies pediatric comparative data or the alternative justification.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(vii)",
+            "category": "evidence",
+            "quote": "Data must demonstrate that throughout the claimed sensor life, the device does not allow clinically significant gaps in sensor data availability",
+            "implemented_by": [],
+            "rationale": "REQ-104 specifies transmission cadence but does not require the data demonstrating availability.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(2)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+            "implemented_by": [
+              "REQ-104"
+            ],
+            "rationale": "REQ-104 addresses transmission cadence, but does not specify the verification and validation strategy.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(3)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+            "implemented_by": [],
+            "rationale": "No requirement specifies manufacturing and release controls.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(4)",
+            "category": "evidence",
+            "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+            "implemented_by": [],
+            "rationale": "No requirement specifies interference performance evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(5)",
+            "category": "behavior",
+            "quote": "appropriate measures to ensure that disposable sensors cannot be used beyond its claimed sensor wear period",
+            "implemented_by": [
+              "REQ-106"
+            ],
+            "rationale": "REQ-106 prevents display of glucose values after the wear period; it addresses one aspect of post-expiry use.",
+            "verdict": "CONSISTENT_BOUNDED",
+            "reasons": [],
+            "contributions": [
+              {
+                "requirement": "REQ-106",
+                "verdict": "CONSISTENT_BOUNDED",
+                "finding_ref": null
+              }
+            ]
+          },
+          {
+            "paragraph": "(b)(6)",
+            "category": "evidence",
+            "quote": "results obtained through a usability study that demonstrates that the intended user can use the device safely and obtain the expected glucose measurement accuracy",
+            "implemented_by": [],
+            "rationale": "No requirement specifies a usability study.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(i)",
+            "category": "labeling",
+            "quote": "A description of the accuracy in the following blood glucose concentration ranges",
+            "implemented_by": [],
+            "rationale": "No requirement specifies labeling accuracy by these concentration ranges.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(ii)",
+            "category": "labeling",
+            "quote": "A description of the accuracy of positive and negative rate of change data.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this labeling content.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(iii)",
+            "category": "labeling",
+            "quote": "A description of the frequency and duration of gaps in sensor data.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this labeling content.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(iv)",
+            "category": "labeling",
+            "quote": "A description of the true, false, missed, and correct alert rates and a description of the available glucose concentration alert settings",
+            "implemented_by": [
+              "REQ-108"
+            ],
+            "rationale": "REQ-108 specifies the alert rates and settings, but does not specify separate descriptions by intended population and use site.",
+            "verdict": "NOT_FORMALIZED",
+            "reasons": [],
+            "contributions": [
+              {
+                "requirement": "REQ-108",
+                "verdict": "NOT_FORMALIZED",
+                "finding_ref": "consistency:REQ-108"
+              }
+            ]
+          },
+          {
+            "paragraph": "(b)(7)(v)",
+            "category": "labeling",
+            "quote": "A description of the observed duration of iCGM life for the device.",
+            "implemented_by": [],
+            "rationale": "No requirement specifies this labeling content.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          }
+        ],
+        "design_conflicts": [
+          {
+            "check": "scenario_conflict",
+            "scenario": "SCN-101",
+            "core": [
+              "REQ-101",
+              "REQ-102",
+              "SCN-101"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 44
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 44
+          },
+          {
+            "scenario": "SCN-104",
+            "requirement": "REQ-101",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 44
+          }
+        ]
+      },
+      "items": [
+        {
+          "paragraph": "(b)(1)(i)",
+          "category": "evidence",
+          "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this clinical accuracy evidence."
+        },
+        {
+          "paragraph": "(b)(1)(ii)",
+          "category": "evidence",
+          "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the parallel-sample laboratory comparison."
+        },
+        {
+          "paragraph": "(b)(1)(iii)",
+          "category": "evidence",
+          "quote": "a clinical study designed to fully represent the performance of the device throughout the intended use population and throughout the measuring range",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this study design."
+        },
+        {
+          "paragraph": "(b)(1)(iv)",
+          "category": "evidence",
+          "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this clinical evidence."
+        },
+        {
+          "paragraph": "(b)(1)(v)(A)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 85 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult low-range ±15 mg/dL clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(B)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 70 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult 70–180 mg/dL ±15 percent clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(C)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 80 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult high-range ±15 percent clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(D)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 98 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult low-range ±40 mg/dL clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(E)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult 70–180 mg/dL ±40 percent clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(F)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult high-range ±40 percent clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(G)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 87 percent.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies the adult full-range ±20 percent clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(H)",
+          "category": "evidence",
+          "quote": "When iCGM values are less than 70 mg/dL, no corresponding blood glucose value shall read above 180 mg/dL.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult clinical-study result."
+        },
+        {
+          "paragraph": "(b)(1)(v)(I)",
+          "category": "evidence",
+          "quote": "When iCGM values are greater than 180 mg/dL, no corresponding blood glucose value shall read less than 70 mg/dL.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult clinical-study result."
+        },
+        {
+          "paragraph": "(b)(1)(v)(J)",
+          "category": "evidence",
+          "quote": "There shall be no more than 1 percent of iCGM measurements that indicate a positive glucose rate of change",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult rate-of-change clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(v)(K)",
+          "category": "evidence",
+          "quote": "There shall be no more than 1 percent of iCGM measurements that indicate a negative glucose rate of change",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this adult rate-of-change clinical analysis."
+        },
+        {
+          "paragraph": "(b)(1)(vi)",
+          "category": "evidence",
+          "quote": "Data demonstrating similar accuracy and rate of change performance of the iCGM in the pediatric population",
+          "implemented_by": [],
+          "rationale": "No requirement specifies pediatric comparative data or the alternative justification."
+        },
+        {
+          "paragraph": "(b)(1)(vii)",
+          "category": "evidence",
+          "quote": "Data must demonstrate that throughout the claimed sensor life, the device does not allow clinically significant gaps in sensor data availability",
+          "implemented_by": [],
+          "rationale": "REQ-104 specifies transmission cadence but does not require the data demonstrating availability."
+        },
+        {
+          "paragraph": "(b)(2)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 addresses transmission cadence, but does not specify the verification and validation strategy."
+        },
+        {
+          "paragraph": "(b)(3)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+          "implemented_by": [],
+          "rationale": "No requirement specifies manufacturing and release controls."
+        },
+        {
+          "paragraph": "(b)(4)",
+          "category": "evidence",
+          "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+          "implemented_by": [],
+          "rationale": "No requirement specifies interference performance evidence."
+        },
+        {
+          "paragraph": "(b)(5)",
+          "category": "behavior",
+          "quote": "appropriate measures to ensure that disposable sensors cannot be used beyond its claimed sensor wear period",
+          "implemented_by": [
+            "REQ-106"
+          ],
+          "rationale": "REQ-106 prevents display of glucose values after the wear period; it addresses one aspect of post-expiry use."
+        },
+        {
+          "paragraph": "(b)(6)",
+          "category": "evidence",
+          "quote": "results obtained through a usability study that demonstrates that the intended user can use the device safely and obtain the expected glucose measurement accuracy",
+          "implemented_by": [],
+          "rationale": "No requirement specifies a usability study."
+        },
+        {
+          "paragraph": "(b)(7)(i)",
+          "category": "labeling",
+          "quote": "A description of the accuracy in the following blood glucose concentration ranges",
+          "implemented_by": [],
+          "rationale": "No requirement specifies labeling accuracy by these concentration ranges."
+        },
+        {
+          "paragraph": "(b)(7)(ii)",
+          "category": "labeling",
+          "quote": "A description of the accuracy of positive and negative rate of change data.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this labeling content."
+        },
+        {
+          "paragraph": "(b)(7)(iii)",
+          "category": "labeling",
+          "quote": "A description of the frequency and duration of gaps in sensor data.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this labeling content."
+        },
+        {
+          "paragraph": "(b)(7)(iv)",
+          "category": "labeling",
+          "quote": "A description of the true, false, missed, and correct alert rates and a description of the available glucose concentration alert settings",
+          "implemented_by": [
+            "REQ-108"
+          ],
+          "rationale": "REQ-108 specifies the alert rates and settings, but does not specify separate descriptions by intended population and use site."
+        },
+        {
+          "paragraph": "(b)(7)(v)",
+          "category": "labeling",
+          "quote": "A description of the observed duration of iCGM life for the device.",
+          "implemented_by": [],
+          "rationale": "No requirement specifies this labeling content."
+        }
+      ],
+      "trace": [
+        {
+          "turn": 1,
+          "tool": "get_regulation",
+          "arguments": {},
+          "latency_ms": 0.0537999999942258
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "clinical accuracy study adult pediatric"
+          },
+          "latency_ms": 0.06579999999667052
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "glucose measurements confidence performance"
+          },
+          "latency_ms": 0.02870000000257278
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "transmission manufacturing sensor wear interference"
+          },
+          "latency_ms": 0.03409999999712454
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "labeling label data alert gaps usability"
+          },
+          "latency_ms": 0.041199999999662396
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "rate change validation verification"
+          },
+          "latency_ms": 0.0529000000024098
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-101"
+          },
+          "latency_ms": 0.050800000004528556
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-102"
+          },
+          "latency_ms": 0.034599999999045394
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-103"
+          },
+          "latency_ms": 0.01299999999901047
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-104"
+          },
+          "latency_ms": 0.008900000000721775
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-105"
+          },
+          "latency_ms": 0.03510000000096625
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-106"
+          },
+          "latency_ms": 0.01750000000174623
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-107"
+          },
+          "latency_ms": 0.01299999999901047
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-108"
+          },
+          "latency_ms": 0.012799999996786937
+        },
+        {
+          "turn": 3,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "shall"
+          },
+          "latency_ms": 0.036099999997531995
+        },
+        {
+          "turn": 3,
+          "tool": "run_audit",
+          "arguments": {
+            "requirement_ids": [
+              "REQ-101",
+              "REQ-102",
+              "REQ-103",
+              "REQ-104",
+              "REQ-105",
+              "REQ-106",
+              "REQ-107",
+              "REQ-108"
+            ]
+          },
+          "latency_ms": 1027.0385999999999
+        }
+      ]
+    },
+    {
+      "run": 3,
+      "status": "complete",
+      "message": null,
+      "latency_ms": 31779.09509999999,
+      "temperature": null,
+      "temperature_error": "Error: 400 Unsupported parameter: 'temperature' is not supported with this model.",
+      "reasoning_effort": "medium",
+      "tokens": {
+        "prompt": 13948,
+        "completion": 2066
+      },
+      "turns": 4,
+      "tool_calls": 20,
+      "metrics": {
+        "category_accuracy": 0.9259259259259259,
+        "mapping_precision": 1,
+        "mapping_recall": 0.75,
+        "gap_recall": 1,
+        "valid_quote_rate": 1,
+        "invented_ids": 0,
+        "verdict_accuracy": 0.9259259259259259,
+        "needs_review": 0
+      },
+      "obligations": [
+        {
+          "paragraph": "(b)(1)(i)",
+          "category": "evidence",
+          "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this clinical evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(ii)",
+          "category": "evidence",
+          "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies the laboratory comparison.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(iii)",
+          "category": "evidence",
+          "quote": "The clinical data must be obtained from a clinical study designed to fully represent the performance",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this clinical study design.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(iv)",
+          "category": "evidence",
+          "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this clinical evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(A)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(B)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 70 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(C)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 80 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(D)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 98 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(E)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(F)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(G)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 87 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(H)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical comparison.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(I)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical comparison.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(J)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult rate-of-change performance assessment.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(v)(K)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult rate-of-change performance assessment.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(vi)",
+          "category": "evidence",
+          "quote": "Data demonstrating similar accuracy and rate of change performance",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies pediatric comparative data or an alternative justification.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(1)(vii)",
+          "category": "evidence",
+          "quote": "Data must demonstrate that throughout the claimed sensor life",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies data demonstrating the required availability.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(2)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 specifies a transmission interval but does not specify the verification and validation strategy or secure transmission.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(3)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies these manufacturing and release controls.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(4)",
+          "category": "evidence",
+          "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies interference performance evidence.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(5)",
+          "category": "behavior",
+          "quote": "disposable sensors cannot be used beyond its claimed sensor wear period",
+          "implemented_by": [
+            "REQ-106"
+          ],
+          "rationale": "REQ-106 restricts glucose display after the wear period; it does not specify prevention of all sensor use.",
+          "verdict": "CONSISTENT_BOUNDED",
+          "reasons": [],
+          "contributions": [
+            {
+              "requirement": "REQ-106",
+              "verdict": "CONSISTENT_BOUNDED",
+              "finding_ref": null
+            }
+          ]
+        },
+        {
+          "paragraph": "(b)(6)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include results obtained through a usability study",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this usability study.",
+          "verdict": "OUT_OF_SCOPE",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(i)",
+          "category": "labeling",
+          "quote": "The labeling required under § 809.10(b) of this chapter must include a separate description",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies accuracy labeling by the stated concentration ranges.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(ii)",
+          "category": "labeling",
+          "quote": "A description of the accuracy of positive and negative rate of change data.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies rate-of-change accuracy labeling.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(iii)",
+          "category": "labeling",
+          "quote": "A description of the frequency and duration of gaps in sensor data.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies data-gap labeling.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        },
+        {
+          "paragraph": "(b)(7)(iv)",
+          "category": "labeling",
+          "quote": "A description of the true, false, missed, and correct alert rates",
+          "implemented_by": [
+            "REQ-108"
+          ],
+          "rationale": "REQ-108 specifies alert rates and settings in labeling but does not specify separate descriptions by intended population and use site.",
+          "verdict": "NOT_FORMALIZED",
+          "reasons": [],
+          "contributions": [
+            {
+              "requirement": "REQ-108",
+              "verdict": "NOT_FORMALIZED",
+              "finding_ref": "consistency:REQ-108"
+            }
+          ]
+        },
+        {
+          "paragraph": "(b)(7)(v)",
+          "category": "labeling",
+          "quote": "A description of the observed duration of iCGM life for the device.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies observed device-life labeling.",
+          "verdict": "NO_REQUIREMENT",
+          "reasons": [],
+          "contributions": []
+        }
+      ],
+      "report": {
+        "obligations": [
+          {
+            "paragraph": "(b)(1)(i)",
+            "category": "evidence",
+            "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population.",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this clinical evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(ii)",
+            "category": "evidence",
+            "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies the laboratory comparison.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(iii)",
+            "category": "evidence",
+            "quote": "The clinical data must be obtained from a clinical study designed to fully represent the performance",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this clinical study design.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(iv)",
+            "category": "evidence",
+            "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period.",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this clinical evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(A)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(B)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 70 percent",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(C)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 80 percent",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(D)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 98 percent",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(E)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(F)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(G)",
+            "category": "evidence",
+            "quote": "the lower one-sided 95 percent confidence bound must exceed 87 percent",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical performance calculation.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(H)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical comparison.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(I)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult clinical comparison.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(J)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult rate-of-change performance assessment.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(v)(K)",
+            "category": "evidence",
+            "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this adult rate-of-change performance assessment.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(vi)",
+            "category": "evidence",
+            "quote": "Data demonstrating similar accuracy and rate of change performance",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies pediatric comparative data or an alternative justification.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(1)(vii)",
+            "category": "evidence",
+            "quote": "Data must demonstrate that throughout the claimed sensor life",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies data demonstrating the required availability.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(2)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+            "implemented_by": [
+              "REQ-104"
+            ],
+            "rationale": "REQ-104 specifies a transmission interval but does not specify the verification and validation strategy or secure transmission.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(3)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies these manufacturing and release controls.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(4)",
+            "category": "evidence",
+            "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies interference performance evidence.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(5)",
+            "category": "behavior",
+            "quote": "disposable sensors cannot be used beyond its claimed sensor wear period",
+            "implemented_by": [
+              "REQ-106"
+            ],
+            "rationale": "REQ-106 restricts glucose display after the wear period; it does not specify prevention of all sensor use.",
+            "verdict": "CONSISTENT_BOUNDED",
+            "reasons": [],
+            "contributions": [
+              {
+                "requirement": "REQ-106",
+                "verdict": "CONSISTENT_BOUNDED",
+                "finding_ref": null
+              }
+            ]
+          },
+          {
+            "paragraph": "(b)(6)",
+            "category": "evidence",
+            "quote": "Design verification and validation must include results obtained through a usability study",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies this usability study.",
+            "verdict": "OUT_OF_SCOPE",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(i)",
+            "category": "labeling",
+            "quote": "The labeling required under § 809.10(b) of this chapter must include a separate description",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies accuracy labeling by the stated concentration ranges.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(ii)",
+            "category": "labeling",
+            "quote": "A description of the accuracy of positive and negative rate of change data.",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies rate-of-change accuracy labeling.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(iii)",
+            "category": "labeling",
+            "quote": "A description of the frequency and duration of gaps in sensor data.",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies data-gap labeling.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          },
+          {
+            "paragraph": "(b)(7)(iv)",
+            "category": "labeling",
+            "quote": "A description of the true, false, missed, and correct alert rates",
+            "implemented_by": [
+              "REQ-108"
+            ],
+            "rationale": "REQ-108 specifies alert rates and settings in labeling but does not specify separate descriptions by intended population and use site.",
+            "verdict": "NOT_FORMALIZED",
+            "reasons": [],
+            "contributions": [
+              {
+                "requirement": "REQ-108",
+                "verdict": "NOT_FORMALIZED",
+                "finding_ref": "consistency:REQ-108"
+              }
+            ]
+          },
+          {
+            "paragraph": "(b)(7)(v)",
+            "category": "labeling",
+            "quote": "A description of the observed duration of iCGM life for the device.",
+            "implemented_by": [],
+            "rationale": "No product requirement specifies observed device-life labeling.",
+            "verdict": "NO_REQUIREMENT",
+            "reasons": [],
+            "contributions": []
+          }
+        ],
+        "design_conflicts": [
+          {
+            "check": "scenario_conflict",
+            "scenario": "SCN-101",
+            "core": [
+              "REQ-101",
+              "REQ-102",
+              "SCN-101"
+            ]
+          }
+        ],
+        "unverified": [
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-102",
+            "requirement": "REQ-104",
+            "tick": 44
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-103",
+            "requirement": "REQ-104",
+            "tick": 44
+          },
+          {
+            "scenario": "SCN-104",
+            "requirement": "REQ-101",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 41
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 42
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 43
+          },
+          {
+            "scenario": "SCN-105",
+            "requirement": "REQ-104",
+            "tick": 44
+          }
+        ]
+      },
+      "items": [
+        {
+          "paragraph": "(b)(1)(i)",
+          "category": "evidence",
+          "quote": "Robust clinical data demonstrating the accuracy of the device in the intended use population.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this clinical evidence."
+        },
+        {
+          "paragraph": "(b)(1)(ii)",
+          "category": "evidence",
+          "quote": "The clinical data must include a comparison between iCGM values and blood glucose values",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies the laboratory comparison."
+        },
+        {
+          "paragraph": "(b)(1)(iii)",
+          "category": "evidence",
+          "quote": "The clinical data must be obtained from a clinical study designed to fully represent the performance",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this clinical study design."
+        },
+        {
+          "paragraph": "(b)(1)(iv)",
+          "category": "evidence",
+          "quote": "Clinical study results must demonstrate consistent analytical and clinical performance throughout the sensor wear period.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this clinical evidence."
+        },
+        {
+          "paragraph": "(b)(1)(v)(A)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(B)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 70 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(C)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 80 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(D)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 98 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(E)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(F)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 99 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(G)",
+          "category": "evidence",
+          "quote": "the lower one-sided 95 percent confidence bound must exceed 87 percent",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical performance calculation."
+        },
+        {
+          "paragraph": "(b)(1)(v)(H)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical comparison."
+        },
+        {
+          "paragraph": "(b)(1)(v)(I)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult clinical comparison."
+        },
+        {
+          "paragraph": "(b)(1)(v)(J)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult rate-of-change performance assessment."
+        },
+        {
+          "paragraph": "(b)(1)(v)(K)",
+          "category": "evidence",
+          "quote": "Clinical study results in the adult population must meet the following performance requirements:",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this adult rate-of-change performance assessment."
+        },
+        {
+          "paragraph": "(b)(1)(vi)",
+          "category": "evidence",
+          "quote": "Data demonstrating similar accuracy and rate of change performance",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies pediatric comparative data or an alternative justification."
+        },
+        {
+          "paragraph": "(b)(1)(vii)",
+          "category": "evidence",
+          "quote": "Data must demonstrate that throughout the claimed sensor life",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies data demonstrating the required availability."
+        },
+        {
+          "paragraph": "(b)(2)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include a detailed strategy to ensure secure and reliable means of iCGM data transmission",
+          "implemented_by": [
+            "REQ-104"
+          ],
+          "rationale": "REQ-104 specifies a transmission interval but does not specify the verification and validation strategy or secure transmission."
+        },
+        {
+          "paragraph": "(b)(3)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include adequate controls established during manufacturing and at product release",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies these manufacturing and release controls."
+        },
+        {
+          "paragraph": "(b)(4)",
+          "category": "evidence",
+          "quote": "The device must demonstrate clinically acceptable performance in the presence of clinically relevant levels of potential interfering substances",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies interference performance evidence."
+        },
+        {
+          "paragraph": "(b)(5)",
+          "category": "behavior",
+          "quote": "disposable sensors cannot be used beyond its claimed sensor wear period",
+          "implemented_by": [
+            "REQ-106"
+          ],
+          "rationale": "REQ-106 restricts glucose display after the wear period; it does not specify prevention of all sensor use."
+        },
+        {
+          "paragraph": "(b)(6)",
+          "category": "evidence",
+          "quote": "Design verification and validation must include results obtained through a usability study",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies this usability study."
+        },
+        {
+          "paragraph": "(b)(7)(i)",
+          "category": "labeling",
+          "quote": "The labeling required under § 809.10(b) of this chapter must include a separate description",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies accuracy labeling by the stated concentration ranges."
+        },
+        {
+          "paragraph": "(b)(7)(ii)",
+          "category": "labeling",
+          "quote": "A description of the accuracy of positive and negative rate of change data.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies rate-of-change accuracy labeling."
+        },
+        {
+          "paragraph": "(b)(7)(iii)",
+          "category": "labeling",
+          "quote": "A description of the frequency and duration of gaps in sensor data.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies data-gap labeling."
+        },
+        {
+          "paragraph": "(b)(7)(iv)",
+          "category": "labeling",
+          "quote": "A description of the true, false, missed, and correct alert rates",
+          "implemented_by": [
+            "REQ-108"
+          ],
+          "rationale": "REQ-108 specifies alert rates and settings in labeling but does not specify separate descriptions by intended population and use site."
+        },
+        {
+          "paragraph": "(b)(7)(v)",
+          "category": "labeling",
+          "quote": "A description of the observed duration of iCGM life for the device.",
+          "implemented_by": [],
+          "rationale": "No product requirement specifies observed device-life labeling."
+        }
+      ],
+      "trace": [
+        {
+          "turn": 1,
+          "tool": "get_regulation",
+          "arguments": {},
+          "latency_ms": 0.15799999999580905
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "clinical"
+          },
+          "latency_ms": 0.023499999995692633
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "accuracy"
+          },
+          "latency_ms": 0.00840000000607688
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "glucose"
+          },
+          "latency_ms": 0.013800000000628643
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "sensor"
+          },
+          "latency_ms": 0.00969999999506399
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "label"
+          },
+          "latency_ms": 0.007700000001932494
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "manufacturing"
+          },
+          "latency_ms": 0.006800000002840534
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "validation"
+          },
+          "latency_ms": 0.005499999999301508
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "interference"
+          },
+          "latency_ms": 0.006699999998090789
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "transmission"
+          },
+          "latency_ms": 0.007000000012340024
+        },
+        {
+          "turn": 2,
+          "tool": "search_requirements",
+          "arguments": {
+            "query": "usability"
+          },
+          "latency_ms": 0.0062000000034458935
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-101"
+          },
+          "latency_ms": 0.03900000000430737
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-102"
+          },
+          "latency_ms": 0.010300000009010546
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-103"
+          },
+          "latency_ms": 0.0062000000034458935
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-104"
+          },
+          "latency_ms": 0.007400000002235174
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-105"
+          },
+          "latency_ms": 0.007400000002235174
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-106"
+          },
+          "latency_ms": 0.007299999997485429
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-107"
+          },
+          "latency_ms": 0.006800000002840534
+        },
+        {
+          "turn": 3,
+          "tool": "get_requirement",
+          "arguments": {
+            "id": "REQ-108"
+          },
+          "latency_ms": 0.011899999997694977
+        },
+        {
+          "turn": 3,
+          "tool": "run_audit",
+          "arguments": {
+            "requirement_ids": [
+              "REQ-101",
+              "REQ-102",
+              "REQ-103",
+              "REQ-104",
+              "REQ-105",
+              "REQ-106",
+              "REQ-107",
+              "REQ-108"
+            ]
+          },
+          "latency_ms": 997.4245999999985
+        }
+      ]
+    }
+  ]
+}

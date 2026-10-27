@@ -217,7 +217,7 @@ Prompt por etapa: *"Implementa la etapa NN de SPEC.md. Corre `scripts/gate.sh` y
 
 **Objetivo:** dado un texto regulatorio, producir un *impact assessment* sobre los requisitos del producto. Cada obligación debe quedar clasificada, citada, mapeada a requisitos y con un veredicto basado en evidencia.
 
-**Bucle:** OpenAI tool calling con el SDK `openai`, un máximo de 12 turnos y la temperatura mínima que el modelo permita. El LLM decide clasificación y mapeo. **Los veredictos los calcula el código, nunca el LLM.**
+**Bucle:** OpenAI tool calling con el SDK `openai`, sobre la Responses API (`client.responses.parse` con tools estrictas y formato Zod; Chat Completions no admite tools con razonamiento en este modelo). Un máximo de 12 turnos y razonamiento por defecto, igual que B y C. Se manda `temperature: 0`; si la API la rechaza, se omite y el run registra `temperature: null` con el mensaje de error, sin probar otros valores. El run registra también el reasoning effort efectivo. El bucle vive en `agent.ts`; la sesión con OpenAI, en `llm.ts` (frontera de §6). El LLM decide clasificación y mapeo. **Los veredictos los calcula el código, nunca el LLM.**
 
 **Herramientas** (deterministas, en `apps/api/src/tools.ts`):
 - `get_regulation()` devuelve los párrafos hoja con `{ id, context }`. El parser es determinista y no usa LLM; `context` es el texto de los ancestros más el del propio párrafo.
@@ -239,7 +239,21 @@ Prompt por etapa: *"Implementa la etapa NN de SPEC.md. Corre `scripts/gate.sh` y
 - Si un id de `implemented_by` no existe, el item queda `NEEDS_REVIEW` con motivo `unknown_requirement`.
 - Si falta un párrafo hoja o hay uno de más, el item queda `NEEDS_REVIEW`.
 
-**Veredicto por obligación** (calculado en código a partir de `run_audit`; lo define `tests/gold/obligations.json`): `CONFLICT`, `DEAD`, `NOT_FORMALIZED`, `NO_REQUIREMENT`, `CONSISTENT_BOUNDED`, `OUT_OF_SCOPE`.
+**Veredicto por obligación** (calculado en código a partir de la auditoría de §4; lo define `tests/gold/obligations.json`): `CONFLICT`, `DEAD`, `NOT_FORMALIZED`, `NO_REQUIREMENT`, `CONSISTENT_BOUNDED`, `OUT_OF_SCOPE`, o `NEEDS_REVIEW`.
+
+Orden de derivación por obligación (decidido con Simón el 27-oct-2026):
+1. **Validación.** Si falla (`invalid_quote`, `unknown_requirement`, párrafo faltante, duplicado o sobrante) o algún requisito mapeado tiene un finding `UNKNOWN` → `NEEDS_REVIEW` (motivo `audit_unknown` en el último caso). Nada más se evalúa. Un `consistency` o `scenario_conflict` `UNKNOWN` toca a todo requisito aprobado, porque todos estaban en el solve; un `vacuity` `UNKNOWN` toca a su sujeto; un `equivalence` `UNKNOWN` no cuenta. Una cita vacía es `invalid_quote`.
+2. `category = evidence` → `OUT_OF_SCOPE`, aunque haya requisitos mapeados.
+3. `behavior`/`labeling` sin requisitos → `NO_REQUIREMENT`.
+4. Por cada requisito mapeado, su veredicto individual:
+   - `CONFLICT` si su id aparece exacto en el core UNSAT de `consistency` o de `scenario_conflict`;
+   - `DEAD` si `TRIGGER:<id>` aparece en un core de `vacuity`;
+   - `NOT_FORMALIZED` si está `pending` o tiene `formal` null;
+   - `CONSISTENT_BOUNDED` en otro caso.
+   `equivalence` nunca produce veredicto de obligación.
+5. Veredicto final = el peor: `CONFLICT` > `DEAD` > `NOT_FORMALIZED` > `CONSISTENT_BOUNDED`.
+
+Cada obligación incluye `contributions: [{ requirement, verdict, finding_ref }]` con todos los veredictos individuales del paso 4, no solo el ganador. `finding_ref` es `<check>:<scenario o sujeto>` del finding que lo produjo, o null para `CONSISTENT_BOUNDED`.
 
 **Salida final:** `runs/agent-<run_id>.json` con el reporte, la traza de llamadas a herramientas, los tokens y la latencia. Además, una auditoría completa del corpus que muestra el conflicto G01, aunque REQ-101 no esté mapeado a ningún párrafo: el reporte lo lista bajo "conflictos de diseño".
 
@@ -251,5 +265,7 @@ Prompt por etapa: *"Implementa la etapa NN de SPEC.md. Corre `scripts/gate.sh` y
 - ids inventados (debe ser 0);
 - exactitud del veredicto;
 - acuerdo entre corridas, latencia y tokens.
+
+Una corrida que falla en la API se marca `status: "api_error"` y queda fuera del acuerdo, las exactitudes, la latencia y los tokens. Sin corridas válidas, cada cifra es null, nunca 1; el acuerdo necesita dos corridas válidas.
 
 Ningún test del gate llama a OpenAI. Los tests del gate cubren el parser, la validación de citas e ids, la derivación de veredictos con mapeos fijos y la función de métricas.

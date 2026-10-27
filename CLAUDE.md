@@ -7,7 +7,7 @@ Demo: auditor de consistencia lógica para requisitos de un dispositivo médico 
 - Setup: `pnpm install`
 - Gate (lo mismo que corre el Stop hook): `scripts/gate.sh`
 - Un test: `pnpm --filter @rqaudit/core vitest run checks -t scenario`
-- Dev: `pnpm dev` (api + web) · Eval: `pnpm eval`
+- Dev: `pnpm dev` (api + web) · Eval: `pnpm eval` · Agente: `pnpm eval:agent` (OpenAI real, 3 corridas)
 
 ## Lo que no es obvio en este repo
 - El código es la mínima implementación que pasa `tests/gold/`. Una función existe porque un test, la API o la UI la llaman; un helper con un solo caller va inline.
