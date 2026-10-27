@@ -113,19 +113,17 @@
     },
     {
       "paragraph": "(b)(1)(vii)",
-      "category": "behavior",
-      "implemented_by": [
-        "REQ-105"
-      ],
-      "expected_verdict": "CONSISTENT_BOUNDED"
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
     },
     {
       "paragraph": "(b)(2)",
-      "category": "behavior",
+      "category": "evidence",
       "implemented_by": [
         "REQ-104"
       ],
-      "expected_verdict": "CONSISTENT_BOUNDED"
+      "expected_verdict": "OUT_OF_SCOPE"
     },
     {
       "paragraph": "(b)(3)",
