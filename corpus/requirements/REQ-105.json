@@ -1,0 +1,31 @@
+{
+  "id": "REQ-105",
+  "version": "1.0",
+  "text": "If no glucose data has been received for 10 minutes while the sensor is active, the system shall issue a Signal Loss alert within 1 minute.",
+  "source": {
+    "kind": "anchored",
+    "ref": "21 CFR 862.1355(b)(1)(vii)",
+    "note": "Supports 'no clinically significant gaps in sensor data availability'. The 10-minute gap is modeled as signal data_gap; thresholds are ours."
+  },
+  "status": "approved",
+  "approved_by": "simon",
+  "formal": {
+    "scope": {
+      "mode": "ACTIVE",
+      "window_s": null
+    },
+    "condition": {
+      "signal": "data_gap",
+      "value": true
+    },
+    "timing": {
+      "kind": "within",
+      "s": 60,
+      "bound": "inclusive"
+    },
+    "response": {
+      "signal": "signal_loss_alert",
+      "value": true
+    }
+  }
+}

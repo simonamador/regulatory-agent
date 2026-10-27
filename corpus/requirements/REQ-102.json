@@ -1,0 +1,29 @@
+{
+  "id": "REQ-102",
+  "version": "1.0",
+  "text": "During sensor warm-up (the first 30 minutes after sensor start), the system shall not issue glucose alerts.",
+  "source": {
+    "kind": "synthetic",
+    "ref": null,
+    "note": "Injected on purpose: conflicts with REQ-101 if glucose is urgently low during warm-up. Real CGMs resolve this with labeling (use a blood glucose meter during warm-up)."
+  },
+  "status": "approved",
+  "approved_by": "simon",
+  "formal": {
+    "scope": {
+      "mode": "WARMUP",
+      "window_s": {
+        "from": 0,
+        "to": 1800
+      }
+    },
+    "condition": null,
+    "timing": {
+      "kind": "always"
+    },
+    "response": {
+      "signal": "urgent_low_alert",
+      "value": false
+    }
+  }
+}

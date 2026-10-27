@@ -1,0 +1,26 @@
+{
+  "id": "REQ-106",
+  "version": "1.0",
+  "text": "After the sensor wear period has ended, the system shall not display glucose values.",
+  "source": {
+    "kind": "anchored",
+    "ref": "21 CFR 862.1355(b)(5)",
+    "note": "Implements 'disposable sensors cannot be used beyond its claimed sensor wear period' as a display lock in mode EXPIRED."
+  },
+  "status": "approved",
+  "approved_by": "simon",
+  "formal": {
+    "scope": {
+      "mode": "EXPIRED",
+      "window_s": null
+    },
+    "condition": null,
+    "timing": {
+      "kind": "always"
+    },
+    "response": {
+      "signal": "glucose_shown",
+      "value": false
+    }
+  }
+}

@@ -1,21 +1,21 @@
 [
   {
-    "id": "AX-001",
-    "text": "Calibration lasts between 10 and 15 seconds.",
+    "id": "AX-101",
+    "text": "Sensor warm-up lasts exactly 30 minutes.",
     "formal": {
       "kind": "mode_duration",
-      "mode": "CALIBRATION",
-      "min_s": 10,
-      "max_s": 15
+      "mode": "WARMUP",
+      "min_s": 1800,
+      "max_s": 1800
     }
   },
   {
-    "id": "AX-002",
-    "text": "The reservoir cannot become empty during calibration, because no fluid is delivered.",
+    "id": "AX-102",
+    "text": "An expired sensor does not measure glucose, so urgent low cannot be detected after expiry.",
     "formal": {
       "kind": "signal_impossible_in_mode",
-      "signal": "reservoir_empty",
-      "mode": "CALIBRATION"
+      "signal": "urgent_low",
+      "mode": "EXPIRED"
     }
   }
 ]

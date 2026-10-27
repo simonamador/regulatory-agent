@@ -1,45 +1,45 @@
 {
-  "id": "INT-002",
-  "requirement_id": "REQ-009",
-  "question": "Are 'within 3 s inclusive' and 'within 4 s exclusive' the same obligation?",
-  "context_scenario": "SCN-005",
+  "id": "INT-102",
+  "requirement_id": "REQ-105",
+  "question": "Are 'within 1 minute inclusive' and 'within 2 minutes exclusive' the same obligation?",
+  "context_scenario": "SCN-105",
   "readings": {
     "A": {
       "scope": {
-        "mode": "NORMAL",
+        "mode": "ACTIVE",
         "window_s": null
       },
       "condition": {
-        "signal": "occlusion",
+        "signal": "data_gap",
         "value": true
       },
       "timing": {
         "kind": "within",
-        "s": 3,
+        "s": 60,
         "bound": "inclusive"
       },
       "response": {
-        "signal": "pumping",
-        "value": false
+        "signal": "signal_loss_alert",
+        "value": true
       }
     },
     "B": {
       "scope": {
-        "mode": "NORMAL",
+        "mode": "ACTIVE",
         "window_s": null
       },
       "condition": {
-        "signal": "occlusion",
+        "signal": "data_gap",
         "value": true
       },
       "timing": {
         "kind": "within",
-        "s": 4,
+        "s": 120,
         "bound": "exclusive"
       },
       "response": {
-        "signal": "pumping",
-        "value": false
+        "signal": "signal_loss_alert",
+        "value": true
       }
     }
   }

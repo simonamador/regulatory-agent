@@ -1,0 +1,22 @@
+{
+  "id": "SCN-102",
+  "description": "New sensor; glucose is urgently low at minute 32, after warm-up.",
+  "facts": [
+    {
+      "mode": "WARMUP",
+      "from_s": 0,
+      "to_s": 1800
+    },
+    {
+      "mode": "ACTIVE",
+      "from_s": 1800,
+      "to_s": 2700
+    },
+    {
+      "signal": "urgent_low",
+      "value": true,
+      "from_s": 1920,
+      "to_s": 1980
+    }
+  ]
+}

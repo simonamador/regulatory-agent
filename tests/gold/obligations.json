@@ -1,0 +1,189 @@
+{
+  "regulation": "corpus/regulations/21-CFR-862.1355.txt",
+  "granularity": "leaf paragraphs, (a) excluded; a leaf's context is its ancestors' text plus its own",
+  "categories": {
+    "behavior": "constrains what the device does at runtime; candidates for formal verification",
+    "evidence": "design verification/validation, clinical, manufacturing or usability evidence; lives in the DHF, not in requirements",
+    "labeling": "content the labeling must include"
+  },
+  "verdicts": {
+    "CONFLICT": "an implementing requirement appears in an UNSAT core of the audit",
+    "DEAD": "an implementing requirement has an unreachable trigger (vacuity UNSAT)",
+    "NOT_FORMALIZED": "an implementing requirement is pending / has no formal",
+    "NO_REQUIREMENT": "behavior or labeling obligation with no implementing requirement (gap)",
+    "CONSISTENT_BOUNDED": "implemented, formalized, no conflict within the horizon; unverified tails reported separately",
+    "OUT_OF_SCOPE": "evidence obligation; not checked by this tool"
+  },
+  "obligations": [
+    {
+      "paragraph": "(b)(1)(i)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(ii)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(iii)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(iv)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(A)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(B)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(C)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(D)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(E)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(F)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(G)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(H)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(I)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(J)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(v)(K)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(vi)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(1)(vii)",
+      "category": "behavior",
+      "implemented_by": [
+        "REQ-105"
+      ],
+      "expected_verdict": "CONSISTENT_BOUNDED"
+    },
+    {
+      "paragraph": "(b)(2)",
+      "category": "behavior",
+      "implemented_by": [
+        "REQ-104"
+      ],
+      "expected_verdict": "CONSISTENT_BOUNDED"
+    },
+    {
+      "paragraph": "(b)(3)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(4)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(5)",
+      "category": "behavior",
+      "implemented_by": [
+        "REQ-106"
+      ],
+      "expected_verdict": "CONSISTENT_BOUNDED"
+    },
+    {
+      "paragraph": "(b)(6)",
+      "category": "evidence",
+      "implemented_by": [],
+      "expected_verdict": "OUT_OF_SCOPE"
+    },
+    {
+      "paragraph": "(b)(7)(i)",
+      "category": "labeling",
+      "implemented_by": [],
+      "expected_verdict": "NO_REQUIREMENT"
+    },
+    {
+      "paragraph": "(b)(7)(ii)",
+      "category": "labeling",
+      "implemented_by": [],
+      "expected_verdict": "NO_REQUIREMENT"
+    },
+    {
+      "paragraph": "(b)(7)(iii)",
+      "category": "labeling",
+      "implemented_by": [],
+      "expected_verdict": "NO_REQUIREMENT"
+    },
+    {
+      "paragraph": "(b)(7)(iv)",
+      "category": "labeling",
+      "implemented_by": [
+        "REQ-108"
+      ],
+      "expected_verdict": "NOT_FORMALIZED"
+    },
+    {
+      "paragraph": "(b)(7)(v)",
+      "category": "labeling",
+      "implemented_by": [],
+      "expected_verdict": "NO_REQUIREMENT"
+    }
+  ]
+}

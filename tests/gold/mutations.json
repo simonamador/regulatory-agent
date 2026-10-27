@@ -2,985 +2,5139 @@
   {
     "id": "M001",
     "family": "grid",
-    "t": 0,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M002",
     "family": "grid",
-    "t": 0,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M003",
     "family": "grid",
-    "t": 0,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M004",
     "family": "grid",
-    "t": 0,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M005",
     "family": "grid",
-    "t": 0,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M006",
     "family": "grid",
-    "t": 0,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M007",
     "family": "grid",
-    "t": 0,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M008",
     "family": "grid",
-    "t": 0,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M009",
     "family": "grid",
-    "t": 0,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 0,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M010",
     "family": "grid",
-    "t": 0,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M011",
     "family": "grid",
-    "t": 0,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 0,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M012",
     "family": "grid",
-    "t": 0,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 0,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 0,
+          "to_s": 60
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M013",
     "family": "grid",
-    "t": 2,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M014",
     "family": "grid",
-    "t": 2,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M015",
     "family": "grid",
-    "t": 2,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M016",
     "family": "grid",
-    "t": 2,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M017",
     "family": "grid",
-    "t": 2,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 5,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M018",
     "family": "grid",
-    "t": 2,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M019",
     "family": "grid",
-    "t": 2,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 5,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M020",
     "family": "grid",
-    "t": 2,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M021",
     "family": "grid",
-    "t": 2,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 5,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M022",
     "family": "grid",
-    "t": 2,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M023",
     "family": "grid",
-    "t": 2,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 5,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M024",
     "family": "grid",
-    "t": 2,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 5,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 300,
+          "to_s": 360
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M025",
     "family": "grid",
-    "t": 4,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M026",
     "family": "grid",
-    "t": 4,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 10,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M027",
     "family": "grid",
-    "t": 4,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M028",
     "family": "grid",
-    "t": 4,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 10,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M029",
     "family": "grid",
-    "t": 4,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M030",
     "family": "grid",
-    "t": 4,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 10,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M031",
     "family": "grid",
-    "t": 4,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M032",
     "family": "grid",
-    "t": 4,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 10,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M033",
     "family": "grid",
-    "t": 4,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 10,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M034",
     "family": "grid",
-    "t": 4,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M035",
     "family": "grid",
-    "t": 4,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M036",
     "family": "grid",
-    "t": 4,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 10,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 600,
+          "to_s": 660
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M037",
     "family": "grid",
-    "t": 6,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M038",
     "family": "grid",
-    "t": 6,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 15,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M039",
     "family": "grid",
-    "t": 6,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M040",
     "family": "grid",
-    "t": 6,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 15,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M041",
     "family": "grid",
-    "t": 6,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 15,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M042",
     "family": "grid",
-    "t": 6,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M043",
     "family": "grid",
-    "t": 6,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M044",
     "family": "grid",
-    "t": 6,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M045",
     "family": "grid",
-    "t": 6,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 15,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M046",
     "family": "grid",
-    "t": 6,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M047",
     "family": "grid",
-    "t": 6,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 15,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M048",
     "family": "grid",
-    "t": 6,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 15,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 900,
+          "to_s": 960
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M049",
     "family": "grid",
-    "t": 8,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M050",
     "family": "grid",
-    "t": 8,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 20,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M051",
     "family": "grid",
-    "t": 8,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M052",
     "family": "grid",
-    "t": 8,
-    "D": 3,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 20,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M053",
     "family": "grid",
-    "t": 8,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M054",
     "family": "grid",
-    "t": 8,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 20,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M055",
     "family": "grid",
-    "t": 8,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M056",
     "family": "grid",
-    "t": 8,
-    "D": 5,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 20,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M057",
     "family": "grid",
-    "t": 8,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M058",
     "family": "grid",
-    "t": 8,
-    "D": 7,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M059",
     "family": "grid",
-    "t": 8,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 6,
-    "e": 0,
-    "calEnd": 12,
+    "params": {
+      "t": 20,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M060",
     "family": "grid",
-    "t": 8,
-    "D": 7,
-    "bound": "exclusive",
-    "W": 10,
-    "e": 0,
-    "calEnd": 12,
-    "expected_status": "SAT",
-    "expected_core": null
+    "params": {
+      "t": 20,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1200,
+          "to_s": 1260
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M061",
-    "family": "horizon",
-    "t": 16,
-    "D": 1,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 12,
-    "calEnd": 20,
-    "expected_status": "UNSAT",
-    "expected_core": [
-      "REQ-001",
-      "REQ-002",
-      "SCN"
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
     ]
   },
   {
     "id": "M062",
-    "family": "horizon",
-    "t": 16,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 12,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M063",
-    "family": "horizon",
-    "t": 16,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 12,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
-  },
-  {
-    "id": "M064",
-    "family": "horizon",
-    "t": 18,
-    "D": 1,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 12,
-    "calEnd": 20,
-    "expected_status": "UNSAT",
-    "expected_core": [
-      "REQ-001",
-      "REQ-002",
-      "SCN"
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
     ]
   },
   {
+    "id": "M064",
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 3,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
     "id": "M065",
-    "family": "horizon",
-    "t": 18,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 12,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M066",
-    "family": "horizon",
-    "t": 18,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 12,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M067",
-    "family": "horizon",
-    "t": 16,
-    "D": 1,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 14,
-    "calEnd": 20,
-    "expected_status": "UNSAT",
-    "expected_core": [
-      "REQ-001",
-      "REQ-002",
-      "SCN"
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
     ]
   },
   {
     "id": "M068",
-    "family": "horizon",
-    "t": 16,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 14,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 5,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "UNSAT",
     "expected_core": [
-      "REQ-001",
-      "REQ-002",
+      "REQ-101",
+      "REQ-102",
       "SCN"
-    ]
+    ],
+    "expected_unverified": []
   },
   {
     "id": "M069",
-    "family": "horizon",
-    "t": 16,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 14,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M070",
-    "family": "horizon",
-    "t": 18,
-    "D": 1,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 14,
-    "calEnd": 20,
-    "expected_status": "UNSAT",
-    "expected_core": [
-      "REQ-001",
-      "REQ-002",
-      "SCN"
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 10,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
     ]
   },
   {
     "id": "M071",
-    "family": "horizon",
-    "t": 18,
-    "D": 3,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 14,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 20,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1200
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
   },
   {
     "id": "M072",
-    "family": "horizon",
-    "t": 18,
-    "D": 5,
-    "bound": "inclusive",
-    "W": 10,
-    "e": 14,
-    "calEnd": 20,
+    "family": "grid",
+    "params": {
+      "t": 25,
+      "D": 10,
+      "bound": "exclusive",
+      "W": 30,
+      "e": 0,
+      "warmEnd": 30
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 600,
+          "bound": "exclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "WARMUP",
+          "from_s": 0,
+          "to_s": 1800
+        },
+        {
+          "mode": "ACTIVE",
+          "from_s": 1800,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 1500,
+          "to_s": 1560
+        }
+      ]
+    },
     "expected_status": "SAT",
-    "expected_core": null
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-104",
+        "tick": 41
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 42
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 43
+      },
+      {
+        "requirement": "REQ-104",
+        "tick": 44
+      }
+    ]
+  },
+  {
+    "id": "M073",
+    "family": "horizon",
+    "params": {
+      "t": 40,
+      "D": 1,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 15,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 60,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 900
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 900,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2400,
+          "to_s": 2460
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
+    "id": "M074",
+    "family": "horizon",
+    "params": {
+      "t": 40,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 15,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 900
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 900,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2400,
+          "to_s": 2460
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
+    "id": "M075",
+    "family": "horizon",
+    "params": {
+      "t": 40,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 15,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 900
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 900,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2400,
+          "to_s": 2460
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-101",
+        "tick": 40
+      }
+    ]
+  },
+  {
+    "id": "M076",
+    "family": "horizon",
+    "params": {
+      "t": 42,
+      "D": 1,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 15,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 60,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 900
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 900,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2520,
+          "to_s": 2580
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
+    "id": "M077",
+    "family": "horizon",
+    "params": {
+      "t": 42,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 15,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 900
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 900,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2520,
+          "to_s": 2580
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-101",
+        "tick": 42
+      }
+    ]
+  },
+  {
+    "id": "M078",
+    "family": "horizon",
+    "params": {
+      "t": 42,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 15,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 900
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 900,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2520,
+          "to_s": 2580
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-101",
+        "tick": 42
+      }
+    ]
+  },
+  {
+    "id": "M079",
+    "family": "horizon",
+    "params": {
+      "t": 40,
+      "D": 1,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 20,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 60,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 1200
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 1200,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2400,
+          "to_s": 2460
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
+    "id": "M080",
+    "family": "horizon",
+    "params": {
+      "t": 40,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 20,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 1200
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 1200,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2400,
+          "to_s": 2460
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
+    "id": "M081",
+    "family": "horizon",
+    "params": {
+      "t": 40,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 20,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 1200
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 1200,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2400,
+          "to_s": 2460
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-101",
+        "tick": 40
+      }
+    ]
+  },
+  {
+    "id": "M082",
+    "family": "horizon",
+    "params": {
+      "t": 42,
+      "D": 1,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 20,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 60,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 1200
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 1200,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2520,
+          "to_s": 2580
+        }
+      ]
+    },
+    "expected_status": "UNSAT",
+    "expected_core": [
+      "REQ-101",
+      "REQ-102",
+      "SCN"
+    ],
+    "expected_unverified": []
+  },
+  {
+    "id": "M083",
+    "family": "horizon",
+    "params": {
+      "t": 42,
+      "D": 3,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 20,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 180,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 1200
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 1200,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2520,
+          "to_s": 2580
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-101",
+        "tick": 42
+      }
+    ]
+  },
+  {
+    "id": "M084",
+    "family": "horizon",
+    "params": {
+      "t": 42,
+      "D": 5,
+      "bound": "inclusive",
+      "W": 30,
+      "e": 20,
+      "warmEnd": 45
+    },
+    "overrides": {
+      "REQ-101": {
+        "timing": {
+          "kind": "within",
+          "s": 300,
+          "bound": "inclusive"
+        }
+      },
+      "REQ-102": {
+        "scope": {
+          "mode": "WARMUP",
+          "window_s": {
+            "from": 0,
+            "to": 1800
+          }
+        }
+      }
+    },
+    "scenario": {
+      "id": "SCN",
+      "facts": [
+        {
+          "mode": "EXPIRED",
+          "from_s": 0,
+          "to_s": 1200
+        },
+        {
+          "mode": "WARMUP",
+          "from_s": 1200,
+          "to_s": 2700
+        },
+        {
+          "signal": "urgent_low",
+          "value": true,
+          "from_s": 2520,
+          "to_s": 2580
+        }
+      ]
+    },
+    "expected_status": "SAT",
+    "expected_core": null,
+    "expected_unverified": [
+      {
+        "requirement": "REQ-101",
+        "tick": 42
+      }
+    ]
   }
 ]

@@ -1,17 +1,17 @@
 {
-  "id": "REQ-006",
+  "id": "REQ-103",
   "version": "1.0",
-  "text": "The pump shall not deliver fluid while in calibration mode.",
+  "text": "During sensor warm-up, the system shall not display glucose values.",
   "source": {
     "kind": "synthetic",
     "ref": null,
-    "note": "Domain rule that motivates AX-002."
+    "note": "Typical CGM behavior; independent of the conflict."
   },
   "status": "approved",
   "approved_by": "simon",
   "formal": {
     "scope": {
-      "mode": "CALIBRATION",
+      "mode": "WARMUP",
       "window_s": null
     },
     "condition": null,
@@ -19,7 +19,7 @@
       "kind": "always"
     },
     "response": {
-      "signal": "pumping",
+      "signal": "glucose_shown",
       "value": false
     }
   }

@@ -1,154 +1,79 @@
 [
   {
-    "id": "G01",
-    "check": "scenario_conflict",
-    "corpus": "base",
-    "scenario": "SCN-001",
-    "expected_status": "UNSAT",
-    "expected_core": [
-      "REQ-001",
-      "REQ-002",
-      "SCN-001"
+    "id": "G01", "check": "scenario_conflict", "corpus": "base", "scenario": "SCN-101",
+    "expected_status": "UNSAT", "expected_core": ["REQ-101", "REQ-102", "SCN-101"], "expected_unverified": [],
+    "why": "Urgent Low alert needed in minutes [10,15]; glucose alerts forbidden in [0,30) of warm-up."
+  },
+  {
+    "id": "G02", "check": "scenario_conflict", "corpus": "base", "scenario": "SCN-102",
+    "expected_status": "SAT", "expected_core": null,
+    "expected_unverified": [
+      { "requirement": "REQ-104", "tick": 41 }, { "requirement": "REQ-104", "tick": 42 },
+      { "requirement": "REQ-104", "tick": 43 }, { "requirement": "REQ-104", "tick": 44 }
     ],
-    "why": "Alarm needed in [1,6]; alarms forbidden in [0,10)."
+    "why": "Negative: urgent low after warm-up. The 5-minute reading obligations starting at minutes 41-44 run past the horizon and must be reported as unverified."
   },
   {
-    "id": "G02",
-    "check": "scenario_conflict",
-    "corpus": "base",
-    "scenario": "SCN-002",
-    "expected_status": "SAT",
-    "expected_core": null,
-    "why": "Negative: occlusion after calibration."
-  },
-  {
-    "id": "G03",
-    "check": "scenario_conflict",
-    "corpus": "base",
-    "scenario": "SCN-003",
-    "expected_status": "SAT",
-    "expected_core": null,
-    "why": "Boundary negative: alarm at t=10 satisfies both rules."
-  },
-  {
-    "id": "G04",
-    "check": "scenario_conflict",
-    "corpus": "base",
-    "scenario": "SCN-004",
-    "expected_status": "SAT",
-    "expected_core": null,
-    "why": "Horizon negative: REQ-001 window [16,21] passes tick 19, so it is unconstrained. A naive encoding returns a spurious UNSAT."
-  },
-  {
-    "id": "G05",
-    "check": "consistency",
-    "corpus": "base",
-    "scenario": null,
-    "expected_status": "SAT",
-    "expected_core": null,
-    "expected_review": [
-      "REQ-008"
+    "id": "G03", "check": "scenario_conflict", "corpus": "base", "scenario": "SCN-103",
+    "expected_status": "SAT", "expected_core": null,
+    "expected_unverified": [
+      { "requirement": "REQ-104", "tick": 41 }, { "requirement": "REQ-104", "tick": 42 },
+      { "requirement": "REQ-104", "tick": 43 }, { "requirement": "REQ-104", "tick": 44 }
     ],
-    "why": "Approved set is globally satisfiable; the conflict exists only under a scenario. REQ-008 is pending and must surface as NEEDS_REVIEW, not be dropped."
+    "why": "Boundary negative: the alert can fire at minute 30, the first minute alerts are allowed."
   },
   {
-    "id": "G06",
-    "check": "vacuity",
-    "corpus": "base",
-    "scenario": null,
+    "id": "G04", "check": "scenario_conflict", "corpus": "base", "scenario": "SCN-104",
+    "expected_status": "SAT", "expected_core": null,
+    "expected_unverified": [{ "requirement": "REQ-101", "tick": 42 }],
+    "why": "Horizon: the REQ-101 window [42,47] passes minute 44. SAT within the bound, but the obligation is unverified. With a longer horizon this is a real conflict, because warm-up lasts until minute 50."
+  },
+  {
+    "id": "G05", "check": "consistency", "corpus": "base", "scenario": null,
+    "expected_status": "SAT", "expected_core": null, "expected_review": ["REQ-108"],
+    "why": "The approved set is globally satisfiable; the conflict needs a scenario. REQ-108 is a labeling obligation and must surface as NEEDS_REVIEW."
+  },
+  {
+    "id": "G06", "check": "vacuity", "corpus": "base", "scenario": null,
     "expected_findings": [
-      {
-        "requirement": "REQ-007",
-        "expected_status": "UNSAT",
-        "expected_core": [
-          "AX-002",
-          "TRIGGER:REQ-007"
-        ]
-      }
+      { "requirement": "REQ-107", "expected_status": "UNSAT", "expected_core": ["AX-102", "TRIGGER:REQ-107"] }
     ],
-    "expected_reachable": [
-      "REQ-001",
-      "REQ-003",
-      "REQ-004",
-      "REQ-005",
-      "REQ-009"
-    ],
-    "why": "Only REQ-007's trigger is unreachable. Every other conditional requirement must not be reported."
+    "expected_reachable": ["REQ-101", "REQ-105"],
+    "why": "Only REQ-107's trigger is unreachable: an expired sensor measures nothing."
   },
   {
-    "id": "G07",
-    "check": "equivalence",
-    "corpus": "base",
-    "interpretation": "INT-001",
+    "id": "G07", "check": "equivalence", "corpus": "base", "interpretation": "INT-101",
     "expected_status": "SAT",
-    "expected_witness": "Replaying the witness trace, exactly one of readings A and B holds. With SCN-005 the only distinguishing trace has the alarm first firing at t=7 s.",
-    "why": "Inclusive vs exclusive differ when the alarm first fires at exactly t_occ + 5."
+    "expected_witness": "Replaying the witness trace, exactly one of readings A and B holds. With SCN-105 the only distinguishing trace has the Urgent Low alert first firing at minute 7.",
+    "why": "Inclusive vs exclusive differ when the alert first fires at exactly t + 5."
   },
   {
-    "id": "G08",
-    "check": "equivalence",
-    "corpus": "base",
-    "interpretation": "INT-002",
+    "id": "G08", "check": "equivalence", "corpus": "base", "interpretation": "INT-102",
     "expected_status": "UNSAT",
-    "why": "Negative: within 3 inclusive and within 4 exclusive cover the same ticks [k, k+3]."
+    "why": "Negative: within 1 minute inclusive and within 2 minutes exclusive cover the same ticks [k, k+1]."
   },
   {
-    "id": "G09",
-    "check": "regression",
-    "from": "base",
-    "to": "v2-short-silence",
-    "scenario": "SCN-001",
+    "id": "G09", "check": "regression", "from": "base", "to": "v2-scope-active", "scenario": "SCN-101",
     "expected": {
-      "resolved": [
-        {
-          "check": "scenario_conflict",
-          "scenario": "SCN-001",
-          "core": [
-            "REQ-001",
-            "REQ-002",
-            "SCN-001"
-          ]
-        }
-      ],
+      "resolved": [{ "check": "scenario_conflict", "scenario": "SCN-101", "core": ["REQ-101", "REQ-102", "SCN-101"] }],
       "introduced": [],
-      "changed_requirements": [
-        "REQ-002"
-      ]
+      "changed_requirements": ["REQ-101"]
     },
-    "why": "Silence window [0,3) no longer covers the alarm window [1,6]."
+    "why": "Scoping REQ-101 to ACTIVE (plus a labeling instruction for warm-up) resolves the conflict."
   },
   {
-    "id": "G10",
-    "check": "regression",
-    "from": "base",
-    "to": "v3-text-only",
-    "scenario": "SCN-001",
+    "id": "G10", "check": "regression", "from": "base", "to": "v3-text-only", "scenario": "SCN-101",
     "expected": {
       "resolved": [],
       "introduced": [],
-      "persistent": [
-        {
-          "check": "scenario_conflict",
-          "scenario": "SCN-001",
-          "core": [
-            "REQ-001",
-            "REQ-002",
-            "SCN-001"
-          ]
-        }
-      ],
+      "persistent": [{ "check": "scenario_conflict", "scenario": "SCN-101", "core": ["REQ-101", "REQ-102", "SCN-101"] }],
       "changed_requirements": []
     },
-    "why": "Negative: text-only edit, same formal, so the finding persists."
+    "why": "Negative: text-only edit of REQ-102, same formal, so the finding persists and nothing changed logically."
   },
   {
-    "id": "G11",
-    "check": "load",
-    "corpus": "invalid",
-    "expected_parse_errors": [
-      "REQ-901",
-      "REQ-902"
-    ],
-    "why": "Undeclared signal and non-integer seconds must be PARSE_ERROR, never silently skipped."
+    "id": "G11", "check": "load", "corpus": "invalid",
+    "expected_parse_errors": ["REQ-901", "REQ-902"],
+    "why": "Undeclared signal and a duration that is not a multiple of the 60 s tick must be PARSE_ERROR, never silently skipped."
   }
 ]

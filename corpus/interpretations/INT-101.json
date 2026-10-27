@@ -1,8 +1,8 @@
 {
-  "id": "INT-001",
-  "requirement_id": "REQ-001",
-  "question": "Does 'within a maximum of 5 seconds' include t+5?",
-  "context_scenario": "SCN-005",
+  "id": "INT-101",
+  "requirement_id": "REQ-101",
+  "question": "Does 'within a maximum of 5 minutes' include minute t+5?",
+  "context_scenario": "SCN-105",
   "readings": {
     "A": {
       "scope": {
@@ -10,16 +10,16 @@
         "window_s": null
       },
       "condition": {
-        "signal": "occlusion",
+        "signal": "urgent_low",
         "value": true
       },
       "timing": {
         "kind": "within",
-        "s": 5,
+        "s": 300,
         "bound": "inclusive"
       },
       "response": {
-        "signal": "alarm",
+        "signal": "urgent_low_alert",
         "value": true
       }
     },
@@ -29,16 +29,16 @@
         "window_s": null
       },
       "condition": {
-        "signal": "occlusion",
+        "signal": "urgent_low",
         "value": true
       },
       "timing": {
         "kind": "within",
-        "s": 5,
+        "s": 300,
         "bound": "exclusive"
       },
       "response": {
-        "signal": "alarm",
+        "signal": "urgent_low_alert",
         "value": true
       }
     }

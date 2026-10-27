@@ -1,11 +1,11 @@
 {
   "id": "REQ-901",
   "version": "1.0",
-  "text": "Upon air-in-line detection, the pump shall alarm within 2 seconds.",
+  "text": "If ketones are high, the system shall alert within 5 minutes.",
   "source": {
     "kind": "synthetic",
     "ref": null,
-    "note": "Invalid on purpose: signal air_in_line is not declared."
+    "note": "Invalid on purpose: signal ketone_high is not declared."
   },
   "status": "pending",
   "approved_by": null,
@@ -15,16 +15,16 @@
       "window_s": null
     },
     "condition": {
-      "signal": "air_in_line",
+      "signal": "ketone_high",
       "value": true
     },
     "timing": {
       "kind": "within",
-      "s": 2,
+      "s": 300,
       "bound": "inclusive"
     },
     "response": {
-      "signal": "alarm",
+      "signal": "urgent_low_alert",
       "value": true
     }
   }

@@ -1,0 +1,22 @@
+{
+  "id": "SCN-104",
+  "description": "Old sensor expired until minute 20; new sensor warms up from minute 20; urgent low at minute 42. The deadline falls past the 45-minute horizon.",
+  "facts": [
+    {
+      "mode": "EXPIRED",
+      "from_s": 0,
+      "to_s": 1200
+    },
+    {
+      "mode": "WARMUP",
+      "from_s": 1200,
+      "to_s": 2700
+    },
+    {
+      "signal": "urgent_low",
+      "value": true,
+      "from_s": 2520,
+      "to_s": 2580
+    }
+  ]
+}

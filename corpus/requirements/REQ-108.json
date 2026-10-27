@@ -1,0 +1,13 @@
+{
+  "id": "REQ-108",
+  "version": "1.0",
+  "text": "The labeling shall describe the true, false, missed, and correct alert rates and the available glucose alert settings.",
+  "source": {
+    "kind": "anchored",
+    "ref": "21 CFR 862.1355(b)(7)(iv)",
+    "note": "Labeling obligation, not device behavior: not formalizable in the temporal template. Must surface as NEEDS_REVIEW."
+  },
+  "status": "pending",
+  "approved_by": null,
+  "formal": null
+}

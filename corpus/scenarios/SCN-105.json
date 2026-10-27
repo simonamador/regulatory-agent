@@ -1,0 +1,29 @@
+{
+  "id": "SCN-105",
+  "description": "Context for equivalence witnesses: active sensor, a single urgent low at minute 2, none elsewhere.",
+  "facts": [
+    {
+      "mode": "ACTIVE",
+      "from_s": 0,
+      "to_s": 2700
+    },
+    {
+      "signal": "urgent_low",
+      "value": false,
+      "from_s": 0,
+      "to_s": 120
+    },
+    {
+      "signal": "urgent_low",
+      "value": true,
+      "from_s": 120,
+      "to_s": 180
+    },
+    {
+      "signal": "urgent_low",
+      "value": false,
+      "from_s": 180,
+      "to_s": 2700
+    }
+  ]
+}

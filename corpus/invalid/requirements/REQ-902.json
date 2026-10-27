@@ -1,11 +1,11 @@
 {
   "id": "REQ-902",
   "version": "1.0",
-  "text": "Upon occlusion, the pump shall alarm within 2.5 seconds.",
+  "text": "If glucose is urgently low, the system shall alert within 90 seconds.",
   "source": {
     "kind": "synthetic",
     "ref": null,
-    "note": "Invalid on purpose: non-integer seconds."
+    "note": "Invalid on purpose: 90 s is not a multiple of the 60 s tick."
   },
   "status": "pending",
   "approved_by": null,
@@ -15,16 +15,16 @@
       "window_s": null
     },
     "condition": {
-      "signal": "occlusion",
+      "signal": "urgent_low",
       "value": true
     },
     "timing": {
       "kind": "within",
-      "s": 2.5,
+      "s": 90,
       "bound": "inclusive"
     },
     "response": {
-      "signal": "alarm",
+      "signal": "urgent_low_alert",
       "value": true
     }
   }

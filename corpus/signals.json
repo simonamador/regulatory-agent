@@ -1,16 +1,17 @@
 {
-  "tick_s": 1,
-  "horizon_ticks": 20,
+  "tick_s": 60,
+  "horizon_ticks": 45,
   "modes": [
-    "NORMAL",
-    "CALIBRATION"
+    "WARMUP",
+    "ACTIVE",
+    "EXPIRED"
   ],
   "signals": [
-    "occlusion",
-    "alarm",
-    "bolus_delivered",
-    "reservoir_empty",
-    "fault",
-    "pumping"
+    "urgent_low",
+    "urgent_low_alert",
+    "glucose_shown",
+    "data_gap",
+    "signal_loss_alert",
+    "reading_sent"
   ]
 }
