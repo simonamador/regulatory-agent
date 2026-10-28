@@ -11,12 +11,13 @@ function Grid({ t, scenario }: { t: Timeline; scenario: string | null }) {
   const has = (kind: string, response: string, k: number) => t.rows.some((r) => r.kind === kind && r.response === response && r.ticks.includes(k));
   const responses = [...new Set(t.rows.map((r) => r.response))];
   const clash = ticks.filter((k) => responses.some((s) => has("required", s, k) && has("forbidden", s, k)));
-  const columns: CSSProperties = { gridTemplateColumns: `14rem repeat(${t.ticks}, minmax(0, 1fr))` };
+  // A tick never narrows below 0.75rem: on a phone the timeline scrolls inside its own box, not the page.
+  const columns: CSSProperties = { gridTemplateColumns: `14rem repeat(${t.ticks}, minmax(0.75rem, 1fr))` };
   const label = "pr-3 text-xs font-bold self-center";
 
   return (
     <div className="mt-8 border-y border-ink text-xs">
-      <div className="grid" style={columns}>
+      <div className="grid overflow-x-auto" style={columns}>
         <div className={label}>Minute</div>
         {ticks.map((k) => <div key={k} className="h-7 pt-1 text-[10px] text-muted">{minute(k) % 5 === 0 ? minute(k) : ""}</div>)}
 
@@ -71,7 +72,7 @@ export function Conflict({ audit }: { audit: Audit }) {
             <span className="text-sm font-bold">{`${c.check} · ${c.scenario ?? "no scenario"} · UNSAT core`}</span>
             {c.core.map((id) => <span key={id} className="border border-red px-2 py-0.5 text-xs font-bold text-red">{id}</span>)}
           </div>
-          <div className="mt-4 grid grid-cols-2 gap-8">
+          <div className="mt-4 grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
             {c.core.filter((id) => texts.has(id)).map((id) => (
               <div key={id} className="border-t border-ink pt-2">
                 <div className="text-sm font-bold">{id}</div>

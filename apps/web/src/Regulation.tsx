@@ -40,13 +40,13 @@ function Context({ context, quote }: { context: string; quote: string | null }) 
 
 function Row({ o, context, texts }: { o: Obligation; context: string; texts: Map<string, string> }) {
   return (
-    <li className="grid grid-cols-10 gap-x-6 border-t border-rule py-4">
-      <div className="col-span-1 text-sm font-bold">{o.paragraph}</div>
-      <div className="col-span-5">
+    <li className="grid grid-cols-1 gap-y-3 border-t border-rule py-4 md:grid-cols-10 md:gap-x-6">
+      <div className="text-sm font-bold md:col-span-1">{o.paragraph}</div>
+      <div className="md:col-span-5">
         <Context context={context} quote={o.quote} />
         {o.rationale !== null && o.rationale !== "" && <p className="mt-2 text-xs text-muted">{o.rationale}</p>}
       </div>
-      <div className="col-span-2 space-y-2 text-xs">
+      <div className="space-y-2 text-xs md:col-span-2">
         <div className="font-bold uppercase tracking-wide">{o.category ?? "no item"}</div>
         {o.implemented_by.length === 0 && <div className="text-muted">No requirement mapped</div>}
         {o.implemented_by.map((id) => (
@@ -55,7 +55,7 @@ function Row({ o, context, texts }: { o: Obligation; context: string; texts: Map
           </div>
         ))}
       </div>
-      <div className="col-span-2 space-y-1">
+      <div className="space-y-1 md:col-span-2">
         <Chip verdict={o.verdict} />
         {o.reasons.length > 0 && <div className="text-xs text-muted">{o.reasons.join(", ")}</div>}
         {o.contributions.length > 1 &&

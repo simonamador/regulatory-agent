@@ -30,24 +30,26 @@ export function EvalTables({ evals }: { evals: Evals }) {
         <p className="mb-4 text-sm text-muted">
           {`A: rule-based linter. B: the LLM judges alone. C: the LLM extracts, Z3 decides. ${e.model} · runs/${e.run_id}.json · rescore ${e.rescore_run_id ?? "none"}`}
         </p>
-        <table className="w-full text-sm">
-          <thead>
-            <tr>{["Variant", "Run", "Precision", "Recall", "F1", "Core exact", "False positive rate on SAT"].map((h) => <th key={h} className={th}>{h}</th>)}</tr>
-          </thead>
-          <tbody>
-            {e.rows.map((r) => (
-              <tr key={`${r.variant}-${r.run}`}>
-                <td className={`${td} font-bold`}>{r.variant}</td>
-                <td className={td}>{r.run}</td>
-                <td className={td}>{fixed(r.precision)}</td>
-                <td className={td}>{fixed(r.recall)}</td>
-                <td className={`${td} font-bold`}>{fixed(r.f1)}</td>
-                <td className={td}>{fixed(r.core_exact)}</td>
-                <td className={td}>{fixed(r.fpr_sat)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr>{["Variant", "Run", "Precision", "Recall", "F1", "Core exact", "False positive rate on SAT"].map((h) => <th key={h} className={th}>{h}</th>)}</tr>
+            </thead>
+            <tbody>
+              {e.rows.map((r) => (
+                <tr key={`${r.variant}-${r.run}`}>
+                  <td className={`${td} font-bold`}>{r.variant}</td>
+                  <td className={td}>{r.run}</td>
+                  <td className={td}>{fixed(r.precision)}</td>
+                  <td className={td}>{fixed(r.recall)}</td>
+                  <td className={`${td} font-bold`}>{fixed(r.f1)}</td>
+                  <td className={td}>{fixed(r.core_exact)}</td>
+                  <td className={td}>{fixed(r.fpr_sat)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
         <p className="mt-3 text-sm text-muted">
           {`Audit latency: first audit ${seconds(latency.cold_first_audit_ms)}, then ${latency.warmup_audits} warm-up and ${latency.audits} measured: p50 ${seconds(latency.p50)}, p95 ${seconds(latency.p95)}.`}
         </p>
@@ -57,30 +59,32 @@ export function EvalTables({ evals }: { evals: Evals }) {
         <p className="mb-4 text-sm text-muted">
           {`runs/agent-${agent.run_id}.json, scored against the gold in force at run time and rescored against the current gold. Columns name each gold by its sha256 and the commit that introduced it.`}
         </p>
-        <table className="w-full max-w-3xl text-sm">
-          <thead>
-            <tr>
-              <th className={th}>Metric</th>
-              {/* A sha256 is case-sensitive text: the label stays out of the header's uppercase. */}
-              <th className={th}>
-                Gold at run time <span className="block font-normal normal-case">{agent.gold_at_run_time ?? "not recorded (the run predates gold_sha256)"}</span>
-                {agent.gold_at_run_time === null && (
-                  <span className="block font-normal normal-case tracking-normal text-muted">Gold v1, before relabelling (b)(2) and (b)(1)(vii) as evidence in commit 95b1902.</span>
-                )}
-              </th>
-              <th className={th}>Rescored <span className="block font-normal normal-case">{agent.gold_rescored ?? "not recorded"}</span></th>
-            </tr>
-          </thead>
-          <tbody>
-            {AGENT_ROWS.map(([key, name, format]) => (
-              <tr key={key}>
-                <td className={td}>{name}</td>
-                <td className={td}>{format(agent.at_run_time[key])}</td>
-                <td className={`${td} font-bold`}>{format(agent.rescored[key])}</td>
+        <div className="overflow-x-auto">
+          <table className="w-full max-w-3xl text-sm">
+            <thead>
+              <tr>
+                <th className={th}>Metric</th>
+                {/* A sha256 is case-sensitive text: the label stays out of the header's uppercase. */}
+                <th className={th}>
+                  Gold at run time <span className="block font-normal normal-case">{agent.gold_at_run_time ?? "not recorded (the run predates gold_sha256)"}</span>
+                  {agent.gold_at_run_time === null && (
+                    <span className="block font-normal normal-case tracking-normal text-muted">Gold v1, before relabelling (b)(2) and (b)(1)(vii) as evidence in commit 95b1902.</span>
+                  )}
+                </th>
+                <th className={th}>Rescored <span className="block font-normal normal-case">{agent.gold_rescored ?? "not recorded"}</span></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {AGENT_ROWS.map(([key, name, format]) => (
+                <tr key={key}>
+                  <td className={td}>{name}</td>
+                  <td className={td}>{format(agent.at_run_time[key])}</td>
+                  <td className={`${td} font-bold`}>{format(agent.rescored[key])}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

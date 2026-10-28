@@ -23,7 +23,7 @@ function Regression({ base, result }: { base: Audit; result: Audit }) {
     <div className="mt-6 space-y-6">
       {result.load_findings.map((f) => <p key={f.subject} className="border border-red p-2 text-sm text-red">{`PARSE_ERROR ${f.subject ?? ""}: ${f.message ?? ""}`}</p>)}
       <p className="text-sm text-muted">{`Live audit of ${result.snapshot}, answered in ${seconds(result.audit_ms)}, then the regression of every scenario against base.`}</p>
-      <div className="grid grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
         <Findings title="Resolved" findings={resolved} />
         <Findings title="Introduced" findings={introduced} />
         <Findings title="Persistent" findings={persistent} />
@@ -33,7 +33,7 @@ function Regression({ base, result }: { base: Audit; result: Audit }) {
         <p className="mt-1 text-sm">{changed_requirements.length === 0 ? "none" : changed_requirements.join(", ")}</p>
       </div>
       {edited.map((r) => (
-        <div key={r.id} className="grid grid-cols-2 gap-8 border-t border-rule pt-2 text-sm">
+        <div key={r.id} className="grid grid-cols-1 gap-4 border-t border-rule pt-2 text-sm md:grid-cols-2 md:gap-8">
           <div>
             <div className="text-xs font-bold">{`${r.id} in base`}</div>
             <p className="mt-1 text-muted">{before.get(r.id)}</p>
@@ -64,7 +64,7 @@ export function Correction({ base, onError, onAudited }: { base: Audit; onError:
   };
   return (
     <div>
-      <div className="flex items-end gap-4 text-sm">
+      <div className="flex flex-wrap items-end gap-4 text-sm">
         <span className="pb-1 font-bold">base →</span>
         <label className="flex flex-col gap-1">
           <span className="text-xs font-bold uppercase tracking-wide">Snapshot</span>

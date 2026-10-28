@@ -7,13 +7,14 @@ import { Regulation } from "./Regulation";
 import { Trace } from "./Trace";
 
 // One section of the storyboard: a folio letter on the grid's left column, the content on the right.
+// Below md the grid collapses to one column, folio above content.
 function Section({ folio, title, children }: { folio: string; title: string; children: ReactNode }) {
   return (
-    <section className="grid grid-cols-12 gap-x-8 border-t border-ink pt-6 pb-16">
-      <div className="col-span-2">
-        <div className="text-[7rem] leading-[0.8] font-bold tracking-tighter">{folio}</div>
+    <section className="border-t border-ink pt-6 pb-16 md:grid md:grid-cols-12 md:gap-x-8">
+      <div className="mb-4 md:col-span-2 md:mb-0">
+        <div className="text-[4rem] leading-[0.8] font-bold tracking-tighter md:text-[7rem]">{folio}</div>
       </div>
-      <div className="col-span-10">
+      <div className="min-w-0 md:col-span-10">
         <h2 className="mb-6 text-2xl font-bold tracking-tight">{title}</h2>
         {children}
       </div>
@@ -48,11 +49,11 @@ export function App() {
   }, []);
 
   return (
-    <main className="mx-auto max-w-[1360px] px-10 py-12 font-sans">
-      <header className="mb-12 grid grid-cols-12 gap-x-8">
-        <div className="col-span-2 text-sm font-bold">rqaudit</div>
-        <div className="col-span-10">
-          <h1 className="text-5xl font-bold tracking-tight">21 CFR 862.1355</h1>
+    <main className="mx-auto max-w-[1360px] px-4 py-8 font-sans md:px-10 md:py-12">
+      <header className="mb-12 md:grid md:grid-cols-12 md:gap-x-8">
+        <div className="mb-4 text-sm font-bold md:col-span-2 md:mb-0">rqaudit</div>
+        <div className="md:col-span-10">
+          <h1 className="text-4xl font-bold tracking-tight md:text-5xl">21 CFR 862.1355</h1>
           <p className="mt-2 text-lg text-muted">
             Integrated continuous glucose monitoring system: impact assessment of the regulation on the product requirements.
           </p>
