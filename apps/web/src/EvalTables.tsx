@@ -62,7 +62,12 @@ export function EvalTables({ evals }: { evals: Evals }) {
             <tr>
               <th className={th}>Metric</th>
               {/* A sha256 is case-sensitive text: the label stays out of the header's uppercase. */}
-              <th className={th}>Gold at run time <span className="block font-normal normal-case">{agent.gold_at_run_time ?? "not recorded (the run predates gold_sha256)"}</span></th>
+              <th className={th}>
+                Gold at run time <span className="block font-normal normal-case">{agent.gold_at_run_time ?? "not recorded (the run predates gold_sha256)"}</span>
+                {agent.gold_at_run_time === null && (
+                  <span className="block font-normal normal-case tracking-normal text-muted">Gold v1, before relabelling (b)(2) and (b)(1)(vii) as evidence in commit 95b1902.</span>
+                )}
+              </th>
               <th className={th}>Rescored <span className="block font-normal normal-case">{agent.gold_rescored ?? "not recorded"}</span></th>
             </tr>
           </thead>
