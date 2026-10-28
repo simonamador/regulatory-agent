@@ -69,7 +69,7 @@ function Row({ o, context, texts }: { o: Obligation; context: string; texts: Map
 
 export function Regulation({ report, onReload, onError }: { report: AgentReport; onReload: () => Promise<void>; onError: (e: unknown) => void }) {
   const [runIndex, setRunIndex] = useState(0);
-  const [filter, setFilter] = useState<Verdict | "ALL">("ALL");
+  const [filter, setFilter] = useState<Verdict | "ALL" | "IN_SCOPE">("IN_SCOPE");
   const [live, setLive] = useState(false);
   const run = report.runs[runIndex];
   if (run === undefined) return <p>The agent report has no runs.</p>;
@@ -77,7 +77,8 @@ export function Regulation({ report, onReload, onError }: { report: AgentReport;
   const texts = new Map(report.requirements.map((r) => [r.id, r.text]));
   const verdicts = [...new Set(run.obligations.map((o) => o.verdict))];
   const counts = verdicts.map((v) => [v, run.obligations.filter((o) => o.verdict === v).length] as const);
-  const shown = run.obligations.filter((o) => filter === "ALL" || o.verdict === filter);
+  const inScope = run.obligations.filter((o) => o.verdict !== "OUT_OF_SCOPE");
+  const shown = filter === "IN_SCOPE" ? inScope : run.obligations.filter((o) => filter === "ALL" || o.verdict === filter);
   const runLive = () => {
     setLive(true);
     postAgentRun().then(onReload, onError).finally(() => setLive(false));
@@ -94,7 +95,8 @@ export function Regulation({ report, onReload, onError }: { report: AgentReport;
         </label>
         <label className="flex flex-col gap-1">
           <span className="text-xs font-bold uppercase tracking-wide">Verdict</span>
-          <select className="border border-ink px-2 py-1" value={filter} onChange={(e) => setFilter(e.target.value as Verdict | "ALL")}>
+          <select className="border border-ink px-2 py-1" value={filter} onChange={(e) => setFilter(e.target.value as Verdict | "ALL" | "IN_SCOPE")}>
+            <option value="IN_SCOPE">{`Excluding out of scope (${inScope.length})`}</option>
             <option value="ALL">{`All (${run.obligations.length})`}</option>
             {counts.map(([v, n]) => <option key={v} value={v}>{`${v.replaceAll("_", " ")} (${n})`}</option>)}
           </select>
