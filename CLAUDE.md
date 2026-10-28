@@ -14,7 +14,7 @@ Demo: auditor de consistencia lógica para requisitos de un dispositivo médico 
 - Fail closed: los errores se propagan. `try/catch` solo en la carga de `corpus/` y en la llamada al LLM (SPEC §6). Un resultado dudoso es `UNKNOWN` o `NEEDS_REVIEW`, nunca un default favorable.
 - `tests/gold/` y `corpus/` son la especificación y son de solo lectura. Si un test gold parece incorrecto, detente y explícalo; no lo rodees.
 - Borrar el código que la etapa vuelve obsoleto es parte de la tarea.
-- `z3-solver`: `init()` es async y pesado. Un solo `Context` por proceso (servidor, archivo de test o CLI). Los CLIs terminan con `process.exit`, porque los workers de Z3 mantienen vivo el proceso.
+- `z3-solver`: `init()` es async y pesado. Un solo `Context` por proceso (servidor, archivo de test o CLI). Los CLIs terminan con `process.exit`, porque los workers de Z3 mantienen vivo el proceso. Dos operaciones de Z3 intercaladas sobre ese `Context` corrompen la memoria WASM: la API pública de core (`audit`, `scenarioConflict`, `regression`) lo toma en exclusiva; no la rodees desde el servidor.
 - BMC: una obligación `within T` disparada cerca del horizonte no restringe nada (SPEC §3). Olvidarlo produce UNSAT espurios. No se descarta en silencio: si el disparador es forzado, sale en `unverified` (SPEC §4).
 - El horizonte, el tick y los modos salen de `signals.json`; ningún número del modelo va escrito a mano.
 - Render inyecta `PORT`; Express lo lee de ahí.

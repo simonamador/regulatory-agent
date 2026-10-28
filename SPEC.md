@@ -15,9 +15,9 @@ Incluye el delta v2 del 27-oct-2026: el dispositivo es un monitor continuo de gl
 | Solver | `z3-solver` 5.3.2 (WASM oficial), solo en servidor |
 | LLM | SDK `openai` 7, structured outputs con `zodResponseFormat`; OpenAI directo, modelo en una constante |
 | API | Express 5 |
-| UI | React 19 + Vite 8 + Tailwind 4 |
+| UI | React 19 + Vite 8 (`@vitejs/plugin-react`) + Tailwind 4 (`@tailwindcss/vite`) |
 | Persistencia | JSON versionado en `corpus/`; sin base de datos |
-| Tests | Vitest 5 |
+| Tests | Vitest 5; supertest para los endpoints de `server.ts` |
 | Calidad | `tsc --noEmit`, ESLint 10 + typescript-eslint 8, knip |
 | Deploy | Render free: un servicio Node; Express sirve la API y `apps/web/dist` |
 
@@ -34,13 +34,15 @@ packages/core/src/
   regression.ts  # diff de findings entre dos snapshots
   index.ts       # exports públicos
 apps/api/src/
-  server.ts      # Express: rutas + sirve web/dist
+  server.ts      # Express: GET /api/agent-report, POST /api/audit {snapshot}, GET /api/evals, POST /api/agent-run + sirve web/dist
   llm.ts         # texto → Requirement.formal vía OpenAI. Único import de `openai`
   evals.ts       # CLI `pnpm eval`: variantes A/B/C → runs/<run_id>.json; `--rescore` por slices
   agent.ts       # agente regulatorio (§10, etapa 06)
   tools.ts       # herramientas deterministas del agente (§10, etapa 06)
-apps/web/src/
-  App.tsx + componentes de las 4 vistas del storyboard
+apps/web/                   # index.html, vite.config.ts (proxy /api → :3000 en dev)
+  src/main.tsx, index.css   # entrada y tokens Swiss
+  src/api.ts                # tipos y fetch de la API
+  src/App.tsx + un componente por sección del storyboard (a–e)
 corpus/          # signals.json, requirements/, axioms.json, scenarios/, interpretations/, snapshots/, invalid/, regulations/
 tests/gold/      # cases.json, mutations.json, gen-mutations.mjs, obligations.json (Simón aprueba; solo lectura para el agente)
 ```
@@ -120,7 +122,7 @@ Cada requisito, axioma y hecho se asserta como `Implies(p_id, fórmula)` con un 
 - **Obligaciones no verificadas:** `scenario_conflict` con resultado SAT devuelve además `unverified: {requirement, tick}[]`. Un par entra si (a) el timing del requisito es `within`, (b) su `last` en ese tick pasa `H − 1`, y (c) el disparador se cumple en **todo** modelo de AX ∧ REQ ∧ SCN. Para comprobar (c), un check con la assumption ¬trigger(k) debe dar UNSAT. El witness no decide: solo descarta pares cuyo disparador es falso en él. Todo par reportado sale de un check UNSAT. Se reutiliza el solver del check SAT (incremental). La lista va ordenada por requirement y luego por tick; si el resultado es UNSAT, va vacía. Si alguno de esos checks da `unknown`, el finding entero es `UNKNOWN`.
 - **Core mínimo:** el core de Z3 no es mínimo por garantía. Se minimiza por deletion: se quita un literal, se re-chequea y, si sigue UNSAT, se descarta.
 - **Identidad de un finding:** `(check, scenario_id | null, ids del core ordenados)`. La regresión compara por esta clave.
-- **Solver:** `random_seed = 0`, `timeout = 2000` ms; si vence → `UNKNOWN`. Un solo `Context` inicializado al arrancar el servidor.
+- **Solver:** `random_seed = 0`, `timeout = 2000` ms; si vence → `UNKNOWN`. Un solo `Context` inicializado al arrancar el servidor; cada operación pública de core (`audit`, `scenarioConflict`, `regression`) lo toma en exclusiva, porque dos checks intercalados corrompen la memoria WASM. El servidor hace 1 auditoría de calentamiento antes de escuchar.
 - **Witness:** tabla tick × señal/modo; la UI la dibuja como timeline.
 - **Auditoría:** auditoría = consistency + scenario_conflict por cada escenario + vacuity + equivalence por cada interpretación, sobre el corpus base, en un proceso que ya hizo 1 auditoría completa de calentamiento (como corre el servidor). La primera auditoría del proceso se reporta aparte como `cold_first_audit_ms`.
 
@@ -188,7 +190,7 @@ El test aplica los overrides sobre el corpus base completo (validados con los mi
 - **Guías:** `CLAUDE.md` (solo lo no obvio), este SPEC, tests gold.
 - **Sensores computacionales:**
   - Stop hook `scripts/gate.sh`: typecheck, lint, test, knip. Si falla, devuelve exit 2 y el turno no termina.
-  - La tarea `test` de turbo declara `corpus/**` y `tests/gold/**` como inputs: un gate que pasa desde la caché no es un sensor.
+  - La tarea `test` de turbo declara `corpus/**`, `tests/gold/**` y `runs/**` como inputs: un gate que pasa desde la caché no es un sensor.
   - ESLint: `complexity ≤ 8`; `no-restricted-syntax` contra `TryStatement` salvo en las dos fronteras; `no-restricted-imports` para z3 y openai; `no-explicit-any`; `ban-ts-comment`.
   - knip: archivos, exports y dependencias sin uso hacen fallar el gate.
   - `permissions.deny` sobre `tests/gold/**` y `corpus/**`.

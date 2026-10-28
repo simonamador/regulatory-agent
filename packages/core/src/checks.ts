@@ -7,6 +7,21 @@ import type { Finding, Formal, Vocabulary, Witness } from "./schema.js";
 const { Context } = await init();
 const ctx = Context("main");
 
+// Z3's async check runs on a worker over this single Context; two operations interleaved on it corrupt WASM memory
+// (concurrent HTTP requests crashed the server). The public API (index.ts) holds the Context for each whole run;
+// the next run waits whatever this one's outcome, and the outcome itself still reaches its caller.
+let held: Promise<unknown> = Promise.resolve();
+export function exclusive<A extends unknown[], T>(run: (...args: A) => Promise<T>) {
+  return (...args: A): Promise<T> => {
+    const result = held.then(() => run(...args));
+    held = result.then(
+      () => undefined,
+      () => undefined,
+    );
+    return result;
+  };
+}
+
 type Literal = [id: string, literal: Bool<"main">];
 type Outcome = Pick<Finding, "status" | "core" | "witness" | "unverified">;
 type Tail = { requirement: string; tick: number; trigger: Bool<"main"> };

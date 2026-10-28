@@ -199,12 +199,13 @@ async function runAgent(corpus: Corpus, leaves: Leaf[]) {
   return { status: "max_turns", message: `No final answer after ${MAX_TURNS} turns.`, items: [], trace, usages, settings };
 }
 
-// The base corpus, the regulation's leaves and the gold; gold_sha256 identifies the gold a score was computed against.
+// The base corpus, the regulation's leaves and the gold; gold_sha256 identifies the gold a score was computed against
+// (LF-normalized, so a CRLF checkout hashes like an LF one; scripts/gold-versions.mjs maps it to its commit).
 function inputs() {
   const corpus = loadCorpus(fileURLToPath(new URL("corpus/", root)), "base");
   if (corpus.findings.length > 0) throw new Error(`The base corpus does not load cleanly: ${JSON.stringify(corpus.findings)}`);
   const leaves = parseRegulation(readFileSync(new URL(REGULATION, root), "utf8"));
-  const raw = readFileSync(new URL("tests/gold/obligations.json", root), "utf8");
+  const raw = readFileSync(new URL("tests/gold/obligations.json", root), "utf8").replaceAll("\r\n", "\n");
   const gold = (JSON.parse(raw) as { obligations: GoldObligation[] }).obligations;
   return { corpus, leaves, gold, gold_sha256: createHash("sha256").update(raw).digest("hex") };
 }
@@ -228,13 +229,14 @@ function rescore(source_run_id: string) {
   console.table(Object.fromEntries(Object.entries(summary).map(([key, value]) => [key, { stored: before[key], rescored: value }])));
 }
 
-async function main() {
+// `count` real agent runs, scored and written to runs/agent-<run_id>.json: 3 for `pnpm eval:agent`, 1 for the UI's live run.
+export async function agentEval(count: number) {
   const started = performance.now();
   const run_id = newRunId();
   const { corpus, leaves, gold, gold_sha256 } = inputs();
 
   const runs = [];
-  for (let run = 1; run <= RUNS; run++) {
+  for (let run = 1; run <= count; run++) {
     const runStarted = performance.now();
     const session = await runAgent(corpus, leaves);
     const findings = await audit(corpus);
@@ -254,8 +256,13 @@ async function main() {
     runs,
   };
   write(`agent-${run_id}`, report);
+  return report;
+}
 
-  console.log(`agent ${run_id} · model ${MODEL} · ${leaves.length} leaf paragraphs · runs/agent-${run_id}.json`);
+async function main() {
+  const report = await agentEval(RUNS);
+  const { run_id, runs } = report;
+  console.log(`agent ${run_id} · model ${MODEL} · ${report.summary.valid_runs}/${runs.length} valid runs · runs/agent-${run_id}.json`);
   console.table(
     runs.map(({ run, status, metrics: m, latency_ms, tokens: t, turns, tool_calls, temperature, reasoning_effort }) => ({
       run, status, ...Object.fromEntries(Object.entries(m ?? {}).map(([key, value]) => [key, round(value)])),
