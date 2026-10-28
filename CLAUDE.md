@@ -1,25 +1,25 @@
 # rqaudit
 
-Demo: auditor de consistencia lógica para requisitos de un dispositivo médico ficticio. El LLM llena una plantilla tipada; Z3 decide sobre trazas acotadas.
-`SPEC.md` es la fuente de verdad técnica. Implementa solo la etapa que se indique.
+Demo: a logical-consistency auditor for the requirements of a fictional medical device. The LLM fills a typed template; Z3 decides over bounded traces.
+`SPEC.md` is the technical source of truth. Implement only the stage you are asked for.
 
-## Comandos
+## Commands
 - Setup: `pnpm install`
-- Gate (lo mismo que corre el Stop hook): `scripts/gate.sh`
-- Un test: `pnpm --filter @rqaudit/core vitest run checks -t scenario`
-- Dev: `pnpm dev` (api + web) · Eval: `pnpm eval` · Agente: `pnpm eval:agent` (OpenAI real, 3 corridas)
+- Gate (what the Stop hook runs): `scripts/gate.sh`
+- One test: `pnpm --filter @rqaudit/core vitest run checks -t scenario`
+- Dev: `pnpm dev` (api + web) · Eval: `pnpm eval` · Agent: `pnpm eval:agent` (real OpenAI calls, 3 runs)
 
-## Lo que no es obvio en este repo
-- El código es la mínima implementación que pasa `tests/gold/`. Una función existe porque un test, la API o la UI la llaman; un helper con un solo caller va inline.
-- Fail closed: los errores se propagan. `try/catch` solo en la carga de `corpus/` y en la llamada al LLM (SPEC §6). Un resultado dudoso es `UNKNOWN` o `NEEDS_REVIEW`, nunca un default favorable.
-- `tests/gold/` y `corpus/` son la especificación y son de solo lectura. Si un test gold parece incorrecto, detente y explícalo; no lo rodees.
-- Borrar el código que la etapa vuelve obsoleto es parte de la tarea.
-- `z3-solver`: `init()` es async y pesado. Un solo `Context` por proceso (servidor, archivo de test o CLI). Los CLIs terminan con `process.exit`, porque los workers de Z3 mantienen vivo el proceso. Dos operaciones de Z3 intercaladas sobre ese `Context` corrompen la memoria WASM: la API pública de core (`audit`, `scenarioConflict`, `regression`) lo toma en exclusiva; no la rodees desde el servidor.
-- BMC: una obligación `within T` disparada cerca del horizonte no restringe nada (SPEC §3). Olvidarlo produce UNSAT espurios. No se descarta en silencio: si el disparador es forzado, sale en `unverified` (SPEC §4).
-- El horizonte, el tick y los modos salen de `signals.json`; ningún número del modelo va escrito a mano.
-- En Vercel la app Express es una función (`api/index.js`) que nunca escucha: el calentamiento es perezoso, en la primera llamada de cada instancia. `listen` y `PORT` son solo del entrypoint local. En producción nada escribe en disco (el agente en vivo está apagado).
-- `tests/gold/gen-mutations.mjs` es un script suelto de Simón: knip debe ignorar `tests/gold/**`, no hay que borrarlo ni importarlo.
-- Los tests de aceptación leen `tests/gold/*.json` desde `packages/core/test/`; el JSON es la especificación y el test solo la recorre.
+## What is not obvious in this repo
+- The code is the minimal implementation that passes `tests/gold/`. A function exists because a test, the API or the UI calls it; a helper with a single caller goes inline.
+- Fail closed: errors propagate. `try/catch` only when loading `corpus/` and when calling the LLM (SPEC §6). A doubtful result is `UNKNOWN` or `NEEDS_REVIEW`, never a favorable default.
+- `tests/gold/` and `corpus/` are the specification and are read-only. If a gold test looks wrong, stop and explain why; do not work around it.
+- Deleting the code a stage makes obsolete is part of the task.
+- `z3-solver`: `init()` is async and heavy. One `Context` per process (server, test file or CLI). CLIs end with `process.exit`, because Z3's workers keep the process alive. Two Z3 operations interleaved on that `Context` corrupt the WASM memory: core's public API (`audit`, `scenarioConflict`, `regression`) holds it exclusively; do not bypass it from the server.
+- BMC: a `within T` obligation triggered near the horizon constrains nothing (SPEC §3). Forgetting this yields spurious UNSAT. It is not dropped silently: if its trigger is forced, it is reported in `unverified` (SPEC §4).
+- The horizon, the tick and the modes come from `signals.json`; no model number is hard-coded.
+- On Vercel the Express app is a function (`api/index.js`) that never listens: the warm-up is lazy, on each instance's first call. `listen` and `PORT` belong to the local entrypoint only. In production nothing writes to disk (the live agent is off).
+- `tests/gold/gen-mutations.mjs` is a standalone script of Simón's: knip must ignore `tests/gold/**`; do not delete or import it.
+- The acceptance tests read `tests/gold/*.json` from `packages/core/test/` and `apps/api/test/`; the JSON is the specification and the test only walks it. After a gold change is committed, run `pnpm gold:versions`.
 
-## Al terminar
-Muestra la salida de `scripts/gate.sh`, no un resumen de que pasó.
+## When done
+Show the output of `scripts/gate.sh`, not a summary saying it passed.

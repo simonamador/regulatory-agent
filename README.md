@@ -10,9 +10,13 @@ A logical-consistency auditor for the requirements of a fictional continuous glu
 - **d. Evals**: variants A/B/C (rule linter, LLM judge, LLM extraction + Z3) and the agent's metrics, read from `runs/`.
 - **e. Agent trace**: tool calls, turns, tokens and latency of each agent run.
 
+## Where to start reading
+
+This README → [SPEC.md](SPEC.md) §1–4 → [packages/core/src/checks.ts](packages/core/src/checks.ts) → [apps/api/src/agent.ts](apps/api/src/agent.ts) → [tests/gold/](tests/gold/).
+
 ## Run it locally
 
-Node 22 and pnpm 10.
+Node 22 or later, and pnpm 10.
 
 ```bash
 pnpm install
@@ -30,6 +34,14 @@ scripts/gate.sh      # typecheck, lint, tests (gold cases, 84 mutations, endpoin
 pnpm eval            # variants A/B/C → runs/<run_id>.json; `pnpm eval --rescore <run_id>` re-scores without the LLM
 pnpm eval:agent      # 3 real agent runs → runs/agent-<run_id>.json; `--rescore <run_id>` against the current gold
 ```
+
+## How this was built
+
+Built in about one day with Claude Code working inside a harness, one session per stage (SPEC §9).
+
+- **Guides:** `CLAUDE.md` (only the non-obvious rules), `SPEC.md`, and a gold set in `tests/gold/` approved by a human before the code existed ([docs/corpus-review.md](docs/corpus-review.md)).
+- **Sensors:** a Stop-hook gate (`scripts/gate.sh`: typecheck, lint, tests, knip) that a turn cannot end without passing; deny rules that keep `corpus/` and `tests/gold/` read-only for the agent; ESLint rules for the fail-closed boundaries (`try/catch` in two places only), the Z3 and OpenAI import boundaries and complexity ≤ 8; knip for dead code; and a `scope-reviewer` subagent on each stage's diff.
+- **Human decisions:** the stack, the data strategy (synthetic, anchored), the corpus and gold approvals, and each blocking decision the agent stopped for, recorded in SPEC (e.g. the verdict derivation order in §10, the witness pruning in §4, the vocabulary-terms exception in §6).
 
 ## Known limitations
 
