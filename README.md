@@ -4,9 +4,9 @@ A logical-consistency auditor for the requirements of a fictional continuous glu
 
 ## The storyboard (one page)
 
-- **a. Regulation**: the 27 paragraphs with category, highlighted quote, mapped requirements and verdict, from the latest committed agent run.
-- **b. Design conflict**: REQ-101 × REQ-102 in scenario SCN-101. The UNSAT core and a minute-by-minute timeline, from a live Z3 audit.
-- **c. Correction**: re-audit snapshot `v2-scope-active` (the conflict is resolved) or `v3-text-only` (it persists; no formal change).
+- **a. Design conflict**: REQ-101 × REQ-102 in scenario SCN-101. The UNSAT core and a minute-by-minute timeline, from a live Z3 audit.
+- **b. Correction**: re-audit snapshot `v2-scope-active` (the conflict is resolved) or `v3-text-only` (it persists; no formal change).
+- **c. Regulation**: the 27 paragraphs with category, highlighted quote, mapped requirements and verdict, from the latest committed agent run.
 - **d. Evals**: variants A/B/C (rule linter, LLM judge, LLM extraction + Z3) and the agent's metrics, read from `runs/`.
 - **e. Agent trace**: tool calls, turns, tokens and latency of each agent run.
 

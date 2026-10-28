@@ -28,7 +28,7 @@ function goldLabel(sha256: string | undefined) {
   return `${sha256.slice(0, 8)} · ${when}`;
 }
 
-// Section b: minute by minute, the scenario's modes and fixed signals and, for each requirement of the core, the
+// Section a: minute by minute, the scenario's modes and fixed signals and, for each requirement of the core, the
 // ticks its response is forbidden (always, value false) or required (within: each trigger up to its deadline).
 // Display only: it reads the same §3 semantics off the scenario facts; the verdict is Z3's.
 function timeline(corpus: Corpus, f: Finding) {
@@ -110,7 +110,7 @@ export function createApp({ warm, rss }: { warm: () => Promise<unknown>; rss: ()
     res.json({ ready: true, rss_mb: Math.round(rss() / MB), audits_served });
   });
 
-  // Section a and e: the latest agent run in runs/ (the agent is not called by default).
+  // Sections c and e: the latest agent run in runs/ (the agent is not called by default).
   app.get("/api/agent-report", (_req, res) => {
     const file = runFiles(/^agent-\d.*\.json$/).at(-1);
     if (file === undefined) throw new Error("No agent run in runs/");
@@ -127,7 +127,7 @@ export function createApp({ warm, rss }: { warm: () => Promise<unknown>; rss: ()
     });
   });
 
-  // Sections b and c: the live audit (Z3) of a snapshot and, against base, the regression.
+  // Sections a and b: the live audit (Z3) of a snapshot and, against base, the regression.
   app.post("/api/audit", async (req, res) => {
     const snapshots = ["base", ...readdirSync(join(corpusDir, "snapshots"))];
     const body = z.strictObject({ snapshot: z.string() }).safeParse(req.body);

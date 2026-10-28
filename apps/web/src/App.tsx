@@ -56,14 +56,14 @@ export function App() {
         </div>
       </header>
       {error !== null && <p className="mb-8 border border-red p-4 text-red">{error}</p>}
-      <Section folio="a" title="Regulation">
-        {report === null ? <p>Loading the agent report…</p> : <Regulation key={report.file} report={report} onReload={loadReport} onError={fail} />}
-      </Section>
-      <Section folio="b" title="Design conflict">
+      <Section folio="a" title="Design conflict">
         {base === null ? <p>Running the live audit…</p> : <Conflict audit={base} />}
       </Section>
-      <Section folio="c" title="Correction">
+      <Section folio="b" title="Correction">
         {base === null ? <p>Waiting for the base audit…</p> : <Correction base={base} onError={fail} onAudited={loadHealth} />}
+      </Section>
+      <Section folio="c" title="Regulation">
+        {report === null ? <p>Loading the agent report…</p> : <Regulation key={report.file} report={report} onReload={loadReport} onError={fail} />}
       </Section>
       <Section folio="d" title="Evals">
         {evals === null ? <p>Loading runs…</p> : <EvalTables evals={evals} />}
