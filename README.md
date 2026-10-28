@@ -1,5 +1,7 @@
 # rqaudit
 
+Live demo: https://regulatory-agent-alpha.vercel.app
+
 A logical-consistency auditor for the requirements of a fictional continuous glucose monitor (CGM), assessed against 21 CFR 862.1355. An LLM fills a typed template, Z3 decides over bounded traces, and an agent maps the regulation's 27 leaf paragraphs to requirements. The verdicts are computed in code, never by the LLM. `SPEC.md` is the technical source of truth.
 
 ## The storyboard (one page)
@@ -49,3 +51,5 @@ Built in about one day with Claude Code working inside a harness, one session pe
 - **A synthetic, anchored corpus.** The 8 requirements were written for the demo. Each one paraphrases a public source (21 CFR 862.1355, FDA 510(k) K213996) or is marked synthetic, and the thresholds are ours. They are not a real device's requirements.
 - **A gold corrected from v1 to v2, declared.** After the first agent run, (b)(2) and (b)(1)(vii) were relabelled from behavior to evidence (commit `95b1902`). Section d shows the agent scored against both.
 - **Solver memory grows by about 9 MB per audit, per instance.** Z3's AST wrappers are freed only by the garbage collector. Past 1.5 GB resident, an audit is refused with `503 solver_memory_limit`; `/api/health` reports `rss_mb` and `audits_served`. Planned fix: run Z3 in a worker_thread recycled every N audits.
+- `CONSISTENT_BOUNDED` means the mapped requirements are consistent under the model, not that the obligation is fully covered. Example: (b)(5) maps to REQ-106, which the agent's own rationale flags as partial. A partial-coverage flag is the next step.
+- `search_requirements` is keyword-based; the agent queried 'shall'/'must' to list all 8 requirements. At scale this needs top-k semantic retrieval.
