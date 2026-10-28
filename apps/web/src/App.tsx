@@ -21,6 +21,12 @@ function Section({ folio, title, children }: { folio: string; title: string; chi
   );
 }
 
+function SolverStatus({ health }: { health: Health | null }) {
+  if (health === null) return <p className="mt-4 text-xs text-muted">Warming up the solver instance…</p>;
+  const served = `${health.audits_served} ${health.audits_served === 1 ? "audit" : "audits"} served`;
+  return <p className="mt-4 text-xs text-muted">{`Solver instance ready · ${health.rss_mb} MB resident · ${served}`}</p>;
+}
+
 export function App() {
   const [report, setReport] = useState<AgentReport | null>(null);
   const [evals, setEvals] = useState<Evals | null>(null);
@@ -50,9 +56,7 @@ export function App() {
           <p className="mt-2 text-lg text-muted">
             Integrated continuous glucose monitoring system: impact assessment of the regulation on the product requirements.
           </p>
-          <p className="mt-4 text-xs text-muted">
-            {health === null ? "Warming up the solver instance…" : `Solver instance ready · ${health.rss_mb} MB resident · ${health.audits_served} audits served`}
-          </p>
+          <SolverStatus health={health} />
         </div>
       </header>
       {error !== null && <p className="mb-8 border border-red p-4 text-red">{error}</p>}
