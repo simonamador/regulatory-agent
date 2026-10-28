@@ -100,14 +100,17 @@ export function Regulation({ report, onReload, onError }: { report: AgentReport;
           </select>
         </label>
         <div className="text-xs text-muted">{`${report.file} · ${report.model}`}</div>
-        <button
-          className="ml-auto border border-ink px-3 py-1 font-bold disabled:border-rule disabled:text-muted"
-          disabled={!report.live_available || live}
-          title={report.live_available ? "One real agent run, written to runs/" : "OPENAI_API_KEY is not set"}
-          onClick={runLive}
-        >
-          {live ? "Running the agent…" : "Run agent live"}
-        </button>
+        <div className="ml-auto flex flex-col items-end gap-1">
+          <button
+            className="border border-ink px-3 py-1 font-bold disabled:border-rule disabled:text-muted"
+            disabled={!report.live_available || live}
+            title={report.live_available ? "One real agent run, written to runs/" : "OPENAI_API_KEY is not set"}
+            onClick={runLive}
+          >
+            {live ? "Running the agent…" : "Run agent live"}
+          </button>
+          {!report.live_available && <span className="text-xs text-muted">Runs locally, with an OpenAI API key</span>}
+        </div>
       </div>
       <ul className="border-b border-rule">
         {shown.map((o) => <Row key={o.paragraph} o={o} context={contexts.get(o.paragraph) ?? ""} texts={texts} />)}

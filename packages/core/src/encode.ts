@@ -4,30 +4,40 @@ import type { Axiom, Fact, Formal, Vocabulary, Witness } from "./schema.js";
 // Ticks in the half-open interval [from, to).
 const range = (from: number, to: number) => Array.from({ length: Math.max(0, to - from) }, (_, i) => from + i);
 
-// Formulas over one bounded trace: ticks 0..H-1, a Bool per signal and a mode enum per tick (SPEC §3).
+// The vocabulary's terms: the mode Datatype and, per tick, the mode and signal constants and their literals. They
+// depend only on signals.json, so checks.ts builds them once per vocabulary. Declaring the Datatype on every check
+// made a new sort, and new atoms, each time: memory grew with every audit. This is not a cache of results (SPEC §6).
 // Z3 constants are identified by name, so `urgent_low@3` is the same variable wherever it is built.
-// Corpus times are seconds, already validated as multiples of tick_s; `tick` turns them into ticks.
-export function encoder(ctx: Context<"main">, { horizon_ticks: H, tick_s, modes, signals }: Vocabulary) {
+export function vocabularyTerms(ctx: Context<"main">, { horizon_ticks: H, modes, signals }: Vocabulary) {
   const Mode = ctx.Datatype("Mode");
   for (const mode of modes) Mode.declare(mode);
   const modeSort = Mode.create();
   const ticks = range(0, H);
-  const tick = (s: number) => s / tick_s;
-
   const modeAt = (k: number) => ctx.Const(`mode@${k}`, modeSort);
   const signalAt = (signal: string, k: number) => ctx.Bool.const(`${signal}@${k}`);
-
-  // Atoms are built once: every Z3 call crosses into WASM, and rebuilding them dominated the check time.
   const table = (keys: string[], build: (key: string, k: number) => Bool<"main">) =>
     new Map(keys.map((key) => [key, ticks.map((k) => build(key, k))]));
+  return {
+    modeAt,
+    modeAtoms: table(modes, (mode, k) => modeAt(k).eq(modeSort.constructorDecl(modes.indexOf(mode)).call())),
+    trueAtoms: table(signals, signalAt),
+    falseAtoms: table(signals, (signal, k) => ctx.Not(signalAt(signal, k))),
+  };
+}
+export type VocabularyTerms = ReturnType<typeof vocabularyTerms>;
+
+// Formulas over one bounded trace: ticks 0..H-1, a Bool per signal and a mode enum per tick (SPEC §3).
+// Corpus times are seconds, already validated as multiples of tick_s; `tick` turns them into ticks.
+export function encoder(ctx: Context<"main">, { horizon_ticks: H, tick_s, signals }: Vocabulary, terms: VocabularyTerms) {
+  const ticks = range(0, H);
+  const tick = (s: number) => s / tick_s;
+  const { modeAt, modeAtoms, trueAtoms, falseAtoms } = terms;
+
   const lookup = (atoms: Map<string, Bool<"main">[]>, key: string, k: number) => {
     const atom = atoms.get(key)?.[k];
     if (atom === undefined) throw new Error(`No atom for ${key} at tick ${k}`);
     return atom;
   };
-  const modeAtoms = table(modes, (mode, k) => modeAt(k).eq(modeSort.constructorDecl(modes.indexOf(mode)).call()));
-  const trueAtoms = table(signals, signalAt);
-  const falseAtoms = table(signals, (signal, k) => ctx.Not(signalAt(signal, k)));
   const isMode = (mode: string, k: number) => lookup(modeAtoms, mode, k);
   const literal = ({ signal, value }: Formal["response"], k: number) => lookup(value ? trueAtoms : falseAtoms, signal, k);
   const entered = (mode: string, e: number) =>
@@ -86,7 +96,7 @@ export function encoder(ctx: Context<"main">, { horizon_ticks: H, tick_s, modes,
     witness: (model: Model<"main">): Witness =>
       ticks.map((k) => ({
         mode: model.eval(modeAt(k), true).toString(),
-        signals: Object.fromEntries(signals.map((s) => [s, ctx.isTrue(model.eval(signalAt(s, k), true))])),
+        signals: Object.fromEntries(signals.map((s) => [s, ctx.isTrue(model.eval(lookup(trueAtoms, s, k), true))])),
       })),
   };
 }

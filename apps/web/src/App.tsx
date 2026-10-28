@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useState } from "react";
-import { type AgentReport, type Audit, type Evals, getAgentReport, getEvals, postAudit } from "./api";
+import { type AgentReport, type Audit, type Evals, type Health, getAgentReport, getEvals, getHealth, postAudit } from "./api";
 import { Conflict } from "./Conflict";
 import { Correction } from "./Correction";
 import { EvalTables } from "./EvalTables";
@@ -25,14 +25,20 @@ export function App() {
   const [report, setReport] = useState<AgentReport | null>(null);
   const [evals, setEvals] = useState<Evals | null>(null);
   const [base, setBase] = useState<Audit | null>(null);
+  const [health, setHealth] = useState<Health | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fail = (e: unknown) => setError(String(e));
   const loadReport = () => getAgentReport().then(setReport, fail);
+  const loadHealth = () => getHealth().then(setHealth, fail);
 
+  // The health call warms the solver instance up (lazily, on serverless); the base audit follows it.
   useEffect(() => {
     void loadReport();
     getEvals().then(setEvals, fail);
-    postAudit("base").then(setBase, fail);
+    loadHealth()
+      .then(() => postAudit("base"))
+      .then(setBase, fail)
+      .finally(() => void loadHealth());
   }, []);
 
   return (
@@ -44,6 +50,9 @@ export function App() {
           <p className="mt-2 text-lg text-muted">
             Integrated continuous glucose monitoring system: impact assessment of the regulation on the product requirements.
           </p>
+          <p className="mt-4 text-xs text-muted">
+            {health === null ? "Warming up the solver instance…" : `Solver instance ready · ${health.rss_mb} MB resident · ${health.audits_served} audits served`}
+          </p>
         </div>
       </header>
       {error !== null && <p className="mb-8 border border-red p-4 text-red">{error}</p>}
@@ -54,7 +63,7 @@ export function App() {
         {base === null ? <p>Running the live audit…</p> : <Conflict audit={base} />}
       </Section>
       <Section folio="c" title="Correction">
-        {base === null ? <p>Waiting for the base audit…</p> : <Correction base={base} onError={fail} />}
+        {base === null ? <p>Waiting for the base audit…</p> : <Correction base={base} onError={fail} onAudited={loadHealth} />}
       </Section>
       <Section folio="d" title="Evals">
         {evals === null ? <p>Loading runs…</p> : <EvalTables evals={evals} />}

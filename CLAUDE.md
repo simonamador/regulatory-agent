@@ -17,7 +17,7 @@ Demo: auditor de consistencia lógica para requisitos de un dispositivo médico 
 - `z3-solver`: `init()` es async y pesado. Un solo `Context` por proceso (servidor, archivo de test o CLI). Los CLIs terminan con `process.exit`, porque los workers de Z3 mantienen vivo el proceso. Dos operaciones de Z3 intercaladas sobre ese `Context` corrompen la memoria WASM: la API pública de core (`audit`, `scenarioConflict`, `regression`) lo toma en exclusiva; no la rodees desde el servidor.
 - BMC: una obligación `within T` disparada cerca del horizonte no restringe nada (SPEC §3). Olvidarlo produce UNSAT espurios. No se descarta en silencio: si el disparador es forzado, sale en `unverified` (SPEC §4).
 - El horizonte, el tick y los modos salen de `signals.json`; ningún número del modelo va escrito a mano.
-- Render inyecta `PORT`; Express lo lee de ahí.
+- En Vercel la app Express es una función (`api/index.js`) que nunca escucha: el calentamiento es perezoso, en la primera llamada de cada instancia. `listen` y `PORT` son solo del entrypoint local. En producción nada escribe en disco (el agente en vivo está apagado).
 - `tests/gold/gen-mutations.mjs` es un script suelto de Simón: knip debe ignorar `tests/gold/**`, no hay que borrarlo ni importarlo.
 - Los tests de aceptación leen `tests/gold/*.json` desde `packages/core/test/`; el JSON es la especificación y el test solo la recorre.
 

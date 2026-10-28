@@ -78,9 +78,37 @@ async function regressions(from: Corpus, to: Corpus) {
   };
 }
 
-export function createApp() {
+// Fail closed on memory (SPEC §6): the solver's memory grows with every audit (README, Known limitations), so past
+// this resident size an audit is refused with 503 instead of being attempted.
+export const SOLVER_MEMORY_LIMIT_BYTES = 1.5 * 1024 ** 3;
+const MB = 1024 ** 2;
+
+// The instance's warm-up audit (SPEC §4), started once by whoever asks first, behind the Z3 lock: the first request
+// on a serverless instance, or the boot of a local server. A failed warm-up rejects for every caller.
+export function warmup(): () => Promise<unknown> {
+  let started: Promise<unknown> | null = null;
+  return () => (started ??= audit(loadCorpus(corpusDir, "base")));
+}
+
+// No live agent in production: a live run writes to runs/, and in production nothing writes to disk.
+const liveAvailable = () => Boolean(process.env.OPENAI_API_KEY) && process.env.NODE_ENV !== "production";
+
+// `warm` starts (or joins) the warm-up; `rss` reads the resident set size, injected so a test can simulate it.
+export function createApp({ warm, rss }: { warm: () => Promise<unknown>; rss: () => number }) {
   const app = express();
   app.use(express.json());
+  let audits_served = 0;
+  const overLimit = () => rss() > SOLVER_MEMORY_LIMIT_BYTES;
+  app.use((_req, _res, next) => {
+    void warm();
+    next();
+  });
+
+  // 200 only once the warm-up audit has finished; the UI calls it on load.
+  app.get("/api/health", async (_req, res) => {
+    await warm();
+    res.json({ ready: true, rss_mb: Math.round(rss() / MB), audits_served });
+  });
 
   // Section a and e: the latest agent run in runs/ (the agent is not called by default).
   app.get("/api/agent-report", (_req, res) => {
@@ -90,7 +118,7 @@ export function createApp() {
     const leaves = parseRegulation(readFileSync(new URL(regulation, root), "utf8"));
     res.json({
       file, model, leaves, requirements: visible(loadCorpus(corpusDir, "base")),
-      live_available: Boolean(process.env.OPENAI_API_KEY),
+      live_available: liveAvailable(),
       runs: runs.map((r) => ({
         run: r.run, status: r.status, latency_ms: r.latency_ms, tokens: r.tokens, turns: r.turns,
         tool_calls: r.tool_calls, temperature: r.temperature, temperature_error: r.temperature_error,
@@ -107,11 +135,16 @@ export function createApp() {
       res.status(400).json({ error: `snapshot must be one of ${snapshots.join(", ")}` });
       return;
     }
+    if (overLimit()) {
+      res.status(503).json({ error: "solver_memory_limit" });
+      return;
+    }
     const { snapshot } = body.data;
     const corpus = loadCorpus(corpusDir, snapshot);
     const started = performance.now();
     const findings = await audit(corpus);
     const audit_ms = performance.now() - started;
+    audits_served += 1;
     const base = loadCorpus(corpusDir, "base");
     res.json({
       snapshot, snapshots, audit_ms, load_findings: corpus.findings, requirements: visible(corpus),
@@ -142,10 +175,14 @@ export function createApp() {
     });
   });
 
-  // "Run agent live": one real run, written to runs/ like `pnpm eval:agent`. Off without an API key.
+  // "Run agent live": one real run, written to runs/ like `pnpm eval:agent`. Off without an API key and in production.
   app.post("/api/agent-run", async (_req, res) => {
-    if (!process.env.OPENAI_API_KEY) {
-      res.status(503).json({ error: "OPENAI_API_KEY is not set" });
+    if (!liveAvailable()) {
+      res.status(503).json({ error: "The live agent runs locally only, with OPENAI_API_KEY set" });
+      return;
+    }
+    if (overLimit()) {
+      res.status(503).json({ error: "solver_memory_limit" });
       return;
     }
     const { run_id } = await agentEval(1);
@@ -177,12 +214,17 @@ type EvalRun = {
 };
 type EvalRescore = { variants: Record<string, { run: number; sat: { false_positive_rate: number | null } }[]> };
 
-// Render injects PORT (CLAUDE.md); 3000 locally, where Vite proxies /api to it. One full warm-up audit before
-// listening (SPEC §4), so no visitor pays for the cold first one.
+const rss = () => process.memoryUsage().rss;
+
+// Vercel (api/index.js) imports this instance: the function never listens, and the warm-up waits for the first call.
+export default createApp({ warm: warmup(), rss });
+
+// Locally: listen on PORT (3000 by default; Vite proxies /api to it) and warm up at boot.
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const port = Number(process.env.PORT ?? "3000");
+  const warm = warmup();
   const started = performance.now();
-  await audit(loadCorpus(corpusDir, "base"));
-  const warmup = Math.round(performance.now() - started);
-  createApp().listen(port, () => console.log(`rqaudit api on :${port} (warm-up audit ${warmup} ms)`));
+  createApp({ warm, rss }).listen(port, () => console.log(`rqaudit api on :${port}`));
+  await warm();
+  console.log(`warm-up audit ${Math.round(performance.now() - started)} ms: ready`);
 }

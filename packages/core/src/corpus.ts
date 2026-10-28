@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import { readFileSync, readdirSync } from "node:fs";
 import { basename, join } from "node:path";
 import { z } from "zod";
@@ -27,7 +28,8 @@ function parseFile<T>(path: string, schema: z.ZodType<T>, findings: Finding[]): 
 // `name` is "base", a directory under corpus/snapshots/, or "invalid" (corpus/invalid/, SPEC §3).
 // Overlays only carry requirements. Without a valid signals.json nothing can be validated, so it throws.
 export function loadCorpus(root: string, name: string) {
-  const vocabulary = Vocabulary.parse(readJson(join(root, "signals.json")));
+  const signals = readFileSync(join(root, "signals.json"), "utf8").replaceAll("\r\n", "\n");
+  const vocabulary = Vocabulary.parse(JSON.parse(signals));
   const schemas = corpusSchemas(vocabulary);
   const findings: Finding[] = [];
   const loadDir = <T>(dir: string, schema: z.ZodType<T>) =>
@@ -42,6 +44,8 @@ export function loadCorpus(root: string, name: string) {
 
   return {
     vocabulary,
+    // Keys the vocabulary's Z3 terms in checks.ts; LF-normalized, so a CRLF checkout keys like an LF one.
+    vocabulary_sha256: createHash("sha256").update(signals).digest("hex"),
     // Overlay requirements come last, so they replace the base ones by id.
     requirements: [...new Map(requirements.map((r) => [r.id, r])).values()],
     axioms: parseFile(join(root, "axioms.json"), z.array(schemas.Axiom), findings).flat(),

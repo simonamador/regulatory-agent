@@ -70,6 +70,8 @@ async function json<T>(response: Response): Promise<T> {
 const post = (url: string, body?: object) =>
   fetch(url, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body ?? {}) });
 
+export type Health = { ready: boolean; rss_mb: number; audits_served: number };
+export const getHealth = () => fetch("/api/health").then((r) => json<Health>(r));
 export const getAgentReport = () => fetch("/api/agent-report").then((r) => json<AgentReport>(r));
 export const getEvals = () => fetch("/api/evals").then((r) => json<Evals>(r));
 export const postAudit = (snapshot: string) => post("/api/audit", { snapshot }).then((r) => json<Audit>(r));

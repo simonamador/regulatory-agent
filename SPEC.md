@@ -19,7 +19,7 @@ Incluye el delta v2 del 27-oct-2026: el dispositivo es un monitor continuo de gl
 | Persistencia | JSON versionado en `corpus/`; sin base de datos |
 | Tests | Vitest 5; supertest para los endpoints de `server.ts` |
 | Calidad | `tsc --noEmit`, ESLint 10 + typescript-eslint 8, knip |
-| Deploy | Render free: un servicio Node; Express sirve la API y `apps/web/dist` |
+| Deploy | Vercel Hobby: `apps/web/dist` como estático y la app Express como función en `/api` (`api/index.js`, `vercel.json`); en local, Express escucha y sirve ambos en un puerto |
 
 TypeScript va fijado en 6.0 porque typescript-eslint 8 requiere `<6.1`.
 
@@ -140,7 +140,7 @@ Cada requisito, axioma y hecho se asserta como `Implies(p_id, fórmula)` con un 
 
 - `try/catch` solo en dos fronteras: la carga de archivos de `corpus/` y la llamada al LLM. Ahí el error se convierte en `PARSE_ERROR` o `NEEDS_REVIEW` conservando el mensaje original. En el resto del código, el error se propaga.
 - Si la extracción LLM falla, el requisito queda `pending`. La UI muestra fixtures revisadas solo si el usuario elige el modo `fixtures`, nunca como respaldo automático.
-- No hay retries, caché, feature flags, configuración dinámica ni clases abstractas. Log: un JSON por ejecución en `runs/<run_id>.json` (`stage`, `latency_ms`, `tokens`, `status`).
+- No hay retries, caché, feature flags, configuración dinámica ni clases abstractas. Única excepción, y no es un caché de resultados: `checks.ts` construye una vez por instancia los términos de Z3 del vocabulario (el `Datatype` de modos y las constantes y literales por señal y tick), con clave sha256 de `signals.json`. Las fórmulas de requisitos, axiomas y escenarios, y todos los resultados, se construyen en cada check. Cada `Solver` y cada `Model` se liberan con `release()` al terminar. Log: un JSON por ejecución en `runs/<run_id>.json` (`stage`, `latency_ms`, `tokens`, `status`).
 
 ## 7. Datos
 
@@ -209,7 +209,7 @@ Una sesión por etapa; `/clear` entre etapas. Plan mode en las etapas 02 y 03.
 | 05 | Dominio CGM + unidades + `unverified` + mutaciones autodescritas + evals A/B/C con plantillas CGM | Gate verde con G01–G11 y 84 mutaciones; `pnpm eval` v3 y rescore por slices; latencia p95 < 2 s |
 | 06 | `agent.ts`, `tools.ts`, `pnpm eval:agent` | Gate verde; una corrida real con métricas contra `obligations.json` |
 | 07 | `server.ts`, `apps/web` | Storyboard de punta a punta en local |
-| 08 | Deploy en Render + video | El link público reproduce el storyboard |
+| 08 | Deploy en Vercel + video | El link público reproduce el storyboard |
 
 Servidor + UI (antes etapa 04) pasó a la 07, y el deploy (antes 05) a la 08.
 

@@ -35,7 +35,7 @@ async function replay(corpus: Corpus, interpretationId: string, witness: Witness
   const { condition, response, timing } = A;
   if (condition === null || timing.kind !== "within") throw new Error("Replay needs a conditional within reading");
 
-  expect(await holds(corpus.vocabulary, A, witness)).not.toBe(await holds(corpus.vocabulary, B, witness));
+  expect(await holds(corpus, A, witness)).not.toBe(await holds(corpus, B, witness));
   const tTrigger = witness.findIndex((row) => row.signals[condition.signal] === condition.value);
   const tResponse = witness.findIndex((row, k) => k >= tTrigger && row.signals[response.signal] === response.value);
   expect(tTrigger).toBeGreaterThanOrEqual(0);

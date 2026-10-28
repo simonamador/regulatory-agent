@@ -2,13 +2,34 @@ import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import request from "supertest";
 import { describe, expect, it, vi } from "vitest";
-import { createApp } from "../src/server.js";
+import { SOLVER_MEMORY_LIMIT_BYTES, createApp, warmup } from "../src/server.js";
 
 // The storyboard endpoints, on the committed runs/ and the live Z3 audit. No test here calls OpenAI.
 vi.stubEnv("OPENAI_API_KEY", "");
-const app = createApp();
+const MB = 1024 ** 2;
+// The resident size is injected: these tests decide what the memory guard reads.
+let resident = 200 * MB;
+const app = createApp({ warm: warmup(), rss: () => resident });
 const g01 = { check: "scenario_conflict", scenario: "SCN-101", core: ["REQ-101", "REQ-102", "SCN-101"] };
 const LIVE = 30_000; // each POST /api/audit runs the full audit, twice more for a regression
+
+describe("GET /api/health", () => {
+  it("answers 200 only once the lazy warm-up audit has run, with rss_mb and audits_served", { timeout: LIVE }, async () => {
+    const { status, body } = await request(app).get("/api/health");
+    expect(status).toBe(200);
+    expect(body).toEqual({ ready: true, rss_mb: 200, audits_served: 0 });
+  });
+});
+
+describe("memory guard", () => {
+  it("refuses an audit with 503 solver_memory_limit past the limit, without attempting it", async () => {
+    resident = SOLVER_MEMORY_LIMIT_BYTES + 1;
+    const refused = await request(app).post("/api/audit").send({ snapshot: "base" });
+    resident = 200 * MB;
+    expect([refused.status, refused.body]).toEqual([503, { error: "solver_memory_limit" }]);
+    expect((await request(app).get("/api/health")).body.audits_served).toBe(0);
+  });
+});
 
 describe("GET /api/agent-report", () => {
   it("serves the latest agent run with the 27 leaves and the design conflict", async () => {

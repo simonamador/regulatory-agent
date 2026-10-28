@@ -48,14 +48,19 @@ function Regression({ base, result }: { base: Audit; result: Audit }) {
   );
 }
 
-export function Correction({ base, onError }: { base: Audit; onError: (e: unknown) => void }) {
+export function Correction({ base, onError, onAudited }: { base: Audit; onError: (e: unknown) => void; onAudited: () => Promise<void> }) {
   const options = base.snapshots.filter((s) => s !== "base");
   const [snapshot, setSnapshot] = useState(options[0] ?? "");
   const [result, setResult] = useState<Audit | null>(null);
   const [running, setRunning] = useState(false);
   const run = () => {
     setRunning(true);
-    postAudit(snapshot).then(setResult, onError).finally(() => setRunning(false));
+    postAudit(snapshot)
+      .then(setResult, onError)
+      .finally(() => {
+        setRunning(false);
+        void onAudited();
+      });
   };
   return (
     <div>
